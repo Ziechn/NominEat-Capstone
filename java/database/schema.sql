@@ -36,7 +36,5 @@ CREATE TABLE restaurant_event (
     PRIMARY KEY (event_id, restaurant_id),
     FOREIGN KEY (event_id) REFERENCES event(event_id)
 );
-g
-
 
 COMMIT TRANSACTION;
