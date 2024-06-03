@@ -47,6 +47,10 @@ public class Restaurant {
         return this.name;
     }
 
+    public String getPhoneNumber(){
+        return this.phoneNumber;
+    }
+
     public List<String> getCategories() {
         return categories;
     }
