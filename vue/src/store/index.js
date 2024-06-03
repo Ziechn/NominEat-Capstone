@@ -4,6 +4,48 @@ import axios from 'axios';
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
+      restaurants: [
+        {
+          id: 1,
+          name: 'Olive Garden',
+          cuisine: 'Italian',
+          address: '1234 Mertle St',
+          hours: '6AM - 9PM',
+          status: 'Open'
+        },
+        {
+          id: 2,
+          name: 'McDonalds',
+          cuisine: 'Fast-Food',
+          address: '4545 Washington Ave',
+          hours: '24/7',
+          status: 'Open'
+        },
+        { 
+          id: 3,
+          name: 'Perkins Restaurant & Bakery',
+          cuisine: 'Diner',
+          address: '582 Mainstreet',
+          hours: '6AM - 12AM',
+          status: 'Closed'
+        },
+        {
+          id: 4, 
+          name: 'Jets Pizza',
+          cuisine: 'Pizza',
+          address: '415 12th Ave',
+          hours: '9AM - 8PM',
+          status: 'Open'
+        },
+        {
+          id: 5,
+          name: 'Casa Deli',
+          cuisine: 'Mexican',
+          address: '978 Abercrombie Lane',
+          hours: '8AM - 11PM',
+          status: 'Closed'
+        }
+      ],
       token: currentToken || '',
       user: currentUser || {}
     },
