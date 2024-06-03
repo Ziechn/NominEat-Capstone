@@ -20,4 +20,12 @@ public class Restaurant {
         this.id = restaurantId;
         this.name = restaurantName;
     }
+
+    public String getId(){
+        return this.id;
+    }
+
+    public String getName(){
+        return this.name;
+    }
 }

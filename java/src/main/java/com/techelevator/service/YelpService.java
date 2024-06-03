@@ -22,7 +22,7 @@ public class YelpService {
     @Value("${yelp.api.url}")
     private String apiUrl;
 
-    @Value("${yelp.api.token")
+    @Value("${yelp.api.token}")
     private String apiToken;
 
     private final String LOCATION_PARAM = "location=";
@@ -31,12 +31,12 @@ public class YelpService {
     private final String LIMIT_PARAM = "limit";
 
     public List<Restaurant> getSearchResults(String zipcode){
-        String url = this.apiUrl + "location=" + zipcode;
+        String url = this.apiUrl + "location=" + zipcode + "&limit=5";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(apiToken);
 
-        HttpEntity<String> httpEntity = new HttpEntity<>("", headers);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -49,21 +49,25 @@ public class YelpService {
                 String.class
         );
 
-        System.out.println(response.getBody());
-
         List<Restaurant> restaurants = new ArrayList<>();
 
         try {
             jsonNode = objectMapper.readTree(response.getBody());
-            JsonNode root = jsonNode.path("data");
+            JsonNode root = jsonNode.path("businesses");
 
             for (int i = 0; i < root.size(); i++){
-                String restaurantId = root.path(i).path("id").asText();
+                String id = root.path(i).path("id").asText();
+                String name = root.path(i).path("name").asText();
+
+                System.out.println(name);
+
+                Restaurant restaurant = new Restaurant(id, name);
+                restaurants.add(restaurant);
             }
         } catch (JsonProcessingException e) {
             System.out.println("[Yelp Service] Problem retrieving data.");
         }
 
-        return new ArrayList<>();
+        return restaurants;
     }
 }
