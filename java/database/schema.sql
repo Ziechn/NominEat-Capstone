@@ -30,7 +30,7 @@ CREATE TABLE event_attendees (
 
 CREATE TABLE restaurant_event (
     event_id INT NOT NULL,
-    restaurant_id INT NOT NULL,
+    restaurant_id VARCHAR (100) NOT NULL,
     yes_votes INT DEFAULT 0,
     no_votes INT DEFAULT 0,
     PRIMARY KEY (event_id, restaurant_id),
