@@ -20,14 +20,15 @@ public class Restaurant {
     private String menuUrl;
 
     public Restaurant(String restaurantId, String restaurantName,
-                      String phoneNumber, String address1,
-                      String address2, String address3,
+                      String phoneNumber, List<String> categories,
+                      String address1, String address2, String address3,
                       String city, String state, String country,
                       String zipcode, String imageUrl,
                       String menuUrl){
         this.id = restaurantId;
         this.name = restaurantName;
         this.phoneNumber = phoneNumber;
+        this.categories = categories;
         this.address1 = address1;
         this.address2 = address2;
         this.address3 = address3;

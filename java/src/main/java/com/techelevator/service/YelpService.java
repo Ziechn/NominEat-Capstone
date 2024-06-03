@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.model.Restaurant;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +19,10 @@ import java.util.List;
 public class YelpService {
 
     @Value("${yelp.api.url}")
-    private String apiUrl;
+    private String searchUrl;
+
+    @Value("$[yelp.api.business.url}")
+    private String businessUrl;
 
     @Value("${yelp.api.token}")
     private String apiToken;
@@ -31,7 +33,7 @@ public class YelpService {
     private final String LIMIT_PARAM = "limit";
 
     public List<Restaurant> getSearchResults(String queryZipcode){
-        String url = this.apiUrl + "location=" + queryZipcode + "&limit=5";
+        String url = this.searchUrl + "location=" + queryZipcode + "&limit=5";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(apiToken);
@@ -62,7 +64,10 @@ public class YelpService {
                 String phoneNumber = root.path(i).path("display_phone").asText();
 
                 // Categories will need to be handled differently as they are a JSON array.
-                // Categories List
+                List<String> categories = new ArrayList<>();
+                for (int a = 0; a < root.path(i).path("categories").size(); a++){
+                    categories.add(root.path(i).path("categories").path(a).path("title").asText());
+                }
 
                 // Address
                 String address1 = root.path(i).path("location").path("address1").asText();
@@ -85,6 +90,7 @@ public class YelpService {
                         id,
                         name,
                         phoneNumber,
+                        categories,
                         address1,
                         address2,
                         address3,
@@ -102,5 +108,47 @@ public class YelpService {
         }
 
         return restaurants;
+    }
+
+    public List<String> getOpenHours(String businessId){
+        String url = this.businessUrl + businessId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(apiToken);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode;
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                httpEntity,
+                String.class
+        );
+
+        List<String> openHours = new ArrayList<>();
+
+        try {
+            jsonNode = objectMapper.readTree(response.getBody());
+            JsonNode root = jsonNode.path("hours");
+
+            // START HERE. Continue digging down to get the hours.
+
+        } catch (JsonProcessingException e) {
+            System.out.println("[Yelp Service] Problem retrieving data.");
+        }
+
+        return new ArrayList<>();
+    }
+
+    public List<String> getCloseHours(String businessId){
+        return new ArrayList<>();
+    }
+
+    public String isOpen(String businessId){
+        return "False";
     }
 }
