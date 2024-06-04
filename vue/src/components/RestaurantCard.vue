@@ -1,12 +1,24 @@
-<template>
-    <div class="restaurant-cards">
-        <div class="restaurant-card" v-for="restaurant in $store.state.restaurants" v-bind:key="restaurant.id">
-            <h2 class="restaurant-name">{{ restaurant.name }}</h2>
-            <p class="restaurant-category">{{ restaurant.category }}</p>
-            <p class="restaurant-price">{{ restaurant.price }}</p>
-            <!-- <router-link v-bind:to="{ name: 'details', params: { id: restaurant.id } }">View Details</router-link> -->
-            <RestaurantDetails v-bind:curRestaurant="restaurant"/>
+
+<!-- Goal is to split the card into two divs - one for each side -Lines -->
+<template> 
+<div class="restaurant-card-wrapper" :class="wrapperClasses" @click="enlargeCard"></div>
+    <div class="restaurant-card" :class="cardClasses" @click.stop="flipCard">
+
+        <div class="card-front">
+            <img :src="restaurant.imageUrl" :alt="restaurant.name" /> 
+            <h2>{{ restaurant.name }}</h2>
+            <p v-if="restaurant.categories && restaurant.categories.length">{{ restaurant.categories[0].title }}
+        </p>
+            <p>{{ restaurant.rating }}</p>    
         </div>
+
+            <div class="card-back"></div>
+            <p>{{ restaurant.name }}</p>
+            <p>{{ restaurant.price }}</p>
+            <!-- <p>{{ restaurant.location }}</p> -->
+          
+            <!-- open: restaurant.isOpenNow, closed: !restaurant.isOpenNow -->
+            <RestaurantDetails v-bind:curRestaurant="restaurant"/>
     </div>
 </template>
 
