@@ -35,14 +35,14 @@ public class YelpService {
     private final String SORT_BY_PARAM = "sort_by";
     private final String LIMIT_PARAM = "limit";
 
-    public List<Restaurant> getSearchResults(String queryZipcode){
+    public List<Restaurant> getSearchResults(String queryZipcode, int limit){
         String url = this.searchUrl + "location=" + queryZipcode;
 
-//        if (limit > 0) {
-//            url += "&limit=" + limit;
-//        } else {
-//            url += "&limit=10";
-//        }
+        if (limit > 0) {
+            url += "&limit=" + limit;
+        } else {
+            url += "&limit=10";
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(apiToken);
@@ -65,7 +65,6 @@ public class YelpService {
         try {
             jsonNode = objectMapper.readTree(response.getBody());
             JsonNode root = jsonNode.path("businesses");
-            System.out.println(root);
 
             for (int i = 0; i < root.size(); i++){
                 // Get general restaurant information:
