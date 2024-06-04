@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 <!-- Goal is to split the card into two divs - one for each side -Lines -->
 <template> 
@@ -11,17 +10,6 @@
             <p v-if="restaurant.categories && restaurant.categories.length">{{ restaurant.categories[0].title }}
         </p>
             <p>{{ restaurant.rating }}</p>    
-=======
-<template>
-    <input placeholder="Enter ZIP Code" type="text" v-model="zipCode"/>
-    <div class="restaurant-cards">
-        <div class="restaurant-card" v-for="restaurant in $store.state.restaurants" v-bind:key="restaurant.id">
-            <h2 class="restaurant-name">{{ restaurant.name }}</h2>
-            <p class="restaurant-category">{{ restaurant.category }}</p>
-            <p class="restaurant-price">{{ restaurant.price }}</p>
-            <!-- <router-link v-bind:to="{ name: 'details', params: { id: restaurant.id } }">View Details</router-link> -->
-            <RestaurantDetails v-bind:curRestaurant="restaurant"/>
->>>>>>> 45e8e47c452727c93b2de1c2d517341f24dba026
         </div>
 
             <div class="card-back"></div>
