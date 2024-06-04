@@ -16,6 +16,11 @@ import RestaurantDetails from './RestaurantDetails.vue';
 export default {
     components: { 
         RestaurantDetails 
+    },
+    props: {
+        restaurantCards: {
+            type: Array
+        }
     }
 }
 </script>

@@ -8,7 +8,7 @@
                 <div v-if="loading" class="loading">Loading...please wait...</div>
             <!-- loading and error stuff here -->
             <div v-if="restaurants.length" class="restaurant-cards">
-                <RestaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" />
+                <RestaurantCard v-bind:restaurantCards="restaurants"/>
             </div>
         </div>
 </template>
@@ -27,17 +27,18 @@ export default{
             text: '',
             loading: false,
         };
-    },methods: {
-        async searchRestaurants() {
-            this.loading = true;
-            try {
-                this.$store.dispatch('retrieveRestaurants', this.searchText);
-            } catch (error) {
-                this.error = 'Failed to load restaurants';
-            }
-        }
     }
-    }
+    // methods: {
+    //     async searchRestaurants() {
+    //         this.loading = true;
+    //         try {
+    //             this.$store.dispatch('retrieveRestaurants', this.searchText);
+    //         } catch (error) {
+    //             this.error = 'Failed to load restaurants';
+    //         }
+    //     }
+    // }
+}
 
 
 
