@@ -9,6 +9,7 @@ export function createStore(currentToken, currentUser) {
           id: 1,
           name: 'Olive Garden',
           category: 'Italian',
+          price: '$$',
           address: '1234 Mertle St',
           hours: '6AM - 9PM',
           status: 'Open'
@@ -17,6 +18,7 @@ export function createStore(currentToken, currentUser) {
           id: 2,
           name: 'McDonalds',
           category: 'Fast-Food',
+          price: '$',
           address: '4545 Washington Ave',
           hours: '24/7',
           status: 'Open'
@@ -25,6 +27,7 @@ export function createStore(currentToken, currentUser) {
           id: 3,
           name: 'Perkins Restaurant & Bakery',
           category: 'Diner',
+          price: '$$',
           address: '582 Mainstreet',
           hours: '6AM - 12AM',
           status: 'Closed'
@@ -33,6 +36,7 @@ export function createStore(currentToken, currentUser) {
           id: 4, 
           name: 'Jets Pizza',
           category: 'Pizza',
+          price: '$$',
           address: '415 12th Ave',
           hours: '9AM - 8PM',
           status: 'Open'
@@ -41,6 +45,7 @@ export function createStore(currentToken, currentUser) {
           id: 5,
           name: 'Casa Deli',
           category: 'Mexican',
+          price: '$$$$',
           address: '978 Abercrombie Lane',
           hours: '8AM - 11PM',
           status: 'Closed'

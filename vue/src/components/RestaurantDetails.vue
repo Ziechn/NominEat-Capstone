@@ -1,15 +1,18 @@
 <template>
     <div class="restaurant-details">
-        <h2 class="restaurant-name">{{ restaurant.name }}</h2>
-        <p class="restaurant-category">{{ restaurant.category }}</p>
-        <p class="restaurant-address">{{ restaurant.address }}</p>
-        <p class="restaurant-hours">{{ restaurant.hours }}</p>
-        <p class="restaurant-status">{{ restaurant.status }}</p>
+        <h2 class="restaurant-name">{{ curRestaurant.name }}</h2>
+            <p class="restaurant-category">{{ curRestaurant.category }}</p>
+            <p class="restaurant-price">{{ curRestaurant.price }}</p>
+            <p class="restaurant-address">{{ curRestaurant.address }}</p>
+            <p class="restaurant-hours">{{ curRestaurant.hours }}</p>
+            <p class="restaurant-status">{{ curRestaurant.status }}</p>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['restaurant']
+        props: {
+            curRestaurant: Object
+        }
     }
 </script>
