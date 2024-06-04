@@ -1,4 +1,5 @@
 <template>
+    <input placeholder="Enter ZIP Code" type="text" v-model="zipCode"/>
     <div class="restaurant-cards">
         <div class="restaurant-card" v-for="restaurant in $store.state.restaurants" v-bind:key="restaurant.id">
             <h2 class="restaurant-name">{{ restaurant.name }}</h2>
@@ -16,11 +17,6 @@ import RestaurantDetails from './RestaurantDetails.vue';
 export default {
     components: { 
         RestaurantDetails 
-    },
-    props: {
-        restaurantCards: {
-            type: Array
-        }
     }
 }
 </script>
