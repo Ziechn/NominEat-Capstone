@@ -11,10 +11,17 @@ public class Event {
 
 
 
-    public Event (int eventId, String eventName, int organizerId) {
-        this.eventId = eventId;
-        this.eventName = eventName;
-        this.organizerId = organizerId;
+
+
+    public Event(int eventId, String eventName, int organizerId) {
+        this.eventId =eventId;
+        this.eventName =eventName;
+        this.organizerId=organizerId;
+
+    }
+
+    public Event() {
+
     }
 
     public int getEventId() {

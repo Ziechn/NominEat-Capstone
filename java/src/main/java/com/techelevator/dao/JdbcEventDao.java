@@ -14,8 +14,8 @@ public class JdbcEventDao implements EventDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcEventDao (JdbdTemplate jdbdTemplate) {
-        this.jdbcTemplate = jdbdTemplate;
+    public JdbcEventDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 
@@ -24,62 +24,64 @@ public class JdbcEventDao implements EventDao {
         List<Event> events = new ArrayList<>();
         Event event = null;
 
-        Sring sql = "SELECT event_id, organizer_id, event_name\n" +
+        String sql = "SELECT event_id, organizer_id, event_name\n" +
                 "FROM event;";
 
-        SqlRow results = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
             event = mapRowToEvent(results);
-            events.add(events);
+            events.add(event);
         }
         return events;
+    }
 
 
-        @Override
-        public Event getEventById (int eventId) {
-            Event event = null;
+    @Override
+    public Event getEventById(int eventId) {
+        Event event = null;
 
-            String sql = "SELECT event_id, organizer_id, event_name\n" +
-                    "FROM event\n" +
-                    "WHERE event_id = ?;";
+        String sql = "SELECT event_id, organizer_id, event_name\n" +
+                "FROM event\n" +
+                "WHERE event_id = ?;";
 
-            SqlRowSet results = jdbcTemplate.queryForRowSet (sql, eventId);
-            if (results.next()) {
-                event = mapRowToEvent(results);
-            }
-            return event;
-
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
+        if (results.next()) {
+            event = mapRowToEvent(results);
         }
-        @Override
-        public Event createEvent (Event event) {
-            Event newEvent = null;
-
-            String sql = "INSERT INTO event (organizer_id, event_name)\n" +
-                    "VALUES (?,?)\n" +
-                    "RETURNING event_id;";
-
-            try {
-                int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(), getEventName());
-
-                newEvent = event;
-                newEvent.setEventId(eventId);
-            } catch (Exception ex) {
-                System.out.println ("Something went wrong" + ex.getMessage());
-            }
-            return newEvent;
-
-        }
-
-        private Event mapRowToEvent (SqlRowSet results){
-            Event event = new Event ();
-            event.setEventId(results.getInt("event_id"));
-            event.setEventName(results.getString("event_name"));
-            event.setOrganizerId(results.getInt("organizer_id"));
-            return event;
-
-        }
-
+        return event;
 
     }
 
+
+    @Override
+    public Event createEvent(Event event) {
+        Event newEvent = null;
+
+        String sql = "INSERT INTO event (organizer_id, event_name)\n" +
+                "VALUES (?,?)\n" +
+                "RETURNING event_id;";
+        try {
+            int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(), event.getEventName());
+
+            newEvent = event;
+            newEvent.setEventId(eventId);
+        } catch (Exception ex) {
+            System.out.println("Something went wrong" + ex.getMessage());
+        }
+        return newEvent;
+
+    }
+
+    private Event mapRowToEvent(SqlRowSet results) {
+        Event event = new Event();
+        event.setEventId(results.getInt("event_id"));
+        event.setEventName(results.getString("event_name"));
+        event.setOrganizerId(results.getInt("organizer_id"));
+        return event;
+
+
+    }
 }
+
+
+
