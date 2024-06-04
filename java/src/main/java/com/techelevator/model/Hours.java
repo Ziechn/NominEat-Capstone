@@ -5,6 +5,11 @@ import java.util.List;
 public class Hours {
 
     private List<Hour> hours;
+
+    public Hours(List<Hour> hourList) {
+        this.hours = hourList;
+    }
+
     public List<Hour> getHours() {
         return hours;
     }
