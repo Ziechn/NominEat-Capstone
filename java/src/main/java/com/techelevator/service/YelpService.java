@@ -36,7 +36,13 @@ public class YelpService {
     private final String LIMIT_PARAM = "limit";
 
     public List<Restaurant> getSearchResults(String queryZipcode){
-        String url = this.searchUrl + "location=" + queryZipcode + "&limit=5";
+        String url = this.searchUrl + "location=" + queryZipcode;
+
+//        if (limit > 0) {
+//            url += "&limit=" + limit;
+//        } else {
+//            url += "&limit=10";
+//        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(apiToken);
@@ -86,12 +92,6 @@ public class YelpService {
                 // List<String> openHours = getOpenHours(id);
                 List<Open> hours = getHours(id);
 
-                List<String> openHours = new ArrayList<>();
-                List<String> closingHours = new ArrayList<>();
-
-                // Open Status
-                boolean isClosed = root.path(i).path("is_closed").asBoolean();
-
                 // External links:
                 String imageUrl = root.path(i).path("image_url").asText();
                 String menuUrl = root.path(i).path("attributes").path("menu_url").asText();
@@ -110,8 +110,9 @@ public class YelpService {
                         zipcode,
                         imageUrl,
                         menuUrl,
-                        hours,
-                        isClosed);
+                        hours);
+
+                setIsOpenNow(restaurant, id);
 
                 restaurants.add(restaurant);
             }
@@ -148,12 +149,10 @@ public class YelpService {
             JsonNode root = jsonNode.path("hours");
 
             for (int i = 0; i < root.path(0).path("open").size(); i++){
-                System.out.println(root.path(0).path("open").path(i));
                 boolean isOverNight = root.path(0).path("open").path(i).path("is_overnight").asBoolean();
                 String start = root.path(0).path("open").path(i).path("start").asText();
                 String end = root.path(0).path("open").path(i).path("end").asText();
                 int day = root.path(0).path("open").path(i).path("day").asInt();
-
                 hours.add(new Open(isOverNight,start,end,day));
             }
 
@@ -162,5 +161,35 @@ public class YelpService {
         }
 
         return hours;
+    }
+
+    private void setIsOpenNow(Restaurant restaurant, String businessId){
+
+        String url = this.businessUrl + businessId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(apiToken);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode;
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                httpEntity,
+                String.class
+        );
+
+        try {
+            jsonNode = objectMapper.readTree(response.getBody());
+            JsonNode root = jsonNode.path("hours");
+            boolean isOpenNow = root.path(0).path("is_open_now").asBoolean();
+            restaurant.SetIsOpenNow(isOpenNow);
+        } catch (JsonProcessingException e) {
+            System.out.println("[Yelp Service] Problem retrieving data.");
+        }
     }
 }
