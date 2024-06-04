@@ -24,8 +24,10 @@ public class JdbcEventDao implements EventDao {
         List<Event> events = new ArrayList<>();
         Event event = null;
 
-        String sql = "SELECT event_id, organizer_id, event_name\n" +
+        String sql = "SELECT event_id, organizer_id, event_name, " +
+                "location, event_link, decision_date\n" +
                 "FROM event;";
+
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
@@ -40,9 +42,11 @@ public class JdbcEventDao implements EventDao {
     public Event getEventById(int eventId) {
         Event event = null;
 
-        String sql = "SELECT event_id, organizer_id, event_name\n" +
+        String sql = "SELECT event_id, organizer_id, event_name, " +
+                "location, event_link, decision_date\n" +
                 "FROM event\n" +
-                "WHERE event_id = ?;";
+                "WHERE event_id =?;";
+
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
         if (results.next()) {
@@ -57,11 +61,13 @@ public class JdbcEventDao implements EventDao {
     public Event createEvent(Event event) {
         Event newEvent = null;
 
-        String sql = "INSERT INTO event (organizer_id, event_name)\n" +
-                "VALUES (?,?)\n" +
+        String sql = "INSERT INTO event (organizer_id, event_name, " +
+                "location, event_link, decision_date)\n" +
+                "VALUES (?, ?, ?, ?, ?)\n" +
                 "RETURNING event_id;";
         try {
-            int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(), event.getEventName());
+            int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(),
+                    event.getEventName(), event.getLocation(),event.getEventLink(), event.getDecisionDate());
 
             newEvent = event;
             newEvent.setEventId(eventId);

@@ -14,20 +14,28 @@ public class Restaurant {
     private String state;
     private String country;
     private String zipcode;
-    private String[] hours;
-    private String openStatus;
+    private List<Open> hours;
+    private boolean isOpenNow;
     private String imageUrl;
     private String menuUrl;
 
+    private double rating;
+    private Coordinates coordinates;
+
+    private List<String> transactions;
+
     public Restaurant(String restaurantId, String restaurantName,
-                      String phoneNumber, String address1,
-                      String address2, String address3,
+                      String phoneNumber, List<String> categories,
+                      String address1, String address2, String address3,
                       String city, String state, String country,
                       String zipcode, String imageUrl,
-                      String menuUrl){
+                      String menuUrl, List<Open> hours,
+                      double rating, Coordinates coordinates,
+                      List<String> transactions){
         this.id = restaurantId;
         this.name = restaurantName;
         this.phoneNumber = phoneNumber;
+        this.categories = categories;
         this.address1 = address1;
         this.address2 = address2;
         this.address3 = address3;
@@ -37,6 +45,10 @@ public class Restaurant {
         this.zipcode = zipcode;
         this.imageUrl = imageUrl;
         this.menuUrl = menuUrl;
+        this.hours = hours;
+        this.rating = rating;
+        this.coordinates = coordinates;
+        this.transactions = transactions;
     }
 
     public String getId(){
@@ -83,19 +95,35 @@ public class Restaurant {
         return zipcode;
     }
 
-    public String[] getHours() {
-        return hours;
+    public List<Open> getHours(){
+        return this.hours;
     }
 
-    public String getOpenStatus() {
-        return openStatus;
+    public boolean getIsOpenNow() {
+        return this.isOpenNow;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return this.imageUrl;
     }
 
     public String getMenuUrl() {
-        return menuUrl;
+        return this.menuUrl;
+    }
+
+    public double getRating(){
+        return this.rating;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public List<String> getTransactions(){
+        return transactions;
+    }
+
+    public void SetIsOpenNow(boolean isOpenNow){
+        this.isOpenNow = isOpenNow;
     }
 }
