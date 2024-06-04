@@ -3,10 +3,7 @@ package com.techelevator.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techelevator.model.Hour;
-import com.techelevator.model.Hours;
-import com.techelevator.model.Open;
-import com.techelevator.model.Restaurant;
+import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -88,6 +85,10 @@ public class YelpService {
                 String country = root.path(i).path("location").path("country").asText();
                 String state = root.path(i).path("location").path("state").asText();
 
+                // Map coordinates
+                double latitude = root.path(i).path("coordinates").path("latitude").asDouble();
+                double longitude = root.path(i).path("coordinates").path("longitude").asDouble();
+                Coordinates coordinates = new Coordinates(latitude, longitude);
 
                 // Hours and open status need to be handled by going to the business id.
                 // List<String> openHours = getOpenHours(id);
