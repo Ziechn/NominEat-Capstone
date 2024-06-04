@@ -19,12 +19,15 @@ public class Restaurant {
     private String imageUrl;
     private String menuUrl;
 
+    private double rating;
+
     public Restaurant(String restaurantId, String restaurantName,
                       String phoneNumber, List<String> categories,
                       String address1, String address2, String address3,
                       String city, String state, String country,
                       String zipcode, String imageUrl,
-                      String menuUrl, List<Open> hours){
+                      String menuUrl, List<Open> hours,
+                      double rating){
         this.id = restaurantId;
         this.name = restaurantName;
         this.phoneNumber = phoneNumber;
@@ -39,6 +42,7 @@ public class Restaurant {
         this.imageUrl = imageUrl;
         this.menuUrl = menuUrl;
         this.hours = hours;
+        this.rating = rating;
     }
 
     public String getId(){
@@ -90,15 +94,19 @@ public class Restaurant {
     }
 
     public boolean getIsOpenNow() {
-        return isOpenNow;
+        return this.isOpenNow;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return this.imageUrl;
     }
 
     public String getMenuUrl() {
-        return menuUrl;
+        return this.menuUrl;
+    }
+
+    public double getRating(){
+        return this.rating;
     }
 
     public void SetIsOpenNow(boolean isOpenNow){

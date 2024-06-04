@@ -71,6 +71,7 @@ public class YelpService {
                 String id = root.path(i).path("id").asText();
                 String name = root.path(i).path("name").asText();
                 String phoneNumber = root.path(i).path("display_phone").asText();
+                double rating = root.path(i).path("rating").asDouble();
 
                 // Categories will need to be handled differently as they are a JSON array.
                 List<String> categories = new ArrayList<>();
@@ -86,6 +87,7 @@ public class YelpService {
                 String zipcode = root.path(i).path("location").path("zip_code").asText();
                 String country = root.path(i).path("location").path("country").asText();
                 String state = root.path(i).path("location").path("state").asText();
+
 
                 // Hours and open status need to be handled by going to the business id.
                 // List<String> openHours = getOpenHours(id);
@@ -109,7 +111,8 @@ public class YelpService {
                         zipcode,
                         imageUrl,
                         menuUrl,
-                        hours);
+                        hours,
+                        rating);
 
                 setIsOpenNow(restaurant, id);
 
