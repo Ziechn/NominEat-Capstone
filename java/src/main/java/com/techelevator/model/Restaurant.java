@@ -20,6 +20,7 @@ public class Restaurant {
     private String menuUrl;
 
     private double rating;
+    private Coordinates coordinates;
 
     public Restaurant(String restaurantId, String restaurantName,
                       String phoneNumber, List<String> categories,
@@ -27,7 +28,7 @@ public class Restaurant {
                       String city, String state, String country,
                       String zipcode, String imageUrl,
                       String menuUrl, List<Open> hours,
-                      double rating){
+                      double rating, Coordinates coordinates){
         this.id = restaurantId;
         this.name = restaurantName;
         this.phoneNumber = phoneNumber;
@@ -43,6 +44,7 @@ public class Restaurant {
         this.menuUrl = menuUrl;
         this.hours = hours;
         this.rating = rating;
+        this.coordinates = coordinates;
     }
 
     public String getId(){
@@ -107,6 +109,10 @@ public class Restaurant {
 
     public double getRating(){
         return this.rating;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
     public void SetIsOpenNow(boolean isOpenNow){

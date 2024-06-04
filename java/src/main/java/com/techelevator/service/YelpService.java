@@ -113,7 +113,8 @@ public class YelpService {
                         imageUrl,
                         menuUrl,
                         hours,
-                        rating);
+                        rating,
+                        coordinates);
 
                 setIsOpenNow(restaurant, id);
 
