@@ -14,8 +14,7 @@ public class Restaurant {
     private String state;
     private String country;
     private String zipcode;
-    private List<String> openHours;
-    private List<String> closingHours;
+    private List<Open> hours;
     private boolean isClosed;
     private String imageUrl;
     private String menuUrl;
@@ -25,8 +24,7 @@ public class Restaurant {
                       String address1, String address2, String address3,
                       String city, String state, String country,
                       String zipcode, String imageUrl,
-                      String menuUrl, List<String> openHours,
-                      List<String> closingHours, boolean isClosed){
+                      String menuUrl, List<Open> hours, boolean isClosed){
         this.id = restaurantId;
         this.name = restaurantName;
         this.phoneNumber = phoneNumber;
@@ -40,8 +38,7 @@ public class Restaurant {
         this.zipcode = zipcode;
         this.imageUrl = imageUrl;
         this.menuUrl = menuUrl;
-        this.openHours = openHours;
-        this.closingHours = closingHours;
+        this.hours = hours;
         this.isClosed = isClosed;
     }
 
@@ -89,12 +86,8 @@ public class Restaurant {
         return zipcode;
     }
 
-    public List<String> getOpenHours() {
-        return openHours;
-    }
-
-    public List<String> getClosingHours() {
-        return closingHours;
+    public List<Open> getHours(){
+        return this.hours;
     }
 
     public boolean getIsClosed() {

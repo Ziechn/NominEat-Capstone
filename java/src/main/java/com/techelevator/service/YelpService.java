@@ -84,7 +84,7 @@ public class YelpService {
 
                 // Hours and open status need to be handled by going to the business id.
                 // List<String> openHours = getOpenHours(id);
-                getHours(id);
+                List<Open> hours = getHours(id);
 
                 List<String> openHours = new ArrayList<>();
                 List<String> closingHours = new ArrayList<>();
@@ -110,8 +110,7 @@ public class YelpService {
                         zipcode,
                         imageUrl,
                         menuUrl,
-                        openHours,
-                        closingHours,
+                        hours,
                         isClosed);
 
                 restaurants.add(restaurant);
@@ -142,7 +141,7 @@ public class YelpService {
                 String.class
         );
 
-        List<Open> opens = new ArrayList<>();
+        List<Open> hours = new ArrayList<>();
 
         try {
             jsonNode = objectMapper.readTree(response.getBody());
@@ -155,59 +154,13 @@ public class YelpService {
                 String end = root.path(0).path("open").path(i).path("end").asText();
                 int day = root.path(0).path("open").path(i).path("day").asInt();
 
-                opens.add(new Open(isOverNight,start,end,day));
+                hours.add(new Open(isOverNight,start,end,day));
             }
 
         } catch (JsonProcessingException e) {
             System.out.println("[Yelp Service] Problem retrieving data.");
         }
 
-        return opens;
-    }
-
-    public List<String> getOpenHours(String businessId){
-        String url = this.businessUrl + businessId;
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiToken);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-        RestTemplate restTemplate = new RestTemplate();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode;
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                httpEntity,
-                String.class
-        );
-
-        List<String> openHours = new ArrayList<>();
-
-        try {
-            jsonNode = objectMapper.readTree(response.getBody());
-            JsonNode root = jsonNode;
-
-            System.out.println(root.asText());
-
-            // START HERE. Continue digging down to get the hours.
-            for (int i = 0; i < root.size(); i++){
-                openHours.add(root.path(i).path("open").asText());
-            }
-        } catch (JsonProcessingException e) {
-            System.out.println("[Yelp Service] Problem retrieving data.");
-        }
-
-        return openHours;
-    }
-
-    public List<String> getCloseHours(String businessId){
-        return new ArrayList<>();
-    }
-
-    public String isOpen(String businessId){
-        return "False";
+        return hours;
     }
 }
