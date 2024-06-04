@@ -21,7 +21,7 @@ public class YelpService {
     @Value("${yelp.api.url}")
     private String searchUrl;
 
-    @Value("$[yelp.api.business.url}")
+    @Value("${yelp.api.business.url}")
     private String businessUrl;
 
     @Value("${yelp.api.token}")
@@ -79,8 +79,12 @@ public class YelpService {
                 String state = root.path(i).path("location").path("state").asText();
 
                 // Hours and open status need to be handled by going to the business id.
-                // Hours
+                // List<String> openHours = getOpenHours(id);
+                List<String> openHours = new ArrayList<>();
+                List<String> closingHours = new ArrayList<>();
+
                 // Open Status
+                boolean isClosed = root.path(i).path("is_closed").asBoolean();
 
                 // External links:
                 String imageUrl = root.path(i).path("image_url").asText();
@@ -99,7 +103,10 @@ public class YelpService {
                         country,
                         zipcode,
                         imageUrl,
-                        menuUrl);
+                        menuUrl,
+                        openHours,
+                        closingHours,
+                        isClosed);
 
                 restaurants.add(restaurant);
             }
@@ -133,15 +140,19 @@ public class YelpService {
 
         try {
             jsonNode = objectMapper.readTree(response.getBody());
-            JsonNode root = jsonNode.path("hours");
+            JsonNode root = jsonNode;
+
+            System.out.println(root.asText());
 
             // START HERE. Continue digging down to get the hours.
-
+            for (int i = 0; i < root.size(); i++){
+                openHours.add(root.path(i).path("open").asText());
+            }
         } catch (JsonProcessingException e) {
             System.out.println("[Yelp Service] Problem retrieving data.");
         }
 
-        return new ArrayList<>();
+        return openHours;
     }
 
     public List<String> getCloseHours(String businessId){
