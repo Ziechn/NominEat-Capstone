@@ -98,6 +98,12 @@ public class YelpService {
                 String imageUrl = root.path(i).path("image_url").asText();
                 String menuUrl = root.path(i).path("attributes").path("menu_url").asText();
 
+                // Transactions:
+                List<String> transactions = new ArrayList<>();
+                for (int a = 0; a < root.path(i).path("transactions").size(); a++){
+                    transactions.add(root.path(i).path("transactions").path(a).asText());
+                }
+
                 Restaurant restaurant = new Restaurant(
                         id,
                         name,
@@ -114,7 +120,8 @@ public class YelpService {
                         menuUrl,
                         hours,
                         rating,
-                        coordinates);
+                        coordinates,
+                        transactions);
 
                 setIsOpenNow(restaurant, id);
 

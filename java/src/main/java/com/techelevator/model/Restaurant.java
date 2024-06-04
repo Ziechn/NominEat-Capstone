@@ -22,13 +22,16 @@ public class Restaurant {
     private double rating;
     private Coordinates coordinates;
 
+    private List<String> transactions;
+
     public Restaurant(String restaurantId, String restaurantName,
                       String phoneNumber, List<String> categories,
                       String address1, String address2, String address3,
                       String city, String state, String country,
                       String zipcode, String imageUrl,
                       String menuUrl, List<Open> hours,
-                      double rating, Coordinates coordinates){
+                      double rating, Coordinates coordinates,
+                      List<String> transactions){
         this.id = restaurantId;
         this.name = restaurantName;
         this.phoneNumber = phoneNumber;
@@ -45,6 +48,7 @@ public class Restaurant {
         this.hours = hours;
         this.rating = rating;
         this.coordinates = coordinates;
+        this.transactions = transactions;
     }
 
     public String getId(){
@@ -113,6 +117,10 @@ public class Restaurant {
 
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    public List<String> getTransactions(){
+        return transactions;
     }
 
     public void SetIsOpenNow(boolean isOpenNow){
