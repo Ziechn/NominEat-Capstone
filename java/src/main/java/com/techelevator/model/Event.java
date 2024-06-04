@@ -1,5 +1,6 @@
 package com.techelevator.model;
-import java.util.List;
+import java.sql.Timestamp;
+
 
 public class Event {
 
@@ -9,13 +10,32 @@ public class Event {
 
     private int organizerId;
 
+    private String location;
+
+    private String eventLink;
+
+    private Timestamp decisionDate;
 
 
-    public Event (int eventId, String eventName, int organizerId) {
+
+
+    public Event() {
+    }
+
+
+
+    public Event(int eventId, String eventName, int organizerId, String location,
+                 String eventLink, Timestamp decisionDate) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.organizerId = organizerId;
+        this.location = location;
+        this.eventLink = eventLink;
+        this.decisionDate = decisionDate;
+
     }
+
+
 
     public int getEventId() {
         return eventId;
@@ -41,4 +61,27 @@ public class Event {
         this.organizerId = organizerId;
     }
 
+    public String getLocation(){
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getEventLink () {
+        return eventLink;
+    }
+
+    public void setEventLink(String eventLink) {
+        this.eventLink = eventLink;
+    }
+
+    public Timestamp getDecisionDate () {
+        return  decisionDate;
+    }
+
+    public void setDecisionDate(Timestamp decisionDate) {
+        this.decisionDate = decisionDate;
+    }
 }

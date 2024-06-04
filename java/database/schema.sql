@@ -17,6 +17,9 @@ CREATE TABLE event (
    event_id SERIAL PRIMARY KEY,
    organizer_id INT NOT NULL,
    event_name VARCHAR (50) NOT NULL,
+   location VARCHAR (50) NOT NULL,
+   event_link VARCHAR (50) NOT NULL UNIQUE,
+   decision_date TIMESTAMP,
    FOREIGN KEY (organizer_id) REFERENCES users (user_id)
 );
 
