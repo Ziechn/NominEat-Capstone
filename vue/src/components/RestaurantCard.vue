@@ -1,7 +1,7 @@
 
 <!-- Goal is to split the card into two divs - one for each side -Lines -->
 <template> 
-<div class="restaurant-card-wrapper" :class="wrapperClasses" @click="enlargeCard"></div>
+<!-- <div class="restaurant-card-wrapper" :class="wrapperClasses" @click="enlargeCard"> -->
     <div class="restaurant-card" :class="cardClasses" @click.stop="flipCard">
 
         <div class="card-front">
@@ -12,14 +12,19 @@
             <p>{{ restaurant.rating }}</p>    
         </div>
 
-            <div class="card-back"></div>
+            <div class="card-back">
             <p>{{ restaurant.name }}</p>
             <p>{{ restaurant.price }}</p>
-            <!-- <p>{{ restaurant.location }}</p> -->
+            <p>{{ restaurant.location.address1 }}</p>
           
-            <!-- open: restaurant.isOpenNow, closed: !restaurant.isOpenNow -->
-            <RestaurantDetails v-bind:curRestaurant="restaurant"/>
+          <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
+            {{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}
+        </p>"
+        <a :href="restaurant.menuUrl" target="_blank"> View Menu</a>
     </div>
+
+</div>
+<!-- </div> -->
 </template>
 
 <script>
