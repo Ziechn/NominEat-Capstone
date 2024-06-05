@@ -1,5 +1,6 @@
 <template>
-  <div id="capstone-app">
+  <!--  app or capstone app -->
+  <div id="app">
     <div id="nav">
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
@@ -7,3 +8,13 @@
     <router-view />
   </div>
 </template>
+
+<script>
+export default{
+  name: 'App',
+};
+</script>
+
+
+<style>
+</style>

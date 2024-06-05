@@ -1,8 +1,9 @@
-import { createRouter as createRouter, createWebHistory } from 'vue-router'
-import { useStore } from 'vuex'
+import { createRouter as createRouter, createWebHistory } from 'vue-router';
+import { useStore } from 'vuex';
 
 // Import components
-import HomeView from '../views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
+import SearchRestaurants from '@/components/SearchRestaurants.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
@@ -24,6 +25,11 @@ const routes = [
       //temporarily set to false
       requiresAuth: false
     }
+  },
+  {
+    path: '/search',
+    name: 'SearchRestaurants',
+    component: SearchRestaurants,
   },
   {
     path: "/login",

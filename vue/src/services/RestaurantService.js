@@ -8,4 +8,4 @@ export default {
     list(zipCode, limit){
         return http.get(`/search?zipcode=${zipCode}&limit=${limit}`)
     }
-}
+};
