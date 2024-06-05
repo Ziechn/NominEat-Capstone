@@ -17,14 +17,13 @@
     </div>
         <div class="card-back">
             <div class="details">
-                <h2>{{  restaurant.name }}</h2>
-                <p>{{ restaurant.price }}</p>
-              <p>{{ restaurant.location.address1 }}</p> 
-          
-          <!-- <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }"> 
-
+                <h2 class="restaurant-name">{{  restaurant.name }}</h2>
+                <p class="restaurant-price">{{ restaurant.price }}</p>
+              <p class="restaurant-address">{{ restaurant.address1 }}</p> 
+              
+          <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
             {{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}
-        </p>  -->
+        </p>
         <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
  </div>
 </div>

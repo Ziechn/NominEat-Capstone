@@ -4,6 +4,7 @@ import axios from 'axios';
 import createPersistedState from 'vuex-persistedstate';
 import RestaurantService from '../services/RestaurantService';
 
+<<<<<<< HEAD
 //backup data
 const backupData = [
         {
@@ -57,11 +58,64 @@ const backupData = [
         
 
 ];
+=======
+//initial backup data (comment in and out dont delete)
+const backupData = [
+  {
+    id: 1,
+    name: 'East Village Pizza',
+    imageUrl: 'https://via.placeholder.com/250',
+    catagories: [{ title: 'Pizza' }],
+    category: 'Pizza',
+    rating: 8,
+    price: '$$',
+    address1: '1234 Pizza St, New York, NY',
+    isOpenNow: true,
+    menuUrl: 'http://www.eastvillagepizza.com/menu',
+    hours: '6AM - 9PM',
+    status: 'Open',
+    zipcode: 12345
+  },
+  {
+    id: 2,
+    name: 'Sushi Place',
+    imageUrl: 'https://via.placeholder.com/250',
+    catagories: [{ title: 'Sushi' }],
+    category: 'Sushi',
+    rating: 9,
+    price: '$$$',
+    address1: '678 Sushi Place, New York, NY',
+    isOpenNow: true,
+    menuUrl: 'http://www.sushiplace.com/menu',
+    hours: '6AM - 9PM',
+    status: 'Open',
+    zipcode: 12345
+  },
+  {
+    id: 3,
+    name: 'Burger House',
+    imageUrl: 'https://via.placeholder.com/250',
+    catagories: [{ title: 'Burgers' }],
+    category: 'Burgers',
+    rating: 7,
+    price: '$$',
+    address1: '1234 Burger Blvd, New York, NY',
+    isOpenNow: true,
+    menuUrl: 'http://www.burgerhouse.com/menu',
+    hours: '6AM - 9PM',
+    status: 'Open',
+    zipcode: 12345
+  }
+
+];
+
+>>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
 const store = createStore({
   state: {
     zipCode: '',
     limit: 10,
     restaurants: [],
+    //restaurants: backupData,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -95,16 +149,30 @@ const store = createStore({
       state.user = {};
       axios.defaults.headers.common = {};
     },
+<<<<<<< HEAD
 
+=======
+    FILTER_BY_CATEGORY(state, category) {
+      state.filteredRestaurants = state.restaurants.filter(restaurant => {
+        restaurant.catagories = category;
+      });
+
+    }
+>>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
   },
   actions: {
     async fetchRestaurants({ commit }, { zipCode, limit }) {
       commit('SET_LOADING', true);
       try {
         const response = await RestaurantService.list(zipCode, limit);
+<<<<<<< HEAD
         //fake api call here
         // const response = { data: backupData };
         commit('SET_RESTAURANTS', response.data);
+=======
+        //const response = { data: createStore };
+        commit('SET_RESTAURANTS', response);
+>>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
       } catch (error) {
         console.error('Error fetching restaurants: ', error);
         commit('SET_RESTAURANTS', []);
@@ -117,3 +185,9 @@ const store = createStore({
   plugins: [createPersistedState(),]
 });
 export default store;
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
