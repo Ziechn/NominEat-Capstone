@@ -1,6 +1,6 @@
-<!-- <template>
+<template>
     <div class="resturant-list">
-        <h2>restaurants Near You</h2>
+        <h2>Restaurants Near You</h2>
         <form class="search-form"
             @submit.prevent="searchByCategory">
             <input placeholder="Enter Category" type="text" v-model="category" />
@@ -16,4 +16,4 @@
 
 
     </div>
-</template> -->
+</template>
