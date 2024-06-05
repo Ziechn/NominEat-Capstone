@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping (path = "/events")
@@ -52,8 +53,21 @@ public class EventController {
         }
         event.setOrganizerId(organizer.getId());
 
+        if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
+            event.setEventLink(generateUniqueEventLink());
+        }
 
         return eventDao.createEvent(event);
     }
+
+    private String generateUniqueEventLink() {
+        String url = "http://localhost:9000/event/";
+        String uniqueId = UUID.randomUUID().toString();
+        return url + uniqueId;
+
+    }
 }
+
+
+
 
