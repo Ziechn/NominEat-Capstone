@@ -5,9 +5,10 @@ import { useStore } from 'vuex';
 import HomeView from '@/views/HomeView.vue';
 // import SearchRestaurants from '@/components/SearchRestaurants.vue';
 import LoginView from '../views/LoginView.vue';
-import EnterZip from '@/views/EnterZip.vue';
-import RestaurantList from '@views/RestaurantList';
-import LogoutView from '../views/LogoutView.vue';
+// import EnterZip from '@/views/EnterZip.vue';
+import SearchRestaurants from '@/views/SearchRestaurants.vue';
+// import RestaurantList from '@views/RestaurantList.vue';
+// import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 
 /**
@@ -28,11 +29,11 @@ const routes = [
       requiresAuth: false
     }
   },
-  // {
-  //   path: '/search',
-  //   name: 'SearchRestaurants',
-  //   component: SearchRestaurants,
-  // },
+  {
+    path: '/search',
+    name: 'SearchRestaurants',
+    component: SearchRestaurants,
+  },
   {
     path: '/login',
     name: 'login',
