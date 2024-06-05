@@ -3,8 +3,10 @@ import { useStore } from 'vuex';
 
 // Import components
 import HomeView from '@/views/HomeView.vue';
-import SearchRestaurants from '@/components/SearchRestaurants.vue';
+// import SearchRestaurants from '@/components/SearchRestaurants.vue';
 import LoginView from '../views/LoginView.vue';
+import EnterZip from '@/views/EnterZip.vue';
+import RestaurantList from '@views/RestaurantList';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 
@@ -26,30 +28,38 @@ const routes = [
       requiresAuth: false
     }
   },
+  // {
+  //   path: '/search',
+  //   name: 'SearchRestaurants',
+  //   component: SearchRestaurants,
+  // },
   {
-    path: '/search',
-    name: 'SearchRestaurants',
-    component: SearchRestaurants,
-  },
-  {
-    path: "/login",
-    name: "login",
+    path: '/login',
+    name: 'login',
     component: LoginView,
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/logout",
-    name: "logout",
-    component: LogoutView,
+    path: '/enter-zip',
+    name: 'EnterZip',
+    component: EnterZip,
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/register",
-    name: "register",
+    path: '/restaurants',
+    name: 'RestaurantList',
+    component: RestaurantList,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
     component: RegisterView,
     meta: {
       requiresAuth: false
