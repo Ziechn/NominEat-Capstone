@@ -1,8 +1,12 @@
 <template>
   <div class="home">
     <h1>NominEat</h1>
-    <p>You are authenticated if you see this.</p>
-    <router-link to="/search">Click to search for restaurants</router-link>
+    <p>Welcome! PLease enter your ZIP to find restaurants near you.</p>
+    <form @submit.prevent="goToSearch">
+      <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
+      <button type="submit">Submit</button>
+    </form>
+    <!-- <router-link to="/search">Click to search for restaurants</router-link> -->
   <!-- <SearchRestaurants/>  -->
 
   </div>
@@ -14,7 +18,20 @@
 
 
 export default {
-  name: 'home',
+  data(){
+    return {
+      zipCode: '',
+    };
+  },
+  // name: 'home',
+  methods: {
+    goToSearch(){
+      if(this.zipCode) {
+        this.$store.commit('SET_ZIP_CODE', this.zipCode);
+        this.$router.push({ name: 'SearchRestaurants' });
+      }
+    },
+  },
 };
 //     components: {
 //     SearchRestaurants

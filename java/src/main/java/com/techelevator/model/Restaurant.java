@@ -29,7 +29,7 @@ public class Restaurant {
                       String address1, String address2, String address3,
                       String city, String state, String country,
                       String zipcode, String imageUrl,
-                      String menuUrl, List<Open> hours,
+                      String menuUrl,
                       double rating, Coordinates coordinates,
                       List<String> transactions){
         this.id = restaurantId;
@@ -45,7 +45,6 @@ public class Restaurant {
         this.zipcode = zipcode;
         this.imageUrl = imageUrl;
         this.menuUrl = menuUrl;
-        this.hours = hours;
         this.rating = rating;
         this.coordinates = coordinates;
         this.transactions = transactions;
@@ -121,6 +120,10 @@ public class Restaurant {
 
     public List<String> getTransactions(){
         return transactions;
+    }
+
+    public void setHours(List<Open> hours) {
+        this.hours = hours;
     }
 
     public void SetIsOpenNow(boolean isOpenNow){

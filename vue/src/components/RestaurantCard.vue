@@ -1,7 +1,7 @@
 
 <!-- Goal is to split the card into two divs - one for each side -Lines -->
 <template> 
-<div class="restaurant-card" @click="flipCard" @dblclick="enlargeCard">
+<div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" @click="flipCard" @dblclick="enlargeCard">
     <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isEnlarged }">
 
         <div class="card-front">
@@ -17,13 +17,13 @@
     </div>
         <div class="card-back">
             <div class="details">
-                <h2>{{  restaurant.name }}</h2>
-                <p>{{ restaurant.price }}</p>
-              <p>{{ restaurant.address1 }}</p> 
+                <h2 class="restaurant-name">{{  restaurant.name }}</h2>
+                <p class="restaurant-price">{{ restaurant.price }}</p>
+              <p class="restaurant-address">{{ restaurant.address1 }}</p> 
               
-          <!-- <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
+          <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
             {{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}
-        </p> -->
+        </p>
         <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
  </div>
 </div>
@@ -74,20 +74,22 @@ methods: {
         transition: transform 0.3s ease-in-out;
     } */
     .restaurant-card {
+        perspective: 1000px;
         border: 1px solid #ccc;
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         transition: transform 0.2s;
         width: 250px;
-        height: 400px;
+        height: 300px;
         margin: 20px;
+        cursor: pointer;
     }
 
     .card-inner {
         width: 100%;
         height: 100%;
-        transition: transform 0.6s;
+        transition: transform 0., transform 0.3s;
         transform-style: preserve-3d;
         position: relative;
     }
@@ -121,12 +123,27 @@ methods: {
         left: 0;
         width: 100%;
         height: 100%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0,1);
     }
 
     .card-front {
+        background-color: #fff;
         display: flex;
         flex-direction: column;
     }
+    .card-back {
+        background-color: white;
+        transform: rotateY(180deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 215x;
+    }
+
 
     .restaurant-image {
         width: 100%;
@@ -135,7 +152,7 @@ methods: {
     }
 
     .restaurant-info {
-        padding: 10px;
+        padding: 15px;
         text-align: center;
     }
 
@@ -153,16 +170,7 @@ methods: {
         color: var(--text-200);
     }
 
-    .card-back {
-        background-color: white;
-        transform: rotateY(180deg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 20px;
-    }
-
+  
     .details h2 {
         margin-bottom: 10px;
         color: var(--text-100);
@@ -208,6 +216,16 @@ methods: {
     .blur-background {
         filter: blur(5px);
         pointer-events: none;
+    }
+    
+    a {
+        color: var(--primary-100);
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
     }
    
 </style>
