@@ -1,20 +1,12 @@
 <template>
     <div class="search-restaurants">
-        <h2>Restaurants Near You</h2>
-        <!-- <form class="search-form" @submit.prevent="searchByZipCode"> -->\
 
-            <div>
-                <p>Showing Results for ZIP code: {{  zipCode  }}</p>
-            </div>
-
-            <div v-if="restaurants.length">
-            <input type="text" v-model="category" placeholder="Filter by Category" @input="filterByCategory" />
-            </div>
-
-            <!-- <input placeholder="Enter ZIP Code" type="text" v-model="zipCode" @input="updateZipCode"/>
-            <input placeholder="Enter # to Limit Results" type="number" v-model="limit" @input="updateLimit"/>
+        <h2>Search</h2>
+        <form class="search-form" @submit.prevent="searchByZipCode">
+            <input placeholder="Enter ZIP Code" type="text" v-model="zipCode" @input="updateZipCode"/>
+            <!-- <input placeholder="Enter # to Limit Results" type="number" v-model="limit" @input="updateLimit"/> -->
             <button type="submit">Search</button>
-        </form> -->
+        </form> 
 
         <div v-if="loading" class="loading">Loading...please wait...</div>
         
@@ -64,33 +56,23 @@ export default{
         ...mapMutations(['FILTER_BY_CATEGORY']),
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
-        }
+        },
        
-        // searchByZipCode() {
-        //     this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
-        // },
-        // updateZipCode(event) {
-        //     this.SET_ZIP_CODE(event.target.value);
-        // },
-        // updateLimit(event) {
-        //     this.SET_LIMIT(event.target.value);
-        // },
-        // async searchByZipCode() {
-        //     this.loading = true;
-        //     try {
-        //         const response = await RestaurantService.list(this.zipCode, this.limit);
-        //         this.restaurants = response.data;
-        //         this.loading = false;
-        //     } catch (error) {
-        //         console.error('Error fetching restaurants:', error);
-        //         this.loading = false;
-        //     } 
-        // }
+        searchByZipCode() {
+            this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
+        },
+        updateZipCode(event) {
+            this.SET_ZIP_CODE(event.target.value);
+        },
+        updateLimit(event) {
+            this.SET_LIMIT(event.target.value);
+        }
     },
    
     created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: 10});
-    }};
+        this.searchByZipCode();
+    }
+};
 </script>
 
 <style scoped>

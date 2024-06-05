@@ -9,13 +9,18 @@
         </form>
         <div v-if="error" class="error">{{ error }}</div>
     </div>
+    <div>
+        <RestaurantList/>
+    </div>
 </template>
 
 <script>
+import RestaurantList from './RestaurantList.vue';
+
 export default {
     data() {
         return {
-            zipCode:'',
+            zipCode: '',
             //error: ''
         };
     },
@@ -25,9 +30,10 @@ export default {
                 this.$store.commit('SET_ZIP_CODE', this.zipCode);
                 this.$router.push({ name: 'RestaurantList' });
             } //else {
-                //this.error = 'Please enter a valid ZIP Code.';
+            //this.error = 'Please enter a valid ZIP Code.';
             //}
         }
-    }
+    },
+    components: { RestaurantList }
 };
 </script>
