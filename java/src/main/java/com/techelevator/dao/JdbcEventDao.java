@@ -37,7 +37,6 @@ public class JdbcEventDao implements EventDao {
         return events;
     }
 
-
     @Override
     public Event getEventById(int eventId) {
         Event event = null;
@@ -56,7 +55,6 @@ public class JdbcEventDao implements EventDao {
 
     }
 
-
     @Override
     public Event createEvent(Event event) {
         Event newEvent = null;
@@ -67,7 +65,8 @@ public class JdbcEventDao implements EventDao {
                 "RETURNING event_id;";
         try {
             int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(),
-                    event.getEventName(), event.getLocation(),event.getEventLink(), event.getDecisionDate());
+                    event.getEventName(), event.getLocation(),event.getEventLink(),
+                    event.getDecisionDate());
 
             newEvent = event;
             newEvent.setEventId(eventId);
@@ -83,6 +82,9 @@ public class JdbcEventDao implements EventDao {
         event.setEventId(results.getInt("event_id"));
         event.setEventName(results.getString("event_name"));
         event.setOrganizerId(results.getInt("organizer_id"));
+        event.setLocation(results.getString("location"));
+        event.setEventLink(results.getString("event_link"));
+        event.setDecisionDate(results.getTimestamp("decision_date"));
         return event;
 
 

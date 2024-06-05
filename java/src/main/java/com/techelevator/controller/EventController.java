@@ -1,0 +1,59 @@
+package com.techelevator.controller;
+
+
+import com.techelevator.dao.EventDao;
+import com.techelevator.dao.UserDao;
+import com.techelevator.model.Event;
+import com.techelevator.model.User;
+import com.techelevator.service.YelpService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
+@RestController
+@RequestMapping (path = "/events")
+@CrossOrigin
+public class EventController {
+
+    @Autowired
+    YelpService yelpService;
+
+    @Autowired
+    private EventDao eventDao;
+
+    @Autowired
+    private UserDao userDao;
+
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<Event> getAllEvents() {
+        return eventDao.getAllEvents();
+    }
+
+    @RequestMapping(path = "/{eventId}", method = RequestMethod.GET)
+    public Event getEventById(@PathVariable int eventId) {
+        return eventDao.getEventById(eventId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/create")
+    public Event createEvent(@RequestBody Event event, @RequestParam String username) {
+        if (event.getEventName() == null || event.getEventName().isEmpty() ||
+                event.getLocation() == null || event.getLocation().isEmpty() ||
+                event.getDecisionDate() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, location and date/time.");
+        }
+        User organizer = userDao.getUserByUsername(username);
+        if (organizer == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
+        }
+        event.setOrganizerId(organizer.getId());
+
+
+        return eventDao.createEvent(event);
+    }
+}
+
