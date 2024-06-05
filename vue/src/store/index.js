@@ -1,77 +1,109 @@
-import { createStore as _createStore } from 'vuex';
+// import { createStore as _createStore } from 'vuex';
+import { createStore } from 'vuex';
 import axios from 'axios';
+import createPersistedState from 'vuex-persistedstate';
 
-export function createStore(currentToken, currentUser) {
-  let store = _createStore({
-    state: {
-      restaurants: [
+
+
+//backup data
+const backupData = [
         {
           id: 1,
           name: 'Olive Garden',
+          imageUrl: 'https://via.placeholder.com/250',
+          categories: [{ title: 'Italian' }],
+          rating: 4,
           category: 'Italian',
           price: '$$',
-          address: '1234 Mertle St',
+          location: {
+          address1: '1234 Mertle St',
+          },
           hours: '6AM - 9PM',
-          status: 'Open'
-        },
-        {
-          id: 2,
-          name: 'McDonalds',
-          category: 'Fast-Food',
-          price: '$',
-          address: '4545 Washington Ave',
-          hours: '24/7',
-          status: 'Open'
-        },
-        { 
-          id: 3,
-          name: 'Perkins Restaurant & Bakery',
-          category: 'Diner',
-          price: '$$',
-          address: '582 Mainstreet',
-          hours: '6AM - 12AM',
-          status: 'Closed'
-        },
-        {
-          id: 4, 
-          name: 'Jets Pizza',
-          category: 'Pizza',
-          price: '$$',
-          address: '415 12th Ave',
-          hours: '9AM - 8PM',
-          status: 'Open'
-        },
-        {
-          id: 5,
-          name: 'Casa Deli',
-          category: 'Mexican',
-          price: '$$$$',
-          address: '978 Abercrombie Lane',
-          hours: '8AM - 11PM',
-          status: 'Closed'
+          isOpenNow: true,
+          menuUrl: 'https://olivegarden.com/menu'
         }
-      ],
-      token: currentToken || '',
-      user: currentUser || {}
+        // ,
+        // {
+        //   id: 2,
+        //   name: 'McDonalds',
+        //   category: 'Fast-Food',
+        //   price: '$',
+        //   address: '4545 Washington Ave',
+        //   hours: '24/7',
+        //   status: 'Open'
+        // },
+        // { 
+        //   id: 3,
+        //   name: 'Perkins Restaurant & Bakery',
+        //   category: 'Diner',
+        //   price: '$$',
+        //   address: '582 Mainstreet',
+        //   hours: '6AM - 12AM',
+        //   status: 'Closed'
+        // },
+        // {
+        //   id: 4, 
+        //   name: 'Jets Pizza',
+        //   category: 'Pizza',
+        //   price: '$$',
+        //   address: '415 12th Ave',
+        //   hours: '9AM - 8PM',
+        //   status: 'Open'
+        // },
+        // {
+        //   id: 5,
+        //   name: 'Casa Deli',
+        //   category: 'Mexican',
+        //   price: '$$$$',
+        //   address: '978 Abercrombie Lane',
+        //   hours: '8AM - 11PM',
+        //   status: 'Closed'
+        // }
+  
+]
+const store = createStore({
+  state: {
+    zipCode: '',
+    limit: 10,
+    restaurants: [],
+    loading: false,
+  },
+  mutations: {
+    SET_ZIP_CODE(state, zipCode) {
+      state.zipCode = zipCode;
     },
-    mutations: {
-      SET_AUTH_TOKEN(state, token) {
-        state.token = token;
-        localStorage.setItem('token', token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      },
-      SET_USER(state, user) {
-        state.user = user;
-        localStorage.setItem('user', JSON.stringify(user));
-      },
-      LOGOUT(state) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        state.token = '';
-        state.user = {};
-        axios.defaults.headers.common = {};
+    SET_LIMIT(state, limit) {
+      state.limit = limit;
+    },
+    SET_RESTAURANTS(state, restaurants) {
+      state.restaurants = restaurants;
+    },
+    SET_LOADING(state, loading) {
+      state.loading = loading;
+    },
+  },
+  actions: {
+    async fetchRestaurants({ commit }, { zipCode, limit }) {
+      commit('SET_LOADING', true);
+      try {
+        const response = await axios.get(`http://localhost:9000/search`, {
+          params: {
+            zipcode: zipCode,
+            limit: limit
+          }
+        });
+      
+        commit('SET_RESTAURANTS', response.data);
+      } catch (error) {
+        console.error('Error fetching restaurants: ', error);
+        commit('SET_RESTAURANTS',backupData);
+      } finally {
+        commit('SET_LOADING', false);
       }
     },
-  });
-  return store;
-}
+  },
+  
+  plugins: [createPersistedState(),]
+});
+export default store;
+
