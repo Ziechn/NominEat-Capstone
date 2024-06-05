@@ -32,14 +32,8 @@ public class YelpService {
     private final String SORT_BY_PARAM = "sort_by";
     private final String LIMIT_PARAM = "limit";
 
-    public List<Restaurant> getSearchResults(String queryZipcode, int limit){
-        String url = this.searchUrl + "location=" + queryZipcode;
-
-        if (limit > 0) {
-            url += "&limit=" + limit;
-        } else {
-            url += "&limit=10";
-        }
+    public List<Restaurant> getSearchResults(String queryZipcode, int limit, String term){
+        String url = this.searchUrl + "location=" + queryZipcode + "&limit=" + limit + "&term=" + term;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(apiToken);
