@@ -1,4 +1,4 @@
-// import { createStore as _createStore } from 'vuex';
+import { createStore as _createStore } from 'vuex';
 import { createStore } from 'vuex';
 import axios from 'axios';
 import createPersistedState from 'vuex-persistedstate';
@@ -64,8 +64,8 @@ const store = createStore({
     limit: 10,
     restaurants: backupData,
     loading: false,
-    // token: localStorage.getItem('token') || '',
-    // user: JSON.parse(localStorage.getItem('user')) || {}
+    token: localStorage.getItem('token') || '',
+    user: JSON.parse(localStorage.getItem('user')) || {}
   },
   mutations: {
     SET_ZIP_CODE(state, zipCode) {
@@ -102,14 +102,14 @@ const store = createStore({
     async fetchRestaurants({ commit }, { zipCode, limit }) {
       commit('SET_LOADING', true);
       try {
-        // const response = await axios.get(`http://localhost:9000/search`, {
-        //   params: {
-        //     zipcode: zipCode,
-        //     limit: limit
-        //   }
-        // });
+        const response = await axios.get(`http://localhost:9000/search`, {
+          params: {
+            zipcode: zipCode,
+            limit: limit
+          }
+        });
         //fake api call here
-        const response = { data: backupData };
+        // const response = { data: backupData };
         commit('SET_RESTAURANTS', response.data);
 
       } catch (error) {

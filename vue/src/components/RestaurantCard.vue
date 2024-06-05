@@ -1,7 +1,7 @@
 
 <!-- Goal is to split the card into two divs - one for each side -Lines -->
 <template> 
-<div class="restaurant-card" @mouseover="flipCard" @click="enlargeCard">
+<div class="restaurant-card" @click="flipCard" @dblclick="enlargeCard">
     <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isEnlarged }">
 
         <div class="card-front">
@@ -96,7 +96,15 @@ methods: {
         transform: rotateY(180deg);
     }
 
-    
+    /* .card-inner.enlarged {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transition: translate(-50%, -50%) scale(1.5);
+        z-index: 1000;
+        background-color: white;
+        box-shadow: 0 4px 8px rgb(0,0,0,0.3);
+    } */
 
     .restaurant-card:hover {
         transform: scale(1.05);
