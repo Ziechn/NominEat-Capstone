@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             zipCode:'',
-            error:''
+            //error: ''
         };
     },
     methods: {
@@ -24,9 +24,9 @@ export default {
             if (this.zipCode) {
                 this.$store.commit('SET_ZIP_CODE', this.zipCode);
                 this.$router.push({ name: 'RestaurantList' });
-            }else {
-                this.error = 'Please enter a valid ZIP Code.';
-            }
+            } //else {
+                //this.error = 'Please enter a valid ZIP Code.';
+            //}
         }
     }
 };

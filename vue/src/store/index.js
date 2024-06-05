@@ -18,7 +18,8 @@ const backupData = [
     isOpenNow: true,
     menuUrl: 'http://www.eastvillagepizza.com/menu',
     hours: '6AM - 9PM',
-    status: 'Open'
+    status: 'Open',
+    zipcode: 12345
   },
   {
     id: 2,
@@ -32,7 +33,8 @@ const backupData = [
     isOpenNow: true,
     menuUrl: 'http://www.sushiplace.com/menu',
     hours: '6AM - 9PM',
-    status: 'Open'
+    status: 'Open',
+    zipcode: 12345
   },
   {
     id: 3,
@@ -46,7 +48,8 @@ const backupData = [
     isOpenNow: true,
     menuUrl: 'http://www.burgerhouse.com/menu',
     hours: '6AM - 9PM',
-    status: 'Open'
+    status: 'Open',
+    zipcode: 12345
   }
 
 ];
@@ -55,8 +58,8 @@ const store = createStore({
   state: {
     zipCode: '',
     limit: 10,
-    // restaurants: [],
-    restaurants: backupData,
+    restaurants: [],
+    //restaurants: backupData,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -90,14 +93,20 @@ const store = createStore({
       state.user = {};
       axios.defaults.headers.common = {};
     },
+    FILTER_BY_CATEGORY(state, category) {
+      state.filteredRestaurants = state.restaurants.filter(restaurant => {
+        restaurant.catagories = category;
+      });
+
+    }
   },
   actions: {
     async fetchRestaurants({ commit }, { zipCode, limit }) {
       commit('SET_LOADING', true);
       try {
-        // const response = await RestaurantService.list(zipCode, limit);
-        const response = { data: createStore };
-        commit('SET_RESTAURANTS', response.data);
+        const response = await RestaurantService.list(zipCode, limit);
+        //const response = { data: createStore };
+        commit('SET_RESTAURANTS', response);
       } catch (error) {
         console.error('Error fetching restaurants: ', error);
         commit('SET_RESTAURANTS', []);

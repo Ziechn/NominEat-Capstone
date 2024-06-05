@@ -5,11 +5,12 @@ import { useStore } from 'vuex';
 import HomeView from '@/views/HomeView.vue';
 // import SearchRestaurants from '@/components/SearchRestaurants.vue';
 import LoginView from '../views/LoginView.vue';
-// import EnterZip from '@/views/EnterZip.vue';
+import EnterZip from '@/views/EnterZip.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
-// import RestaurantList from '@views/RestaurantList.vue';
+import RestaurantList from '@/views/RestaurantList.vue';
 // import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
