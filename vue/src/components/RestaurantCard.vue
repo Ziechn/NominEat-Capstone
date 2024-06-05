@@ -19,7 +19,7 @@
             <div class="details">
                 <h2>{{  restaurant.name }}</h2>
                 <p>{{ restaurant.price }}</p>
-              <p>{{ restaurant.location.address1 }}</p> 
+              <p>{{ restaurant.address1 }}</p> 
           
           <!-- <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
             {{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}
