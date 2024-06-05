@@ -1,21 +1,27 @@
 <template>
-        <div class="search-restaurants">
-            <h2>Search</h2>
-            <input type="text" v-model="searchText" placeholder="Enter zip" />
+    <div class="search-restaurants">
+        <h2>Search</h2>
+        <form class="search-form" @submit.prevent="searchByZipCode">
+            <input placeholder="Enter ZIP Code" type="text" v-model="zipCode"/>
+            <input placeholder="Enter # to Limit Results" type="number" v-model="limit"/>
+            <button type="submit">Search</button>
+        </form>
 
-            <button @click="searchRestaurants" class="search">Search</button>
-
-                <div v-if="loading" class="loading">Loading...please wait...</div>
-            <!-- loading and error stuff here -->
-            <div v-if="restaurants.length" class="restaurant-cards">
-                <RestaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" />
-            </div>
+        <div v-if="loading" class="loading">Loading...please wait...</div>
+        
+        <div v-if="!loading && restaurants.length" class="restaurant-cards">
+            <RestaurantCard v-for="restaurant in restaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"/>
         </div>
+
+        <div v-if="!loading && !restaurants.length">
+            No results found...
+        </div>
+    </div>
 </template>
 
 <script>
 import RestaurantCard from '../components/RestaurantCard.vue';
-//vuex mapstate stuff
+import RestaurantService from '../services/RestaurantService';
 
 
 export default{
@@ -24,23 +30,31 @@ export default{
     },
     data(){
         return {
-            text: '',
-            loading: false,
+            zipCode: '',
+            limit: 10,
+            restaurants: [],
+            loading: false
         };
-    },methods: {
-        async searchRestaurants() {
+    },
+    created() {
+        RestaurantService.list(this.zipCode).then(response => {
+            this.restaurants = response.data;
+        })
+    },
+    methods: {
+        async searchByZipCode() {
             this.loading = true;
             try {
-                this.$store.dispatch('retrieveRestaurants', this.searchText);
+                const response = await RestaurantService.list(this.zipCode, this.limit);
+                this.restaurants = response.data;
+                this.loading = false;
             } catch (error) {
-                this.error = 'Failed to load restaurants';
-            }
+                console.error('Error fetching restaurants:', error);
+                this.loading = false;
+            } 
         }
     }
-    }
-
-
-
+}
 </script>
 
 <style>

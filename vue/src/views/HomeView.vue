@@ -2,16 +2,18 @@
   <div class="home">
     <h1>Home</h1>
     <p>You are authenticated if you see this.</p>
-    <RestaurantCard/>
+  <SearchRestaurants/>
   </div>
 </template>
 
 <script>
-import RestaurantCard from '../components/RestaurantCard.vue';
+import SearchRestaurants from '../components/SearchRestaurants.vue';
+
+
 
 export default {
     components: {
-    RestaurantCard
+    SearchRestaurants
 }
 };
 </script>
