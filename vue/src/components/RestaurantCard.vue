@@ -73,9 +73,18 @@ methods: {
         transition: transform 0.3s ease-in-out;
     } */
     .restaurant-card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
         width: 250px;
         height: 400px;
         margin: 20px;
+    }
+
+    .restaurant-card:hover {
+        transform: scale(1.05);
     }
 
     .restaurant-card.flipped {
