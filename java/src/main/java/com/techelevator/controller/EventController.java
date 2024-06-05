@@ -44,9 +44,9 @@ public class EventController {
     @PostMapping(path = "/create")
     public Event createEvent(@RequestBody Event event, @RequestParam String username) {
         if (event.getEventName() == null || event.getEventName().isEmpty() ||
-                event.getLocation() == null || event.getLocation().isEmpty() ||
+                event.getZipcode() == null || event.getZipcode().isEmpty() ||
                 event.getDecisionDate() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, location and date/time.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
         }
         User organizer = userDao.getUserByUsername(username);
         if (organizer == null) {
@@ -77,7 +77,7 @@ public class EventController {
        if (event == null) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
        }
-       return yelpService.getSearchResults(event.getLocation(), limit);
+       return yelpService.getSearchResults(event.getZipcode(), limit);
     }
 }
 
