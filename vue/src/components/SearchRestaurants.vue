@@ -3,7 +3,7 @@
         <h2>Search</h2>
         <form class="search-form" @submit.prevent="searchByZipCode">
             <input placeholder="Enter ZIP Code" type="text" v-model="zipCode" @input="updateZipCode"/>
-            <input placeholder="Enter # to Limit Results" type="number" v-model="limit" @input="updateLimit"/>
+            <!-- <input placeholder="Enter # to Limit Results" type="number" v-model="limit" @input="updateLimit"/> -->
             <button type="submit">Search</button>
         </form>
 
@@ -28,16 +28,24 @@ export default{
     components: {
         RestaurantCard,
     },
-    // data() {
-    //     return {
-    //         searchText: '',
-    //         loading: false,
-    //         error: '',
-    //     };
-    // },
-    computed: {
-        ...mapState(['zipCode', 'limit', 'restaurants', 'loading']),
+    data() {
+        return {
+            zipCode: '',
+            limit: 10,
+        };
+        // return {
+        //     searchText: '',
+        //     loading: false,
+        //     error: '',
+        // };
     },
+    computed: {
+        ...mapState(['restaurants', 'loading']),
+    },
+    // computed: {
+    //     ...mapState(['zipCode', 'limit', 'restaurants', 'loading']),
+    // },
+
 
     methods: {
         ...mapMutations(['SET_ZIP_CODE', 'SET_LIMIT']),
@@ -64,6 +72,7 @@ export default{
         // }
     },
     created() {
+
         this.searchByZipCode();
     }
 };
