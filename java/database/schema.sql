@@ -1,9 +1,8 @@
+ROLLBACK;
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS event_attendees;
-DROP TABLE IF EXISTS restaurant_event;
+DROP TABLE IF EXISTS users, event, event_attendees, restaurant_event CASCADE;
+
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -18,7 +17,7 @@ CREATE TABLE event (
    organizer_id INT NOT NULL,
    event_name VARCHAR (50) NOT NULL,
    location VARCHAR (50) NOT NULL,
-   event_link VARCHAR (200) NOT NULL UNIQUE,
+   event_link VARCHAR(300) NOT NULL UNIQUE,
    decision_date TIMESTAMP,
    FOREIGN KEY (organizer_id) REFERENCES users (user_id)
 );
@@ -39,5 +38,6 @@ CREATE TABLE restaurant_event (
     PRIMARY KEY (event_id, restaurant_id),
     FOREIGN KEY (event_id) REFERENCES event(event_id)
 );
+
 
 COMMIT TRANSACTION;

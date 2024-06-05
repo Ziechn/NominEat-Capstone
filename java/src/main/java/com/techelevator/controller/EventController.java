@@ -4,6 +4,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.EventDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Event;
+import com.techelevator.model.Restaurant;
 import com.techelevator.model.User;
 import com.techelevator.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,18 +54,30 @@ public class EventController {
         }
         event.setOrganizerId(organizer.getId());
 
-        if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
-            event.setEventLink(generateUniqueEventLink());
+       if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
+           event.setEventLink(generateUniqueEventLink());
         }
 
         return eventDao.createEvent(event);
     }
 
     private String generateUniqueEventLink() {
-        String url = "http://localhost:9000/event/";
+       String url = "http://localhost:9000/event/";
         String uniqueId = UUID.randomUUID().toString();
         return url + uniqueId;
 
+    }
+
+
+
+    @RequestMapping(path = "/{eventId}/restaurants", method = RequestMethod.GET)
+    public List<Restaurant> getEventRestaurants (@PathVariable int eventId, @RequestParam (defaultValue = "10") int limit) {
+       Event event = eventDao.getEventById(eventId);
+
+       if (event == null) {
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
+       }
+       return yelpService.getSearchResults(event.getLocation(), limit);
     }
 }
 
