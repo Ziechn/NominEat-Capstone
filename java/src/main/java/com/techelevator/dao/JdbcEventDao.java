@@ -25,7 +25,7 @@ public class JdbcEventDao implements EventDao {
         Event event = null;
 
         String sql = "SELECT event_id, organizer_id, event_name, " +
-                "location, event_link, decision_date\n" +
+                "zipcode, event_link, decision_date\n" +
                 "FROM event;";
 
 
@@ -42,7 +42,7 @@ public class JdbcEventDao implements EventDao {
         Event event = null;
 
         String sql = "SELECT event_id, organizer_id, event_name, " +
-                "location, event_link, decision_date\n" +
+                "zipcode, event_link, decision_date\n" +
                 "FROM event\n" +
                 "WHERE event_id =?;";
 
@@ -60,12 +60,12 @@ public class JdbcEventDao implements EventDao {
         Event newEvent = null;
 
         String sql = "INSERT INTO event (organizer_id, event_name, " +
-                "location, event_link, decision_date)\n" +
+                "zipcode, event_link, decision_date)\n" +
                 "VALUES (?, ?, ?, ?, ?)\n" +
                 "RETURNING event_id;";
         try {
             int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(),
-                    event.getEventName(), event.getLocation(),event.getEventLink(),
+                    event.getEventName(), event.getZipcode(),event.getEventLink(),
                     event.getDecisionDate());
 
             newEvent = event;
@@ -82,7 +82,7 @@ public class JdbcEventDao implements EventDao {
         event.setEventId(results.getInt("event_id"));
         event.setEventName(results.getString("event_name"));
         event.setOrganizerId(results.getInt("organizer_id"));
-        event.setLocation(results.getString("location"));
+        event.setZipcode(results.getString("zipcode"));
         event.setEventLink(results.getString("event_link"));
         event.setDecisionDate(results.getTimestamp("decision_date"));
         return event;

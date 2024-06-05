@@ -66,7 +66,7 @@ public class Event {
     }
 
     public void setZipcode(String location) {
-        this.zipcode = location;
+        this.zipcode = zipcode;
     }
 
     public String getEventLink () {
