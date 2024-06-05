@@ -110,5 +110,10 @@ export default{
     flex-wrap: wrap;
     gap: 20px;
     margin-top: 20px;
+    justify-content: center;
+    }
+
+    .no-results {
+        color: var(--text-200);
     }
 </style>

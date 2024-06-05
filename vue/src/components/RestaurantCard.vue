@@ -1,8 +1,8 @@
 
 <!-- Goal is to split the card into two divs - one for each side -Lines -->
 <template> 
-<div class="restaurant-card-wrapper" @click="enlargeCard">
-    <div class="restaurant-card" :class="{ flipped: isFlipped }">
+<div class="restaurant-card" @mouseover="flipCard" @click="enlargeCard">
+    <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isEnlarged }">
 
         <div class="card-front">
             <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" /> 
@@ -11,6 +11,7 @@
             <p v-if="restaurant.categories && restaurant.categories.length"  class="restaurant-category">
                 {{ restaurant.categories[0].title }}
              </p>
+             <p class="restaurant-price">{{  restaurant.price }}</p>
             <p class="restaurant-rating">{{ restaurant.rating }}</p>    
         </div>
     </div>
@@ -20,9 +21,9 @@
                 <p>{{ restaurant.price }}</p>
               <p>{{ restaurant.location.address1 }}</p> 
           
-          <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
+          <!-- <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
             {{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}
-        </p>
+        </p> -->
         <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
  </div>
 </div>
@@ -82,6 +83,20 @@ methods: {
         height: 400px;
         margin: 20px;
     }
+
+    .card-inner {
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+    }
+
+    .card-inner.flipped {
+        transform: rotateY(180deg);
+    }
+
+    
 
     .restaurant-card:hover {
         transform: scale(1.05);
