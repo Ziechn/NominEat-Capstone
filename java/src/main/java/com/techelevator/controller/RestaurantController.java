@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public List<Restaurant> searchResults(@RequestParam String zipcode, @RequestParam int limit) {
-        return yelpService.getSearchResults(zipcode, limit);
+    public List<Restaurant> searchResults(@RequestParam (defaultValue = "45202") String zipcode, @RequestParam (defaultValue = "10") int limit, @RequestParam (defaultValue = "food") String term) {
+        return yelpService.getSearchResults(zipcode, limit, term);
     }
 }

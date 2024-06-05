@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -27,40 +28,38 @@ public class YelpService {
     @Value("${yelp.api.token}")
     private String apiToken;
 
-    private final String LOCATION_PARAM = "location=";
-    private final String RADIUS_PARAM = "radius=";
-    private final String SORT_BY_PARAM = "sort_by";
-    private final String LIMIT_PARAM = "limit";
-
-    public List<Restaurant> getSearchResults(String queryZipcode, int limit){
-        String url = this.searchUrl + "location=" + queryZipcode;
-
-        if (limit > 0) {
-            url += "&limit=" + limit;
-        } else {
-            url += "&limit=10";
-        }
-
+    private ResponseEntity<String> getResponse(String url){
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(apiToken);
 
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
 
+        ResponseEntity<String> response = null;
+        try {
+            response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    httpEntity,
+                    String.class
+            );
+        } catch (RestClientException e) {
+            System.out.println("Rest template error.");
+        }
+
+        return response;
+    }
+
+    public List<Restaurant> getSearchResults(String queryZipcode, int limit, String term){
+        String url = this.searchUrl + "location=" + queryZipcode + "&limit=" + limit + "&term=" + term;
+
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode;
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                httpEntity,
-                String.class
-        );
 
         List<Restaurant> restaurants = new ArrayList<>();
 
         try {
-            jsonNode = objectMapper.readTree(response.getBody());
+            jsonNode = objectMapper.readTree(getResponse(url).getBody());
             JsonNode root = jsonNode.path("businesses");
 
             for (int i = 0; i < root.size(); i++){
@@ -91,7 +90,6 @@ public class YelpService {
                 Coordinates coordinates = new Coordinates(latitude, longitude);
 
                 // Hours and open status need to be handled by going to the business id.
-                // List<String> openHours = getOpenHours(id);
                 List<Open> hours = getHours(id);
 
                 // External links:
@@ -137,26 +135,13 @@ public class YelpService {
     public List<Open> getHours(String businessId){
         String url = this.businessUrl + businessId;
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiToken);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-        RestTemplate restTemplate = new RestTemplate();
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode;
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                httpEntity,
-                String.class
-        );
 
         List<Open> hours = new ArrayList<>();
 
         try {
-            jsonNode = objectMapper.readTree(response.getBody());
+            jsonNode = objectMapper.readTree(getResponse(url).getBody());
             JsonNode root = jsonNode.path("hours");
 
             for (int i = 0; i < root.path(0).path("open").size(); i++){
@@ -166,7 +151,6 @@ public class YelpService {
                 int day = root.path(0).path("open").path(i).path("day").asInt();
                 hours.add(new Open(isOverNight,start,end,day));
             }
-
         } catch (JsonProcessingException e) {
             System.out.println("[Yelp Service] Problem retrieving data.");
         }
@@ -178,24 +162,11 @@ public class YelpService {
 
         String url = this.businessUrl + businessId;
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiToken);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-        RestTemplate restTemplate = new RestTemplate();
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode;
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                httpEntity,
-                String.class
-        );
-
         try {
-            jsonNode = objectMapper.readTree(response.getBody());
+            jsonNode = objectMapper.readTree(getResponse(url).getBody());
             JsonNode root = jsonNode.path("hours");
             boolean isOpenNow = root.path(0).path("is_open_now").asBoolean();
             restaurant.SetIsOpenNow(isOpenNow);
