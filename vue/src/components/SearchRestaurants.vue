@@ -1,6 +1,7 @@
 <template>
     <div class="search-restaurants">
         <h2>Search</h2>
+        {{ zipCode }}
         <form class="search-form" @submit.prevent="searchByZipCode">
             <input placeholder="Enter ZIP Code" type="text" v-model="zipCode" @input="updateZipCode"/>
             <!-- <input placeholder="Enter # to Limit Results" type="number" v-model="limit" @input="updateLimit"/> -->
@@ -72,7 +73,6 @@ export default{
         // }
     },
     created() {
-
         this.searchByZipCode();
     }
 };
