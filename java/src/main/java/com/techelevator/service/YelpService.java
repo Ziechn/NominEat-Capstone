@@ -89,9 +89,6 @@ public class YelpService {
                 double longitude = root.path(i).path("coordinates").path("longitude").asDouble();
                 Coordinates coordinates = new Coordinates(latitude, longitude);
 
-                // Hours and open status need to be handled by going to the business id.
-                List<Open> hours = getHours(id);
-
                 // External links:
                 String imageUrl = root.path(i).path("image_url").asText();
                 String menuUrl = root.path(i).path("attributes").path("menu_url").asText();
@@ -116,12 +113,12 @@ public class YelpService {
                         zipcode,
                         imageUrl,
                         menuUrl,
-                        hours,
                         rating,
                         coordinates,
                         transactions);
 
-                setIsOpenNow(restaurant, id);
+                // Hours and open status need to be handled by going to the business id.
+                setHoursAndIsOpen(restaurant, id);
 
                 restaurants.add(restaurant);
             }
@@ -132,7 +129,7 @@ public class YelpService {
         return restaurants;
     }
 
-    public List<Open> getHours(String businessId){
+    public void setHoursAndIsOpen(Restaurant restaurant, String businessId){
         String url = this.businessUrl + businessId;
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -151,25 +148,12 @@ public class YelpService {
                 int day = root.path(0).path("open").path(i).path("day").asInt();
                 hours.add(new Open(isOverNight,start,end,day));
             }
-        } catch (JsonProcessingException e) {
-            System.out.println("[Yelp Service] Problem retrieving data.");
-        }
 
-        return hours;
-    }
-
-    private void setIsOpenNow(Restaurant restaurant, String businessId){
-
-        String url = this.businessUrl + businessId;
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode;
-
-        try {
-            jsonNode = objectMapper.readTree(getResponse(url).getBody());
-            JsonNode root = jsonNode.path("hours");
             boolean isOpenNow = root.path(0).path("is_open_now").asBoolean();
+
+            restaurant.setHours(hours);
             restaurant.SetIsOpenNow(isOpenNow);
+
         } catch (JsonProcessingException e) {
             System.out.println("[Yelp Service] Problem retrieving data.");
         }
