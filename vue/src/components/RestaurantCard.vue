@@ -110,15 +110,16 @@ export default {
     height: 300px;
     margin: 20px;
     cursor: pointer;
-    transition: transform 0.3s;
 }
+
+
 .restaurant-card:hover {
     transform: scale(1.05);
 }
 .card-inner {
     width: 100%;
     height: 100%;
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.6s 0.3s;
     transform-style: preserve-3d;
     position: relative;
 }

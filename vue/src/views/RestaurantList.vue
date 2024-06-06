@@ -2,7 +2,7 @@
     <div class="restaurant-list">
         <h2>Restaurants Near You</h2>
         <form class="search-form"
-            @submit.prevent="searchByCategory">
+            @submit="searchByCategory">
             <input placeholder="Enter Category" type="text" v-model="category" />
             <button type="submit">Search</button>
          </form>
@@ -43,6 +43,7 @@ export default{
         searchByCategory() {
             this.$store.commit('FILTER_BY_CATEGORY', this.category);
         }
+        
     },
     created() {
         //default load for now
