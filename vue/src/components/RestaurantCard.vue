@@ -1,7 +1,7 @@
 
 <template> 
-<div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" @click="flipCard" @dblclick="enlargeCard">
-    <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isEnlarged }">
+<div class="restaurant-card" @click="flipCard">
+    <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered}">
 
         <div class="card-front">
             <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" /> 
@@ -46,14 +46,14 @@ export default {
     flipCard() {
         this.isFlipped = !this.isFlipped;
     },
-    enlargeCard() {
-        this.isEnlarged = !this.isEnlarged;
-        if (this.isEnlarged) {
-            document.body.classList.add('blur-background');
-        } else {
-            document.body.classList.remove('blur-background');
-        }
-      }
+    // enlargeCard() {
+    //     this.isEnlarged = !this.isEnlarged;
+    //     if (this.isEnlarged) {
+    //         document.body.classList.add('blur-background');
+    //     } else {
+    //         document.body.classList.remove('blur-background');
+    //     }
+    //   }
     }
    }
 </script>
@@ -79,6 +79,7 @@ export default {
         transition: transform 0.6s, transform 0.3s;
         transform-style: preserve-3d;
         position: relative;
+        color: var(--primary-100);
     }
 
     .card-inner.flipped {
@@ -97,11 +98,11 @@ export default {
 
     /*.card-inner.enlarged {
         transform: scale(1.1);
-    }
+    }*/
 
      .restaurant-card:hover {
         transform: scale(1.05);
-    } */
+    } 
 
     /* .restaurant-card.flipped {
         transform: rotateY(180deg);
