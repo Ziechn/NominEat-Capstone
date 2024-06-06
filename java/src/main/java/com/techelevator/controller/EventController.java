@@ -79,6 +79,10 @@ public class EventController {
        }
         return yelpService.getSearchResults(event.getZipcode(), limit, term);
     }
+
+    public Event accessEventLink (@PathVariable int eventId) {
+        Event event = eventDao.getEventByLink(eventLink);
+    }
 }
 
 

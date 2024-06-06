@@ -77,6 +77,22 @@ public class JdbcEventDao implements EventDao {
 
     }
 
+    @Override
+    public Event getEventByLink(String eventLink) {
+        Event event = null;
+
+        String sql = "SELECT event_id, organizer_id, event_name, zipcode, event_link, decision_date\n" +
+                "FROM event\n" +
+                "WHERE event_link = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventLink);
+        if (results.next()) {
+            event = mapRowToEvent(results);
+        }
+        return event;
+    }
+
+
     private Event mapRowToEvent(SqlRowSet results) {
         Event event = new Event();
         event.setEventId(results.getInt("event_id"));
