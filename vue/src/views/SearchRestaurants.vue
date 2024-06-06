@@ -24,7 +24,7 @@
 
         <!-- && !filteredRestaurants.length -->
         <!--<div v-if="!loading && !filteredRestaurants.length">  -->
-        <div v-if="!loading && !filteredRestaurants.length"></div>
+        <div v-if="!loading && !filteredRestaurants.length">
             No results found...
         </div>
     </div>

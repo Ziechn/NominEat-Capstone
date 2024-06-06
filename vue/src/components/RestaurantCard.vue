@@ -1,4 +1,6 @@
 
+<!-- MVP: call to order, hours  Nice to have: rating, map, take out delivery -->
+
 <template>
     <div class="restaurant-card" @click="flipCard">
         <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered }">
@@ -13,7 +15,7 @@
                 </div>
             </div>
             <div class="card-back" aria-label="restaurant-back">
-                <div class="restaurant-info">
+                <div class="restaurant-info"> 
                     <h2 class="restaurant-name" aria-label="restaurant-name">{{ restaurant.name }}</h2>
                     <p class="restaurant-category" aria-label="restaurant-category">{{ restaurant.categories }}</p>
                     <p class="restaurant-price" aria-label="restaurant-price">{{ restaurant.price }}</p>
