@@ -4,7 +4,7 @@
             <div>
                 <p>Showing Results for ZIP code: {{  zipCode  }}</p>
             </div>
-            <div v-if="restaurants.length">
+            <div v-if="filteredRestaurants.length">
             <input 
              type="text"
              v-model="category" 
@@ -45,7 +45,7 @@ export default{
         };
     },
     computed: {
-        ...mapState(['zipCode','filteredrestaurants', 'loading']),
+        ...mapState(['zipCode','filteredRestaurants', 'loading']),
     },
     methods: {
         ...mapActions(['fetchRestaurants']),

@@ -61,8 +61,9 @@ const store = createStore({
   state: {
     zipCode: '',
     limit: 10,
-    restaurants: [],
-    //restaurants: backupData,
+    // restaurants: [],
+    restaurants: backupData,
+    filteredRestaurants: backupData,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -95,7 +96,6 @@ const store = createStore({
       axios.defaults.headers.common = {};
     },
     FILTER_BY_CATEGORY(state, category) {
-
       if (category === '') {
         state.filteredRestaurants = state.restaurants;
       } else {
@@ -104,16 +104,12 @@ const store = createStore({
             cat.title.toLowerCase().includes(category.toLowerCase()))
             );
       }
-      state.filteredRestaurants = state.restaurants.filter(restaurant => {
-        restaurant.catagories = category;
-      });
     }
   },
   actions: {
     async fetchRestaurants({ commit }, zipCode ) {
       commit('SET_LOADING', true);
       try {
-
         // const response = await RestaurantService.list(zipCode, limit);
         // const response = { data: createStore };
        // const response = { data: backupData};
