@@ -27,5 +27,6 @@ public class RestaurantController {
     @GetMapping("/search")
     public List<Restaurant> searchResults(@RequestParam (defaultValue = "45202") String zipcode, @RequestParam (defaultValue = "10") int limit, @RequestParam (defaultValue = "food") String term) {
         return yelpService.getSearchResults(zipcode, limit, term);
+        // Main
     }
 }
