@@ -69,7 +69,7 @@ public class JdbcEventDao implements EventDao {
                     event.getDecisionDate());
 
             newEvent = event;
-            newEvent.setEventId(eventId);
+            newEvent.setEventId(eventId); // Me be irrelevant.
         } catch (Exception ex) {
             System.out.println("Something went wrong" + ex.getMessage());
         }
