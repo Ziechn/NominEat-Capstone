@@ -14,7 +14,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         </span>
                     </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
-                    <p class="restaurant-rating" >Rating: {{ restaurant.rating }}</p>
+                    <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>
                     
                 </div>
             </div>
@@ -25,6 +25,12 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
+                    
+                    <p class="restaurant-hours"
+                        v-for="(hours, index) in restaurant.hours" v-bind:key="index">
+                        {{ getDayByDayNum(hours.day) }}: {{ formatHours(hours.start, hours.end) }}
+                    </p>
+
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <!-- added empty div to separate button from menu for now. remove when styling -->
                     <div></div>
@@ -65,7 +71,22 @@ export default {
         },
         selectRestaurant() {
             this.$emit('selectRestaurant', this.restaurant);
+        },
+        formatTime(time) {
+        let hour = parseInt(time.substring(0, 2), 10);
+        const minute = time.substring(2, 4);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12 || 12; 
+        return `${hour}:${minute} ${ampm}`;
+        },
+        formatHours(start, end) {
+            return `${this.formatTime(start)} - ${this.formatTime(end)}`
+        },
+        getDayByDayNum(dayNum){
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            return days[dayNum];
         }
+        
         // enlargeCard() {
         //     this.isEnlarged = !this.isEnlarged;
         //     if (this.isEnlarged) {
@@ -79,6 +100,10 @@ export default {
 </script>
 
 <style scoped>
+/* just added this so i could make sure all the hours were displaying correctly */
+.restaurant-hours{
+    font-size: 0.6em;
+}
 .restaurant-card {
     perspective: 1000px; 
     width: 250px;
