@@ -68,8 +68,6 @@ public class EventController {
 
     }
 
-
-
     @RequestMapping(path = "/{eventId}/restaurants", method = RequestMethod.GET)
     public List<Restaurant> getEventRestaurants (@PathVariable int eventId, @RequestParam (defaultValue = "10") int limit,@RequestParam (defaultValue = "food") String term) {
        Event event = eventDao.getEventById(eventId);
@@ -80,8 +78,13 @@ public class EventController {
         return yelpService.getSearchResults(event.getZipcode(), limit, term);
     }
 
-    public Event accessEventLink (@PathVariable int eventId) {
+    public Event accessEventLink (@PathVariable String eventLink) {
         Event event = eventDao.getEventByLink(eventLink);
+
+        if( event == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
+        }
+        return event;
     }
 }
 
