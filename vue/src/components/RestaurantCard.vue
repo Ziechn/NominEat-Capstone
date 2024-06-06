@@ -1,24 +1,25 @@
-
+<!-- MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
+Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
 <template>
     <div class="restaurant-card" @click="flipCard">
         <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered }">
 
-            <div class="card-front" aria-label="restaurant-front">
+            <div class="card-front" aria-label="restaurant-card-front-of-card">
                 <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" />
                 <div class="restaurant-info">
-                    <h2 class="restaurant-name" aria-label="restaurant-name">{{ restaurant.name }}</h2>
-                    <p class="restaurant-category" aria-label="restaurant-category">{{ restaurant.categories }}</p>
-                    <p class="restaurant-price" aria-label="restaurant-price">{{ restaurant.price }}</p>
-                    <p class="restaurant-rating" aria-label="restaurant-rating">{{ restaurant.rating }}</p>
+                    <h2 class="restaurant-name" >{{ restaurant.name }} </h2>
+                    <p class="restaurant-category">{{ restaurant.categories }}</p>
+                    <p class="restaurant-price" >{{ restaurant.price }}</p>
+                    <p class="restaurant-rating" >{{ restaurant.rating }}</p>
                 </div>
             </div>
             <div class="card-back" aria-label="restaurant-back">
                 <div class="restaurant-info">
-                    <h2 class="restaurant-name" aria-label="restaurant-name">{{ restaurant.name }}</h2>
-                    <p class="restaurant-category" aria-label="restaurant-category">{{ restaurant.categories }}</p>
-                    <p class="restaurant-price" aria-label="restaurant-price">{{ restaurant.price }}</p>
-                    <p class="restaurant-address" aria-label="restaurant-address">{{ restaurant.address1 }}</p>
-                    <p class="restaurant-status" aria-label="restaurant-address">{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
+                    <h2 class="restaurant-name">{{ restaurant.name }}</h2>
+                    <p class="restaurant-category">{{ restaurant.categories }}</p>
+                    <p class="restaurant-price" >{{ restaurant.price }}</p>
+                    <p class="restaurant-address" >{{ restaurant.address1 }}</p>
+                    <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                 </div>
             </div>
