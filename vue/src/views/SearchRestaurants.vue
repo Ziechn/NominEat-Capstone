@@ -56,7 +56,7 @@ export default{
         }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: 10});
+        this.fetchRestaurants({ zipCode: this.zipCode, limit: 3});
 }};
 </script>
 

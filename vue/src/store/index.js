@@ -4,7 +4,7 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 import createPersistedState from "vuex-persistedstate";
-//import RestaurantService from '../services/RestaurantService';
+import RestaurantService from '../services/RestaurantService';
 
 //initial backup data (comment in and out dont delete)
 const backupData = [
@@ -62,10 +62,14 @@ const backupData = [
 const store = createStore({
   state: {
     zipCode: '',
-    limit: 10,
-    // restaurants: [],
-    restaurants: backupData,
-    filteredRestaurants: backupData,
+    limit: 3,
+    // uncomment for API data
+    restaurants: [],
+    filteredRestaurants: [],
+
+    //uncomment for backup data
+    // restaurants: backupData,
+    // filteredRestaurants: backupData,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -109,13 +113,20 @@ const store = createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, zipCode ) {
+    async fetchRestaurants({ commit }, zipCode, limit ) {
       commit('SET_LOADING', true);
       try {
-        // const response = await RestaurantService.list(zipCode, limit);
+        //uncomment for API data
+        const response = await RestaurantService.list(zipCode, limit);
+        commit('SET_RESTAURANTS', response)
+
         // const response = { data: createStore };
-       // const response = { data: backupData};
-        commit('SET_RESTAURANTS', backupData);
+        // const response = { data: backupData};
+
+       //uncomment for backup data
+        // commit('SET_RESTAURANTS', backupData);
+
+
         commit('SET_LOADING', false);
 
         //fake api call here

@@ -8,7 +8,11 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                 <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" />
                 <div class="restaurant-info">
                     <h2 class="restaurant-name" >{{ restaurant.name }} </h2>
-                    <p class="restaurant-category">{{ restaurant.categories }}</p>
+                    <p class="restaurant-category">
+                        <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
+                            {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
+                        </span>
+                    </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-rating" >{{ restaurant.rating }}</p>
                 </div>
