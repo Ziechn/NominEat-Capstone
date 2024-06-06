@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.RestaurantDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Restaurant;
 import com.techelevator.model.User;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping (path = "/restaurants")
 @CrossOrigin
 public class RestaurantController {
 
@@ -22,6 +24,9 @@ public class RestaurantController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RestaurantDao restaurantDao;
 
     @GetMapping("/")
     public void connected(Principal principal){
@@ -35,17 +40,11 @@ public class RestaurantController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/create-restaurant")
-    public Restaurant createRestaurant(@RequestBody Restaurant restaurant, Principal principal){
-        if (restaurant != null){
+    @PostMapping(path = "/create")
+    public Restaurant createRestaurant(@RequestBody Restaurant restaurant) {
+        if (restaurant != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide a restaurant object.");
         }
-
-        User user = userDao.getUserByUsername(principal.getName());
-
-        // Create a restaurant object for each restaurant in the incoming list.
-        Restaurant newRestaurant = new Restaurant();
-        
-        return newRestaurant;
+        return restaurantDao.createRestaurant(restaurant);
     }
 }
