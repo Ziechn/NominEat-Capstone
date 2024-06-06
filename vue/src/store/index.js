@@ -61,14 +61,9 @@ const store = createStore({
   state: {
     zipCode: '',
     limit: 10,
-<<<<<<< HEAD
     // restaurants: [],
     restaurants: backupData,
     filteredRestaurants: backupData,
-=======
-    restaurants: [],
-    //restaurants: backupData,
->>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -101,7 +96,6 @@ const store = createStore({
       axios.defaults.headers.common = {};
     },
     FILTER_BY_CATEGORY(state, category) {
-<<<<<<< HEAD
       if (category === '') {
         state.filteredRestaurants = state.restaurants;
       } else {
@@ -110,29 +104,17 @@ const store = createStore({
             cat.title.toLowerCase().includes(category.toLowerCase()))
             );
       }
-=======
-      state.filteredRestaurants = state.restaurants.filter(restaurant => {
-        restaurant.catagories = category;
-      });
-
->>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
     }
   },
   actions: {
     async fetchRestaurants({ commit }, zipCode ) {
       commit('SET_LOADING', true);
       try {
-<<<<<<< HEAD
         // const response = await RestaurantService.list(zipCode, limit);
         // const response = { data: createStore };
        // const response = { data: backupData};
         commit('SET_RESTAURANTS', backupData);
         commit('SET_LOADING', false);
-=======
-        const response = await RestaurantService.list(zipCode, limit);
-        //const response = { data: createStore };
-        commit('SET_RESTAURANTS', response);
->>>>>>> 52d1b422b41610a8334b8961015acd14fec28a6c
       } catch (error) {
         console.error('Error fetching restaurants: ', error);
     //  } finally {
