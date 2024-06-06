@@ -1,3 +1,5 @@
+// MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
+// Nice to Haves: Num of stars, map, takeout.delivery option shown 
 //import { createStore as _createStore } from 'vuex';
 import { createStore } from 'vuex';
 import axios from 'axios';
