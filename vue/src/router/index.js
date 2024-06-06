@@ -3,13 +3,9 @@ import { useStore } from 'vuex';
 
 // Import components
 import HomeView from '@/views/HomeView.vue';
-// import SearchRestaurants from '@/components/SearchRestaurants.vue';
-import LoginView from '../views/LoginView.vue';
-// import EnterZip from '@/views/EnterZip.vue';
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
-// import RestaurantList from '@views/RestaurantList.vue';
-// import LogoutView from '../views/LogoutView.vue';
-import RegisterView from '../views/RegisterView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -30,11 +26,6 @@ const routes = [
     }
   },
   {
-    path: '/search',
-    name: 'SearchRestaurants',
-    component: SearchRestaurants,
-  },
-  {
     path: '/login',
     name: 'login',
     component: LoginView,
@@ -43,25 +34,17 @@ const routes = [
     }
   },
   {
-    path: '/enter-zip',
-    name: 'EnterZip',
-    component: EnterZip,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: '/restaurants',
-    name: 'RestaurantList',
-    component: RestaurantList,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
     path: '/register',
     name: 'register',
     component: RegisterView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: SearchRestaurants,
     meta: {
       requiresAuth: false
     }
