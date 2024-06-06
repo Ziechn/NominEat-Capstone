@@ -3,9 +3,10 @@ import { useStore } from 'vuex';
 
 // Import components
 import HomeView from '@/views/HomeView.vue';
+import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
-import SearchRestaurants from '@/views/SearchRestaurants.vue';
+import LogoutView from '@/views/LogoutView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -26,6 +27,14 @@ const routes = [
     }
   },
   {
+    path: '/search',
+    name: 'SearchRestaurants',
+    component: SearchRestaurants,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
     path: '/login',
     name: 'login',
     component: LoginView,
@@ -40,15 +49,8 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  },
-  {
-    path: '/search',
-    name: 'search',
-    component: SearchRestaurants,
-    meta: {
-      requiresAuth: false
-    }
   }
+  
 ];
 
 // Create the router

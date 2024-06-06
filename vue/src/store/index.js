@@ -1,8 +1,8 @@
-import { createStore as _createStore } from 'vuex';
+//import { createStore as _createStore } from 'vuex';
 import { createStore } from 'vuex';
 import axios from 'axios';
 import createPersistedState from "vuex-persistedstate";
-import RestaurantService from '../services/RestaurantService';
+//import RestaurantService from '../services/RestaurantService';
 
 //initial backup data (comment in and out dont delete)
 const backupData = [
@@ -69,9 +69,6 @@ const store = createStore({
     SET_ZIP_CODE(state, zipCode) {
       state.zipCode = zipCode;
     },
-    // SET_LIMIT(state, limit) {
-    //   state.limit = limit;
-    // },
     SET_RESTAURANTS(state, restaurants) {
       state.restaurants = restaurants;
       state.filteredRestaurants = restaurants;

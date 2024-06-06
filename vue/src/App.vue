@@ -6,8 +6,8 @@
         <router-link to="/search" aria-label="Search"><i class="icon-magnifying-glass"></i></router-link>
         <router-link to="/profile" aria-label="Profile" v-if="$store.state.token != ''"><i class="icon-user"></i></router-link>
         <router-link to="/login" aria-label="Profile" v-if="$store.state.token != ''"><i class="icon-exit"></i></router-link>
-        <router-view></router-view>
       </nav>
+      <router-view></router-view>
     </header>
     <!-- <div id="nav">
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
