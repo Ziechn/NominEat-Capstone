@@ -15,6 +15,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-rating" >{{ restaurant.rating }}</p>
+                    
                 </div>
             </div>
             <div class="card-back" aria-label="restaurant-back">
@@ -25,6 +26,12 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
+                    <!-- added empty div to separate button from menu for now. remove when styling -->
+                    <div></div>
+                    <button class="call-button" v-if="restaurant.phoneNumber !== null" @click="showNumber">Call to order</button>
+                    <div v-if="isVisible">
+                        {{ restaurant.phoneNumber }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,13 +51,17 @@ export default {
         return {
             isFlipped: false,
             isHovered: false,
-            isEnlarged: false
+            isEnlarged: false,
+            isVisible: false
         };
     },
     methods: {
         flipCard() {
             this.isFlipped = !this.isFlipped;
         },
+        showNumber() {
+            this.isVisible = !this.isVisible;
+        }
         // enlargeCard() {
         //     this.isEnlarged = !this.isEnlarged;
         //     if (this.isEnlarged) {
