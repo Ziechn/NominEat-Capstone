@@ -16,10 +16,12 @@
         <div v-if="loading" class="loading">Loading...please wait...</div>
         
         <!-- cards -->
-        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">
+        <!-- && filteredRestaurants.length" -->
+        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">  
             <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"/>
         </div>
 
+        <!-- && !filteredRestaurants.length -->
         <div v-if="!loading && !filteredRestaurants.length">
             No results found...
         </div>
