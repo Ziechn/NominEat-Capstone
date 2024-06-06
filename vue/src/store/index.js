@@ -78,6 +78,12 @@ const store = _createStore({
     SET_ZIP_CODE(state, zipCode) {
       state.zipCode = zipCode;
     },
+    ADD_RESTAURANTS(state, restaurants) {
+      state.selectedRestaurants.push(restaurants);
+    },
+    REMOVE_RESTAURANTS(state, restaurants) {
+      state.selectedRestaurants.pop(restaurants);
+    },
     SET_RESTAURANTS(state, restaurants) {
       state.restaurants = restaurants;
       state.filteredRestaurants = restaurants;
