@@ -14,7 +14,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         </span>
                     </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
-                    <p class="restaurant-rating" >{{ restaurant.rating }}</p>
+                    <p class="restaurant-rating" >Rating: {{ restaurant.rating }}</p>
                     
                 </div>
             </div>
@@ -32,6 +32,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <div v-if="isVisible">
                         {{ restaurant.phoneNumber }}
                     </div>
+                    <button @click.stop="selectRestaurant">select</button>
                 </div>
             </div>
         </div>
@@ -61,6 +62,9 @@ export default {
         },
         showNumber() {
             this.isVisible = !this.isVisible;
+        },
+        selectRestaurant() {
+            this.$emit('selectRestaurant', this.restaurant);
         }
         // enlargeCard() {
         //     this.isEnlarged = !this.isEnlarged;
@@ -75,27 +79,23 @@ export default {
 </script>
 
 <style scoped>
-/* .restaurant-card-wrapper {
-        position: relative;
-        perspective: 1000px;
-        transition: transform 0.3s ease-in-out;
-    } */
 .restaurant-card {
-    perspective: 1000px;
+    perspective: 1000px; 
     width: 250px;
     height: 300px;
     margin: 20px;
     cursor: pointer;
     transition: transform 0.3s;
 }
-
+.restaurant-card:hover {
+    transform: scale(1.05);
+}
 .card-inner {
     width: 100%;
     height: 100%;
-    transition: transform 0.6s, transform 0.3s;
+    transition: transform 0.6s ease-in-out;
     transform-style: preserve-3d;
     position: relative;
-    color: var(--primary-100);
 }
 
 .card-inner.flipped {
@@ -108,21 +108,13 @@ export default {
     left: 50%;
     transition: translate(-50%, -50%) scale(1.5);
     z-index: 1000;
-    background-color: white;
-    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.3);
+    background-color: var(--bg-100);
+    box-shadow: 0 4px 8px rgba(0,0,0,.3);
 }
 
-/*.card-inner.enlarged {
-        transform: scale(1.1);
-    }*/
 
-.restaurant-card:hover {
-    transform: scale(1.05);
-}
 
-/* .restaurant-card.flipped {
-        transform: rotateY(180deg);
-    } */
+
 .card-front,
 .card-back {
     backface-visibility: hidden;
@@ -131,16 +123,13 @@ export default {
     height: 100%;
     border: 1px solid #ccc;
     border-radius: 10px;
+    background-color: var(--bg-100);
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0, 1);
-}
-
-.card-front {
-    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .3);
 }
 
 .card-back {
-    background-color: white;
+    background-color: var(--bg-100);
     transform: rotateY(180deg);
     padding: 15px;
 }
@@ -157,7 +146,7 @@ export default {
 }
 
 .restaurant-name {
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin: 5px 0;
     color: var(--text-100);
 }
@@ -167,12 +156,6 @@ export default {
     color: var(--text-200);
 }
 
-.restaurant-rating {
-    font-size: .09em;
-    color: var(--text-200);
-}
-
-
 .menu-link {
     margin-top: 20px;
     text-decoration: none;
@@ -180,6 +163,18 @@ export default {
     font-weight: bold;
 }
 
+.call-button {
+    margin: 15px;
+    background-color: var(--bg-100);
+    border: none;
+    cursor: pointer;
+    color: var(--text-100);
+    padding: 5px;
+}
+
+.call-button:hover {
+    color: var(--accent-100);
+}
 .open {
     color: var(--accent-100);
 }
@@ -205,10 +200,10 @@ export default {
     z-index: 1000;
 }
 
-.blur-background {
+/* .blur-background {
     filter: blur(5px);
     pointer-events: none;
-}
+} */
 
 a {
     color: var(--primary-100);
