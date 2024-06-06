@@ -115,6 +115,14 @@ const store = createStore({
        // const response = { data: backupData};
         commit('SET_RESTAURANTS', backupData);
         commit('SET_LOADING', false);
+
+        //fake api call here
+        // const response = { data: backupData };
+        //commit('SET_RESTAURANTS', response.data);
+
+        //const response = { data: createStore };
+        //commit('SET_RESTAURANTS', response);
+
       } catch (error) {
         console.error('Error fetching restaurants: ', error);
     //  } finally {
@@ -122,10 +130,13 @@ const store = createStore({
       }
     }
   },
-  plugins: [createPersistedState()]
+  
+  plugins: [createPersistedState(),]
 });
-
 export default store;
+
+
+
 
 
 

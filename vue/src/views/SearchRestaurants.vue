@@ -50,6 +50,7 @@ export default{
         ...mapMutations(['FILTER_BY_CATEGORY']),
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
+
         }
     },
    created() {
