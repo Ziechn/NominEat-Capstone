@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="calculate-zip">
         <h2> Enter your ZIP Code </h2>
         <form @submit.prevent="setZipCode">
@@ -31,3 +31,4 @@ export default {
     }
 };
 </script>
+ -->

@@ -1,14 +1,15 @@
-import { createStore as _createStore } from 'vuex';
+//import { createStore as _createStore } from 'vuex';
 import { createStore } from 'vuex';
 import axios from 'axios';
-//import createPersistedState from "vuex-persistedstate";
-import RestaurantService from '../services/RestaurantService';
+import createPersistedState from "vuex-persistedstate";
+//import RestaurantService from '../services/RestaurantService';
 
 //initial backup data (comment in and out dont delete)
 const backupData = [
   {
     id: 1,
     name: 'East Village Pizza',
+    zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
     catagories: [{ title: 'Pizza' }],
     category: 'Pizza',
@@ -24,6 +25,7 @@ const backupData = [
   {
     id: 2,
     name: 'Sushi Place',
+    zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
     catagories: [{ title: 'Sushi' }],
     category: 'Sushi',
@@ -39,6 +41,7 @@ const backupData = [
   {
     id: 3,
     name: 'Burger House',
+    zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
     catagories: [{ title: 'Burgers' }],
     category: 'Burgers',
@@ -68,11 +71,9 @@ const store = createStore({
     SET_ZIP_CODE(state, zipCode) {
       state.zipCode = zipCode;
     },
-    SET_LIMIT(state, limit) {
-      state.limit = limit;
-    },
     SET_RESTAURANTS(state, restaurants) {
       state.restaurants = restaurants;
+      state.filteredRestaurants = restaurants;
     },
     SET_LOADING(state, loading) {
       state.loading = loading;
@@ -94,31 +95,52 @@ const store = createStore({
       axios.defaults.headers.common = {};
     },
     FILTER_BY_CATEGORY(state, category) {
+
+      if (category === '') {
+        state.filteredRestaurants = state.restaurants;
+      } else {
+        state.filteredRestaurants = state.restaurants.filter(restaurant =>
+          restaurant.catagories.some(cat =>
+            cat.title.toLowerCase().includes(category.toLowerCase()))
+            );
+      }
       state.filteredRestaurants = state.restaurants.filter(restaurant => {
         restaurant.catagories = category;
       });
-
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit }) {
+    async fetchRestaurants({ commit }, zipCode ) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit);
+
+        // const response = await RestaurantService.list(zipCode, limit);
+        // const response = { data: createStore };
+       // const response = { data: backupData};
+        commit('SET_RESTAURANTS', backupData);
+        commit('SET_LOADING', false);
+
+        //fake api call here
+        // const response = { data: backupData };
+        //commit('SET_RESTAURANTS', response.data);
+
         //const response = { data: createStore };
-        commit('SET_RESTAURANTS', response);
+        //commit('SET_RESTAURANTS', response);
+
       } catch (error) {
         console.error('Error fetching restaurants: ', error);
-        commit('SET_RESTAURANTS', []);
-      } finally {
+    //  } finally {
         commit('SET_LOADING', false);
       }
-    },
+    }
   },
-  //plugins: [createPersistedState()]
+  
+  plugins: [createPersistedState(),]
 });
-
 export default store;
+
+
+
 
 
 
