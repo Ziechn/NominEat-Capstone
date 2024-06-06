@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
@@ -23,6 +24,25 @@ public class Restaurant {
     private Coordinates coordinates;
 
     private List<String> transactions;
+
+    public Restaurant(){
+        this.id = "temp0r4ry1d";
+        this.name = "New Restaurant";
+        this.phoneNumber = "(513) 555-0289";
+        this.categories = new ArrayList<>();
+        this.address1 = "1234 East St";
+        this.address2 = "";
+        this.address3 = "";
+        this.city = "city";
+        this.state = "ST";
+        this.country = "US";
+        this.zipcode = "12345";
+        this.imageUrl = "no image";
+        this.menuUrl = "no menu";
+        this.rating = 4.6;
+        this.coordinates = new Coordinates(0.0,0.0);
+        this.transactions = new ArrayList<>();
+    }
 
     public Restaurant(String restaurantId, String restaurantName,
                       String phoneNumber, List<String> categories,

@@ -44,6 +44,8 @@ public class RestaurantController {
         User user = userDao.getUserByUsername(principal.getName());
 
         // Create a restaurant object for each restaurant in the incoming list.
-
+        Restaurant newRestaurant = new Restaurant();
+        
+        return newRestaurant;
     }
 }
