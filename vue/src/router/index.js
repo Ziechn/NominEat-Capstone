@@ -3,13 +3,10 @@ import { useStore } from 'vuex';
 
 // Import components
 import HomeView from '@/views/HomeView.vue';
-// import SearchRestaurants from '@/components/SearchRestaurants.vue';
-import LoginView from '../views/LoginView.vue';
-import EnterZip from '@/views/EnterZip.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
-import RestaurantList from '@/views/RestaurantList.vue';
-// import LogoutView from '../views/LogoutView.vue';
-import RegisterView from '../views/RegisterView.vue';
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import LogoutView from '@/views/LogoutView.vue';
 
 
 /**
@@ -34,27 +31,14 @@ const routes = [
     path: '/search',
     name: 'SearchRestaurants',
     component: SearchRestaurants,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: '/login',
     name: 'login',
     component: LoginView,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: '/enter-zip',
-    name: 'EnterZip',
-    component: EnterZip,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: '/restaurants',
-    name: 'RestaurantList',
-    component: RestaurantList,
     meta: {
       requiresAuth: false
     }
@@ -67,6 +51,7 @@ const routes = [
       requiresAuth: false
     }
   }
+  
 ];
 
 // Create the router

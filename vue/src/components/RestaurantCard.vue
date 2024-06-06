@@ -1,5 +1,4 @@
 
-<!-- Goal is to split the card into two divs - one for each side -Lines -->
 <template> 
 <div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" @click="flipCard" @dblclick="enlargeCard">
     <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isEnlarged }">
@@ -8,48 +7,42 @@
             <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" /> 
             <div class="restaurant-info">
             <h2 class="restaurant-name">{{ restaurant.name }}</h2>
-            <p v-if="restaurant.categories && restaurant.categories.length"  class="restaurant-category">
-                {{ restaurant.categories[0].title }}
-             </p>
-             <p class="restaurant-price">{{  restaurant.price }}</p>
+            <p class="restaurant-category">{{ restaurant.categories[0].title }}</p>
+            <p class="restaurant-price">{{  restaurant.price }}</p>
             <p class="restaurant-rating">{{ restaurant.rating }}</p>    
         </div>
     </div>
         <div class="card-back">
-            <div class="details">
+            <div class="restaurant-info">
                 <h2 class="restaurant-name">{{  restaurant.name }}</h2>
+                <p class="restaurant-category">{{ restaurant.categories[0].title }}</p>
                 <p class="restaurant-price">{{ restaurant.price }}</p>
-              <p class="restaurant-address">{{ restaurant.address1 }}</p> 
-              
-          <p :class="{ open: restaurant.isOpenNow, closed: !restaurant.isOpenNow }">
-            {{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}
-        </p>
-        <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
- </div>
-</div>
-</div>
-<div v-if="isEnlarged" class="overlay" @click="enlargeCard">
+                <p class="restaurant-address">{{ restaurant.address1 }}</p> 
+                <p class="restaurant-status">{{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
+                <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
+            </div>
+        </div>
+    </div>
+<!-- <div v-if="isEnlarged" class="overlay" @click="enlargeCard"> -->
 </div> 
-</div>
-</template> 
+<!-- </div> -->
+</template>
+
 
 <script>
-
 export default {
     props: {
-        restaurant: {
-            type: Object,
-            required: true,
-        },
+        restaurant: Object
     },
+
     data() { 
         return {
             isFlipped: false,
-            isEnlarged: false,
+            isHovered: false,
+            isEnlarged: false
         };
-
-},
-methods: {
+    },
+    methods: {
     flipCard() {
         this.isFlipped = !this.isFlipped;
     },
@@ -60,14 +53,12 @@ methods: {
         } else {
             document.body.classList.remove('blur-background');
         }
-    },
-},
-
-};
+      }
+    }
+   }
 </script>
 
 <style scoped>
-
     /* .restaurant-card-wrapper {
         position: relative;
         perspective: 1000px;
@@ -75,21 +66,17 @@ methods: {
     } */
     .restaurant-card {
         perspective: 1000px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        transition: transform 0.2s;
         width: 250px;
         height: 300px;
         margin: 20px;
         cursor: pointer;
+        transition: transform 0.3s;
     }
 
     .card-inner {
         width: 100%;
         height: 100%;
-        transition: transform 0., transform 0.3s;
+        transition: transform 0.6s, transform 0.3s;
         transform-style: preserve-3d;
         position: relative;
     }
@@ -98,7 +85,7 @@ methods: {
         transform: rotateY(180deg);
     }
 
-    /* .card-inner.enlarged {
+    .card-inner.enlarged {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -106,21 +93,23 @@ methods: {
         z-index: 1000;
         background-color: white;
         box-shadow: 0 4px 8px rgb(0,0,0,0.3);
+    } 
+
+    /*.card-inner.enlarged {
+        transform: scale(1.1);
+    }
+
+     .restaurant-card:hover {
+        transform: scale(1.05);
     } */
 
-    .restaurant-card:hover {
-        transform: scale(1.05);
-    }
-
-    .restaurant-card.flipped {
+    /* .restaurant-card.flipped {
         transform: rotateY(180deg);
-    }
+    } */
     .card-front,
     .card-back {
         backface-visibility: hidden;
         position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
         border: 1px solid #ccc;
@@ -131,19 +120,12 @@ methods: {
 
     .card-front {
         background-color: #fff;
-        display: flex;
-        flex-direction: column;
     }
     .card-back {
         background-color: white;
         transform: rotateY(180deg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 215x;
+        padding: 15px;
     }
-
 
     .restaurant-image {
         width: 100%;
@@ -171,16 +153,6 @@ methods: {
     }
 
   
-    .details h2 {
-        margin-bottom: 10px;
-        color: var(--text-100);
-    }
-
-    .details p {
-        margin: 5px 0;
-        color: var(--text-200);
-    }
-
     .menu-link {
         margin-top: 20px;
         text-decoration: none;
