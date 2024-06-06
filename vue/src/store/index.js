@@ -1,65 +1,65 @@
 // MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
 // Nice to Haves: Num of stars, map, takeout.delivery option shown 
-//import { createStore as _createStore } from 'vuex';
-import { createStore } from 'vuex';
+import { createStore as _createStore } from 'vuex';
+//import { createStore } from 'vuex';
 import axios from 'axios';
 import createPersistedState from "vuex-persistedstate";
 import RestaurantService from '../services/RestaurantService';
 
 //initial backup data (comment in and out dont delete)
-const backupData = [
-  {
-    id: 1,
-    name: 'East Village Pizza',
-    zipCode: '11222',
-    imageUrl: 'https://via.placeholder.com/250',
-    catagories: [{ title: 'Pizza' }],
-    category: 'Pizza',
-    rating: 8,
-    price: '$$',
-    address1: '1234 Pizza St, New York, NY',
-    isOpenNow: true,
-    menuUrl: 'http://www.eastvillagepizza.com/menu',
-    hours: '6AM - 9PM',
-    status: 'Open',
-    zipcode: 12345
-  },
-  {
-    id: 2,
-    name: 'Sushi Place',
-    zipCode: '11222',
-    imageUrl: 'https://via.placeholder.com/250',
-    catagories: [{ title: 'Sushi' }],
-    category: 'Sushi',
-    rating: 9,
-    price: '$$$',
-    address1: '678 Sushi Place, New York, NY',
-    isOpenNow: true,
-    menuUrl: 'http://www.sushiplace.com/menu',
-    hours: '6AM - 9PM',
-    status: 'Open',
-    zipcode: 12345
-  },
-  {
-    id: 3,
-    name: 'Burger House',
-    zipCode: '11222',
-    imageUrl: 'https://via.placeholder.com/250',
-    catagories: [{ title: 'Burgers' }],
-    category: 'Burgers',
-    rating: 7,
-    price: '$$',
-    address1: '1234 Burger Blvd, New York, NY',
-    isOpenNow: true,
-    menuUrl: 'http://www.burgerhouse.com/menu',
-    hours: '6AM - 9PM',
-    status: 'Open',
-    zipcode: 12345
-  }
+// const backupData = [
+//   {
+//     id: 1,
+//     name: 'East Village Pizza',
+//     zipCode: '11222',
+//     imageUrl: 'https://via.placeholder.com/250',
+//     catagories: [{ title: 'Pizza' }],
+//     category: 'Pizza',
+//     rating: 8,
+//     price: '$$',
+//     address1: '1234 Pizza St, New York, NY',
+//     isOpenNow: true,
+//     menuUrl: 'http://www.eastvillagepizza.com/menu',
+//     hours: '6AM - 9PM',
+//     status: 'Open',
+//     zipcode: 12345
+//   },
+//   {
+//     id: 2,
+//     name: 'Sushi Place',
+//     zipCode: '11222',
+//     imageUrl: 'https://via.placeholder.com/250',
+//     catagories: [{ title: 'Sushi' }],
+//     category: 'Sushi',
+//     rating: 9,
+//     price: '$$$',
+//     address1: '678 Sushi Place, New York, NY',
+//     isOpenNow: true,
+//     menuUrl: 'http://www.sushiplace.com/menu',
+//     hours: '6AM - 9PM',
+//     status: 'Open',
+//     zipcode: 12345
+//   },
+//   {
+//     id: 3,
+//     name: 'Burger House',
+//     zipCode: '11222',
+//     imageUrl: 'https://via.placeholder.com/250',
+//     catagories: [{ title: 'Burgers' }],
+//     category: 'Burgers',
+//     rating: 7,
+//     price: '$$',
+//     address1: '1234 Burger Blvd, New York, NY',
+//     isOpenNow: true,
+//     menuUrl: 'http://www.burgerhouse.com/menu',
+//     hours: '6AM - 9PM',
+//     status: 'Open',
+//     zipcode: 12345
+//   }
 
-];
+// ];
 
-const store = createStore({
+const store = _createStore({
   state: {
     zipCode: '',
     limit: 3,
@@ -113,12 +113,14 @@ const store = createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, zipCode, limit ) {
+    async fetchRestaurants({ commit, state }) {
       commit('SET_LOADING', true);
       try {
+
+        const { zipCode, limit } = state
         //uncomment for API data
         const response = await RestaurantService.list(zipCode, limit);
-        commit('SET_RESTAURANTS', response)
+        commit('SET_RESTAURANTS', response.data)
 
         // const response = { data: createStore };
         // const response = { data: backupData};
