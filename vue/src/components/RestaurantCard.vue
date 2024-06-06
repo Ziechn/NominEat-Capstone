@@ -7,7 +7,7 @@
             <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" /> 
             <div class="restaurant-info">
             <h2 class="restaurant-name">{{ restaurant.name }}</h2>
-            <p class="restaurant-category">{{ restaurant.categories[0].title }}</p>
+            <p class="restaurant-category">{{ restaurant.categories }}</p>
             <p class="restaurant-price">{{  restaurant.price }}</p>
             <p class="restaurant-rating">{{ restaurant.rating }}</p>    
         </div>
@@ -15,7 +15,7 @@
         <div class="card-back">
             <div class="restaurant-info">
                 <h2 class="restaurant-name">{{  restaurant.name }}</h2>
-                <p class="restaurant-category">{{ restaurant.categories[0].title }}</p>
+                <p class="restaurant-category">{{ restaurant.categories }}</p>
                 <p class="restaurant-price">{{ restaurant.price }}</p>
                 <p class="restaurant-address">{{ restaurant.address1 }}</p> 
                 <p class="restaurant-status">{{  restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
