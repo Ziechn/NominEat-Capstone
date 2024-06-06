@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,11 +79,17 @@ public class EventController {
         return yelpService.getSearchResults(event.getZipcode(), limit, term);
     }
 
+    @RequestMapping(path = "/access/{eventLink}", method = RequestMethod.GET)
     public Event accessEventLink (@PathVariable String eventLink) {
         Event event = eventDao.getEventByLink(eventLink);
 
         if( event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        if (now.isAfter(event.getDecisionDate().toLocalDateTime())) {
+            throw new ResponseStatusException(HttpStatus.LOCKED, "Can not accessed link");
         }
         return event;
     }
