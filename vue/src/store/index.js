@@ -1,7 +1,7 @@
 import { createStore as _createStore } from 'vuex';
 import { createStore } from 'vuex';
 import axios from 'axios';
-import createPersistedState from "vuex-persistedstate";
+//import createPersistedState from "vuex-persistedstate";
 import RestaurantService from '../services/RestaurantService';
 
 //initial backup data (comment in and out dont delete)
@@ -115,7 +115,7 @@ const store = createStore({
       }
     },
   },
-  plugins: [createPersistedState()]
+  //plugins: [createPersistedState()]
 });
 
 export default store;
