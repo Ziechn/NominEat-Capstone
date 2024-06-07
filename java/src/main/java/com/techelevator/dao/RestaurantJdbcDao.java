@@ -101,6 +101,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
             } else {
                 // If not, add them to the transactions table, and return the transaction_id.
                 int transactionId = createTransaction(transaction);
+
                 // Associate the restaurant_id with the transaction_id on the restaurant_transactions table.
                 associateTransactionAndRestaurant(restaurant.getId(), transactionId);
             }
@@ -197,20 +198,81 @@ public class RestaurantJdbcDao implements RestaurantDao {
     @Override
     public int getCategoryId(String categoryName){
         // Check to see if the category exists in the category table.
-        // Return the category id.
+        String sql = "SELECT * FROM category WHERE category_name = ?;";
+
+        try {
+            // Return the category id.
+            return jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
+        } catch (DataAccessException e){
+            System.out.println("[Restaurant JDBC DAO] Problem accessing category id.");
+        }
+
+        // Return -1 is category cannot be found.
         return -1;
     }
 
     @Override
     public int getTransactionId(String transactionName){
         // Check to see if the transaction type exists in the transactions table.
-        // Return the transaction id.
+        String sql = "SELECT * FROM transactions WHERE transaction_name = ?;";
+
+        try {
+            // Return the transaction id.
+            return jdbcTemplate.queryForObject(sql, Integer.class, transactionName);
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem accessing transaction id.");
+        }
+
+        // Return -1 if the transaction id cannot be found.
         return -1;
+    }
+
+    public Open getOpen(int openId) {
+        Open open = null;
+
+        String sql = "SELECT * FROM restaurant_hours WHERE hours_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, openId);
+            if (results.next()){
+                open = new Open();
+                open.setDay(results.getInt("day_id"));
+                open.setDayName(results.getString("day_name"));
+                open.setStart(results.getInt("start"));
+                open.setEnd(results.getInt("end"));
+            }
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem getting hours.");
+        }
+
+        return open;
     }
 
     @Override
     public List<Open> createHours(String restaurantId, List<Open> hours){
+        List<Open> opens = new ArrayList<>();
         // Add a hours to the restaurant_hours table.
+        String sql = "INSERT INTO hours (restaurant_id, day_id, day_name," +
+                "start, end " +
+                "VALUE (?, ?, ?, ?, ?);";
+
+        try {
+            for (Open open : hours) {
+                int openId = jdbcTemplate.queryForObject(sql, int.class,
+                        restaurantId,
+                        open.getDay(),
+                        open.getDayName(open.getDay()),
+                        open.getStart(),
+                        open.getEnd());
+
+                // Get the hour object.
+                Open newOpen = getOpen(openId);
+            }
+
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem adding hours.");
+        }
+
         // Return the created hours list.
         return new ArrayList<>();
     }
