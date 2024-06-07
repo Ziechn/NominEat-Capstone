@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -43,13 +44,13 @@ public class EventController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/create")
-    public Event createEvent(@RequestBody Event event, @RequestParam String username) {
+    public Event createEvent(@RequestBody Event event, Principal principal) {
         if (event.getEventName() == null || event.getEventName().isEmpty() ||
                 event.getZipcode() == null || event.getZipcode().isEmpty() ||
                 event.getDecisionDate() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
         }
-        User organizer = userDao.getUserByUsername(username);
+        User organizer = userDao.getUserByUsername(principal.getName());
         if (organizer == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
         }
