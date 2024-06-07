@@ -46,7 +46,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
             String sql = "INSERT INTO restaurant (name, phone, address1, address2, address3, " +
                     "city, country, state, zipcode, image_url, menu_url, rating, " +
                     "latitude, longitude" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?;";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
             try {
                 String restaurantId = jdbcTemplate.queryForObject(sql, String.class,
