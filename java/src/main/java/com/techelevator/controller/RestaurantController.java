@@ -39,12 +39,17 @@ public class RestaurantController {
         // 002-backend
     }
 
+    @GetMapping(path = "/event/${eventId}")
+    public List<Restaurant> getRestaurants(@PathVariable int eventId){
+        return restaurantDao.getRestaurantsByEventId(eventId);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/create")
-    public Restaurant createRestaurant(@RequestBody Restaurant restaurant) {
-        if (restaurant != null) {
+    public List<Restaurant> createRestaurant(@RequestBody List<Restaurant> restaurants) {
+        if (restaurants.size() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide a restaurant object.");
         }
-        return restaurantDao.createRestaurant(restaurant);
+        return restaurantDao.addRestaurants(restaurants);
     }
 }
