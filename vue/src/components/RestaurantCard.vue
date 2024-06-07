@@ -106,16 +106,16 @@ export default {
 }
 .restaurant-card {
     perspective: 1000px; 
-    width: 250px;
-    height: 300px;
+    width: 300px;
+    height: 400px;
     margin: 20px;
     cursor: pointer;
 }
 
-
 .restaurant-card:hover {
     transform: scale(1.05);
 }
+
 .card-inner {
     width: 100%;
     height: 100%;
@@ -124,22 +124,10 @@ export default {
     position: relative;
 }
 
+
 .card-inner.flipped {
     transform: rotateY(180deg);
 }
-
-.card-inner.enlarged {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transition: translate(-50%, -50%) scale(1.5);
-    z-index: 1000;
-    background-color: var(--bg-100);
-    box-shadow: 0 4px 8px rgba(0,0,0,.3);
-}
-
-
-
 
 .card-front,
 .card-back {
@@ -154,10 +142,21 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, .3);
 }
 
+
 .card-back {
     background-color: var(--bg-100);
     transform: rotateY(180deg);
-    padding: 15px;
+}
+
+
+.card-inner.enlarged {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transition: translate(-50%, -50%) scale(1.5);
+    z-index: 1000;
+    background-color: var(--bg-100);
+    box-shadow: 0 4px 8px rgba(0,0,0,.3);
 }
 
 .restaurant-image {
@@ -177,10 +176,10 @@ export default {
     color: var(--text-100);
 }
 
-.restaurant-category {
+/* .restaurant-category {
     font-size: .09em;
     color: var(--text-200);
-}
+} */
 
 .menu-link {
     margin-top: 20px;
@@ -226,18 +225,4 @@ export default {
     z-index: 1000;
 }
 
-/* .blur-background {
-    filter: blur(5px);
-    pointer-events: none;
-} */
-
-a {
-    color: var(--primary-100);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-}
 </style>

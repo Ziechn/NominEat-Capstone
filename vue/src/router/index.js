@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 // Import components
 import HomeView from '@/views/HomeView.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
-import LoginView from '@/views/LoginView.vue';
+import LoginAndZip from '@/views/LoginAndZip.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LogoutView from '@/views/LogoutView.vue';
 
@@ -38,7 +38,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: LoginAndZip,
     meta: {
       requiresAuth: false
     }

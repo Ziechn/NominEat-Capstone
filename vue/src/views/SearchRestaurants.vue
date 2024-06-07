@@ -52,7 +52,12 @@ export default{
         ...mapMutations(['FILTER_BY_CATEGORY']),
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
-
+        },
+        restaurantSelectionList() {
+            if (this.zipCode) {
+                this.$store.commit('SET_ZIP_CODE', this.zipCode);
+                this.$router.push({ name: 'SearchRestaurants' });
+            }
         }
     },
    created() {
@@ -91,10 +96,7 @@ export default{
     background-color: var(--primary-200);
 }
 
-.loading {
-    margin-top: 10px;
-    color: var(--primary-100);
-}
+
 
 .restaurant-cards {
     display: flex;

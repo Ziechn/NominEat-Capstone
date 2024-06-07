@@ -1,11 +1,14 @@
 <template>
-  <div id="login">
-    <form v-on:submit.prevent="login">
-      <h1 >Please Sign In</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
-      </div>
-      <div role="alert" v-if="this.$route.query.registration">
+  <div class="login-zip-container"></div>
+    <flipCard ref="flipCard">
+      <template #front>
+          <div class="form-container">
+          <h1 >Please Sign In</h1>
+          <form v-on:submit.prevent="login">
+          <div role="alert" v-if="invalidCredentials">
+          Invalid username and password!
+          </div>
+          <div role="alert" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
       </div>
       <div class="form-input-group">
@@ -22,12 +25,26 @@
     </form>
   </div>
 </template>
+      <template #back>
+        <div class="form-container">
+          </div>
+          </template>
+
+    </flipCard>
+    </template>
+
+
+    
+
 
 <script>
+import FlipCard from "../components/FlipCard.vue";
 import authService from "../services/AuthService";
 
 export default {
-  components: {},
+  components: {
+    FlipCard
+  },
   data() {
     return {
       user: {
@@ -55,12 +72,29 @@ export default {
             this.invalidCredentials = true;
           }
         });
+    },
+    //setzip if else
+    flip() {
+      this.$refs.flipCard.flipCard();
     }
   }
+
 };
 </script>
 
 <style scoped>
+.login-zip-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.form-container {
+  width: 80%;
+  padding:20px;
+  text-align: center;
+}
 .form-input-group {
   margin-bottom: 1rem;
 }

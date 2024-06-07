@@ -13,7 +13,9 @@
 export default {
     data() {
         return {
+            // invalidCredentials: false,
             zipCode: '',
+            error: '',
         };
     },
     methods: {
