@@ -86,8 +86,8 @@ CREATE TABLE restaurant_hours (
     restaurant_id INT NOT NULL,
     day_id INT NOT NULL,
     day_name VARCHAR (20) NOT NULL,
-    start TIME NOT NULL,
-    end TIME NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
     PRIMARY KEY (restaurant_id, day_id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id)
 );
