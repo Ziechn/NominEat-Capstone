@@ -1,7 +1,7 @@
 ROLLBACK;
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, event, event_attendees, restaurant_event,
+DROP TABLE IF EXISTS users, event, event_attendees, restaurant_event, restaurant,
 restaurant_transactions, category, restaurant_category,restaurant_hours, transactions CASCADE;
 
 
@@ -26,17 +26,7 @@ CREATE TABLE event (
 CREATE TABLE event_attendees (
 	user_id INT NOT NULL,
 	event_id INT NOT NULL,
-	PRIMARY KEY (user_id, event_id),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (event_id) REFERENCES event(event_id)
-);
-
-CREATE TABLE restaurant_event (
-    event_id INT NOT NULL,
-    restaurant_id VARCHAR (100) NOT NULL,
-    yes_votes INT DEFAULT 0,
-    no_votes INT DEFAULT 0,
-    PRIMARY KEY (event_id, restaurant_id),
     FOREIGN KEY (event_id) REFERENCES event(event_id)
 );
 
@@ -48,6 +38,7 @@ CREATE TABLE restaurant (
     address2 VARCHAR (100),
     address3 VARCHAR (100),
     city VARCHAR (50),
+    country VARCHAR (20),
     state VARCHAR (50),
     zipcode VARCHAR (20),
     image_url VARCHAR (100),
@@ -56,6 +47,17 @@ CREATE TABLE restaurant (
     latitude NUMERIC (10,6),
     longitude NUMERIC (10,6)
 );
+
+CREATE TABLE restaurant_event (
+    event_id INT NOT NULL,
+    restaurant_id INT NOT NULL,
+    yes_votes INT DEFAULT 0,
+    no_votes INT DEFAULT 0,
+    FOREIGN KEY (event_id) REFERENCES event(event_id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id)
+);
+
+
 CREATE TABLE transactions (
     transaction_id SERIAL PRIMARY KEY,
     transaction_name VARCHAR (100)
@@ -64,7 +66,6 @@ CREATE TABLE transactions (
 CREATE TABLE restaurant_transactions (
      restaurant_id INT NOT NULL,
      transaction_id INT NOT NULL,
-     PRIMARY KEY (restaurant_id, transaction_id),
      FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id),
      FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)
 );
@@ -77,18 +78,17 @@ CREATE TABLE category (
 CREATE TABLE restaurant_category (
      restaurant_id INT NOT NULL,
      category_id INT NOT NULL,
-     PRIMARY KEY (restaurant_id, category_id),
      FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id),
      FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
 
 CREATE TABLE restaurant_hours (
+    hours_id SERIAL PRIMARY KEY,
     restaurant_id INT NOT NULL,
     day_id INT NOT NULL,
     day_name VARCHAR (20) NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    PRIMARY KEY (restaurant_id, day_id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id)
 );
 

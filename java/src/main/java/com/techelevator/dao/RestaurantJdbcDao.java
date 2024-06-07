@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +149,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
         return newRestaurant;
     }
 
+
     @Override
     public List<Restaurant> getRestaurantsByEventId(int eventId) {
         // Create a new list.
@@ -196,7 +198,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
     }
 
     @Override
-    public int getCategoryId(String categoryName){
+    public int getCategoryId(String categoryName) {
         // Check to see if the category exists in the category table.
         String sql = "SELECT * FROM category WHERE category_name = ?;";
 
@@ -212,7 +214,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
     }
 
     @Override
-    public int getTransactionId(String transactionName){
+    public int getTransactionId(String transactionName) {
         // Check to see if the transaction type exists in the transactions table.
         String sql = "SELECT * FROM transactions WHERE transaction_name = ?;";
 
@@ -292,7 +294,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
         // Return the new transaction_id.
         return -1;
     }
-
+    
     public int associateCategoryAndRestaurant(String restaurantId, int categoryId){
         // Insert restaurant_id and category_id into the restaurant_category table.
         return -1;
@@ -328,3 +330,6 @@ public class RestaurantJdbcDao implements RestaurantDao {
         return newRestaurant;
     }
 }
+
+
+
