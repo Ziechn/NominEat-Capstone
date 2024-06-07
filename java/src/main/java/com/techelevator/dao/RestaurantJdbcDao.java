@@ -12,13 +12,6 @@ import java.util.List;
 @Component
 public class RestaurantJdbcDao implements RestaurantDao {
 
-    private final JdbcTemplate jdbcTemplate;
-
-
-    public RestaurantJdbcDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
 
     @Override
     public Restaurant createRestaurant(Restaurant restaurant) {
