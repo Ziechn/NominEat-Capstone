@@ -39,7 +39,7 @@ public class RestaurantController {
         // 002-backend
     }
 
-    @GetMapping(path = "/event/${eventId}")
+    @GetMapping(path = "/event/{eventId}")
     public List<Restaurant> getRestaurants(@PathVariable int eventId){
         return restaurantDao.getRestaurantsByEventId(eventId);
     }
