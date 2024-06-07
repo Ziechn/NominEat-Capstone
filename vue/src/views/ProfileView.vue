@@ -12,8 +12,8 @@
                 <p>Events go here</p>
             </div>
         </div>
-        <button @click="logout()">Log Out</button>
     </div>
+    <button @click="logout()">Log Out</button>
 </template>
 
 <script>
@@ -48,6 +48,7 @@ export default {
 
 .user-profile {
     display: flex;
+    justify-content: center;
 }
 
 

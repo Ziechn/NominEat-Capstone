@@ -2,40 +2,49 @@
   <div class="login-zip-container"></div>
     <flipCard ref="flipCard">
       <template #front>
-          <div class="form-container">
+        <div class="form-container">
           <h1 >Please Sign In</h1>
           <form v-on:submit.prevent="login">
-          <div role="alert" v-if="invalidCredentials">
-          Invalid username and password!
-          </div>
-          <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
-    </form>
-  </div>
-</template>
+            <div role="alert" v-if="invalidCredentials">
+              Invalid username and password!
+            </div>
+            <div role="alert" v-if="this.$route.query.registration">
+              Thank you for registering, please sign in.
+            </div>
+            <div class="form-input-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" v-model="user.username" required autofocus />
+            </div>
+            <div class="form-input-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" v-model="user.password" required />
+            </div>
+            <button type="submit">Sign in</button>
+            <p>
+            <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+            </p>
+          </form>
+        </div>
+      
+      </template>
+
       <template #back>
         <div class="form-container">
+          <div class="home">
+            <h1>NominEat</h1>
+            <p>Welcome! Please enter your ZIP to find restaurants near you.</p>
+            <form @submit.prevent="goToSearch">
+            <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
+            <button type="submit">Submit</button>
+            </form> 
           </div>
-          </template>
-
+          <RouterLink v-bind:to="{name: 'profile'}">
+            View Profile
+          </RouterLink>
+        </div>
+      </template>
     </flipCard>
-    </template>
-
-
-    
-
+</template>
 
 <script>
 import FlipCard from "../components/FlipCard.vue";
@@ -49,8 +58,10 @@ export default {
     return {
       user: {
         username: "",
-        password: ""
+        password: "",
       },
+      zipCode: '',
+      error: '',
       invalidCredentials: false
     };
   },
@@ -62,7 +73,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            this.flip();
           }
         })
         .catch(error => {
@@ -76,9 +87,20 @@ export default {
     //setzip if else
     flip() {
       this.$refs.flipCard.flipCard();
+    },
+    goToSearch() {
+      if (this.zipCode) {
+          this.$store.commit('SET_ZIP_CODE', this.zipCode);
+          this.$router.push({ name: 'SearchRestaurants' });
+        }
+    }
+
+  },
+  computed: {
+    isAuthenticated(){
+      return this.$store.state.user !== null;
     }
   }
-
 };
 </script>
 
