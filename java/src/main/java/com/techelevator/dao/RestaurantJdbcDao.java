@@ -1,9 +1,12 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Coordinates;
 import com.techelevator.model.Open;
 import com.techelevator.model.Restaurant;
 import jdk.jfr.Category;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -42,7 +45,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
             String sql = "INSERT INTO restaurant (name, phone, address1, address2, address3, " +
                     "city, country, state, zipcode, image_url, menu_url, rating, " +
                     "latitude, longitude" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?;";
 
             try {
                 String restaurantId = jdbcTemplate.queryForObject(sql, String.class,
@@ -63,7 +66,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
 
                 newRestaurant = getRestaurantById(restaurantId);
             } catch (Exception ex) {
-                System.out.println("Something went wrong" + ex.getMessage());
+                System.out.println("[Restaurant JDBC DAO] Problem adding restaurant to the database. " + ex.getMessage());
             }
 
             // Add the hours to the restaurant_hours table
@@ -109,25 +112,78 @@ public class RestaurantJdbcDao implements RestaurantDao {
     @Override
     public boolean doesRestaurantExist(String restaurantId){
         // Check to see if the restaurant exists in the restaurant table.
-        return false;
+        String sql = "SELECT restaurant_id FROM restaurant WHERE restaurant_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
+            if (results.wasNull()){
+                return false;
+            } else {
+                return true;
+            }
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem checking if restaurant exists.");
+            return false;
+        }
     }
 
     @Override
     public Restaurant getRestaurantById(String restaurantId) {
+        // Create a new restaurant.
+        Restaurant newRestaurant = null;
+
         // Get a restaurant by the restaurant_id from the restaurant table.
-        return new Restaurant();
+        String sql = "SELECT * FROM restaurant WHERE restaurant_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
+            if (results.next()){
+                newRestaurant = mapRowToRestaurant(results);
+            }
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem selection restaurant by id.");
+        }
+
+        return newRestaurant;
     }
 
     @Override
     public List<Restaurant> getRestaurantsByEventId(int eventId) {
-        // Get a list of restaurants by an event id.
+        // Create a new list.
+        List<Restaurant> newRestaurants = new ArrayList<>();
+
+        // Get a list of restaurant_id's by an event id.
+        String sql = "SELECT * FROM restaurant_event WHERE event_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
+            if (results.next()){
+                newRestaurants.add(getRestaurantById(results.getString("restaurant_id")));
+            }
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem selecting restaurants by event id.");
+        }
+
         // By referencing the restaurant_event table.
-        return new ArrayList<>();
+        return newRestaurants;
     }
 
     @Override
     public List<Open> getHours(String restaurantId){
+        List<Open> hours = new ArrayList<>();
+
+        String sql = "SELECT * FROM restaurant_hours WHERE restaurant_id = ?;";
+
         // Return the hours from the database.
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
+            if (results.next()){
+                // Create a new Open object and populate with the relevant information.
+            }
+        } catch (DataAccessException e) {
+            System.out.println("[Restaurant JDBC DAO] Problem selecting restaurants by event id.");
+        }
+
         return new ArrayList<>();
     }
 
@@ -176,5 +232,30 @@ public class RestaurantJdbcDao implements RestaurantDao {
     public int associateTransactionAndRestaurant(String restaurantId, int transactionId){
         // Insert restaurant_id and transaction_id into the restaurant_transaction table.
         return -1;
+    }
+
+    Restaurant mapRowToRestaurant(SqlRowSet results){
+        Restaurant newRestaurant = new Restaurant();
+
+        // Map sql row set to restaurant.
+        newRestaurant.setId(results.getString("restaurant_id"));
+        newRestaurant.setName(results.getString("name"));
+        newRestaurant.setPhoneNumber(results.getString("phone"));
+        newRestaurant.setAddress1(results.getString("address1"));
+        newRestaurant.setAddress2(results.getString("address2"));
+        newRestaurant.setAddress3(results.getString("address3"));
+        newRestaurant.setCity(results.getString("city"));
+        newRestaurant.setCountry(results.getString("country"));
+        newRestaurant.setState(results.getString("state"));
+        newRestaurant.setZipcode(results.getString("zipcode"));
+        newRestaurant.setImageUrl(results.getString("image_url"));
+        newRestaurant.setMenuUrl(results.getString("menu_url"));
+        newRestaurant.setRating(results.getDouble("rating"));
+        newRestaurant.setCoordinates(new Coordinates(
+                results.getDouble("latitude"),
+                results.getDouble("longitude")
+        ));
+
+        return newRestaurant;
     }
 }
