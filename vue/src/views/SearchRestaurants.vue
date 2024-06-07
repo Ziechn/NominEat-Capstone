@@ -1,8 +1,7 @@
 <template>
     <div class="search-restaurants">
-        <h2>Restaurants Near You</h2>
-            <div>
-                <p>Showing Results for ZIP code: {{  zipCode  }}</p>
+        <div>
+                <p>Showing Results near {{  zipCode  }}.</p>
             </div>
             <div v-if="filteredRestaurants.length">
             <input 
@@ -13,19 +12,36 @@
             />
             </div>
 
+        <h2>Search Restaurants</h2>
+        <form class="search-form" @submit.prevent="searchByZipCode">
+        <div class="input-group">
+            <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
+            <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
+            <select v-model="limit" class="search-input">
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            </select>
+            <button type="submit" class="submit">Search</button>
+        </div>
+        </form>
+           
         <div v-if="loading" class="loading">Loading...please wait...</div>
-        
-        <!-- cards -->
-        <!-- && filteredRestaurants.length" -->
-        <!-- <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> -->  
         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">  
-            <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"/>
+            <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"
+            @select="selectRestaurant"/>
         </div>
 
         <!-- && !filteredRestaurants.length -->
         <!--<div v-if="!loading && !filteredRestaurants.length">  -->
         <div v-if="!loading && !filteredRestaurants.length">
             No results found...
+        </div>
+        <div v-if="selectedRestaurant.length" class="selected-list">
+        <h3>Selected Restaurants</h3>
+        <ul>
+            <li v-for="restaurant in selectedRestaurant" :key="restaurant.id">{{  restaurant.name  }}</li>
+        </ul>
         </div>
     </div>
 </template>
@@ -45,7 +61,7 @@ export default{
         };
     },
     computed: {
-        ...mapState(['zipCode','filteredRestaurants', 'loading']),
+        ...mapState(['zipCode','filteredRestaurants', 'restaurants','loading']),
     },
     methods: {
         ...mapActions(['fetchRestaurants']),
@@ -61,7 +77,7 @@ export default{
         }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: 3});
+        this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit });
 }};
 </script>
 
@@ -96,7 +112,22 @@ export default{
     background-color: var(--primary-200);
 }
 
+.search-input {
+    width: 200px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+.submit:hover {
+    background-color: var(--primary-200);
+}
+
+.loading {
+    margin-top: 10px;
+    color: var(--primary-100)
+}
 
 .restaurant-cards {
     display: flex;
