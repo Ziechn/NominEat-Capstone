@@ -4,9 +4,10 @@ import { useStore } from 'vuex';
 // Import components
 import HomeView from '@/views/HomeView.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
-import LoginView from '@/views/LoginView.vue';
+import LoginAndZip from '@/views/LoginAndZip.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LogoutView from '@/views/LogoutView.vue';
+import ProfileView from '@/views/ProfileView.vue';
 
 
 /**
@@ -23,8 +24,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      //temporarily set to false
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -32,13 +32,13 @@ const routes = [
     name: 'SearchRestaurants',
     component: SearchRestaurants,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: LoginAndZip,
     meta: {
       requiresAuth: false
     }
@@ -49,6 +49,14 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
+    meta: {
+      requiresAuth: true
     }
   }
   
