@@ -1,7 +1,8 @@
 ROLLBACK;
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, event, event_attendees, restaurant_event CASCADE;
+DROP TABLE IF EXISTS users, event, event_attendees, restaurant_event,
+restaurant_transactions, category, restaurant_category,restaurant_hours, transactions CASCADE;
 
 
 CREATE TABLE users (
@@ -39,5 +40,56 @@ CREATE TABLE restaurant_event (
     FOREIGN KEY (event_id) REFERENCES event(event_id)
 );
 
+CREATE TABLE restaurant (
+    restaurant_id SERIAL PRIMARY KEY,
+    name VARCHAR (50) NOT NULL,
+    phone VARCHAR (20),
+    address1 VARCHAR (100),
+    address2 VARCHAR (100),
+    address3 VARCHAR (100),
+    city VARCHAR (50),
+    state VARCHAR (50),
+    zipcode VARCHAR (20),
+    image_url VARCHAR (100),
+    menu_url VARCHAR (100),
+    rating NUMERIC (3,2),
+    latitude NUMERIC (10,6),
+    longitude NUMERIC (10,6)
+);
+CREATE TABLE transactions (
+    transaction_id SERIAL PRIMARY KEY,
+    transaction_name VARCHAR (100)
+);
+
+CREATE TABLE restaurant_transactions (
+     restaurant_id INT NOT NULL,
+     transaction_id INT NOT NULL,
+     PRIMARY KEY (restaurant_id, transaction_id),
+     FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id),
+     FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)
+);
+
+CREATE TABLE category (
+     category_id SERIAL PRIMARY KEY,
+     category_name VARCHAR (50) NOT NULL
+);
+
+CREATE TABLE restaurant_category (
+     restaurant_id INT NOT NULL,
+     category_id INT NOT NULL,
+     PRIMARY KEY (restaurant_id, category_id),
+     FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id),
+     FOREIGN KEY (category_id) REFERENCES category (category_id)
+);
+
+CREATE TABLE restaurant_hours (
+    restaurant_id INT NOT NULL,
+    day_id INT NOT NULL,
+    day_name VARCHAR (20) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    PRIMARY KEY (restaurant_id, day_id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id)
+);
 
 COMMIT TRANSACTION;
