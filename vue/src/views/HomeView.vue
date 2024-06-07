@@ -7,13 +7,18 @@
       <button type="submit">Submit</button>
     </form> 
     </div>
+    <RouterLink v-bind:to="{name: 'profile'}">
+      Profile
+    </RouterLink>
 </template>
 
 <script>
 export default {
     data() {
         return {
+            // invalidCredentials: false,
             zipCode: '',
+            error: '',
         };
     },
     methods: {

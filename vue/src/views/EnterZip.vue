@@ -1,4 +1,6 @@
 <!-- <template>
+
+    this is now in the home page
     <div class="calculate-zip">
         <h2> Enter your ZIP Code </h2>
         <form @submit.prevent="setZipCode">

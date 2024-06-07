@@ -157,7 +157,5 @@ public class YelpService {
         } catch (JsonProcessingException e) {
             System.out.println("[Yelp Service] Problem retrieving data.");
         }
-
-        // Frontend branch
     }
 }
