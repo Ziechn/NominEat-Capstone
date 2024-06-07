@@ -43,11 +43,7 @@ public class Open {
         return day;
     }
 
-    public void setDay(int dayId){
-        this.day = dayId;
-    }
-
-    public void setDayName(int dayId){
+    public String getDayName(int dayId){
         if (dayId == 0){
             dayName = "Sunday";
         } else if (dayId == 1){
@@ -63,8 +59,19 @@ public class Open {
         } else if (dayId == 6) {
             dayName = "Saturday";
         } else {
+            dayName = "Invalid Day.";
             System.out.println("[Open] Invalid dayId provided.");
         }
+
+        return dayName;
+    }
+
+    public void setDay(int dayId){
+        this.day = dayId;
+    }
+
+    public void setDayName(String dayName){
+        this.dayName = dayName;
     }
 
     public void setStart(int start){

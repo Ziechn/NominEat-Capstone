@@ -179,12 +179,19 @@ public class RestaurantJdbcDao implements RestaurantDao {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
             if (results.next()){
                 // Create a new Open object and populate with the relevant information.
+                Open open = new Open();
+                open.setDay(results.getInt("day_id"));
+                open.setDayName(results.getString("day_name"));
+                open.setStart(results.getInt("start"));
+                open.setEnd(results.getInt("end"));
+
+                hours.add(open);
             }
         } catch (DataAccessException e) {
             System.out.println("[Restaurant JDBC DAO] Problem selecting restaurants by event id.");
         }
 
-        return new ArrayList<>();
+        return hours;
     }
 
     @Override
