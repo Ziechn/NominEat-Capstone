@@ -1,15 +1,19 @@
 <template>
     <div class="user-profile">
-        <h1>User Profile</h1>
-        <p>Username: {{ user.username }}</p>
-        <p>Email: </p>
+        <div class="profile-content">
+            <div>
+                <h1>User Profile</h1>
+                <p>Username: {{ user.username }}</p>
+                <p>Email: </p>
+            </div>
+            <img class="placeholder-img" src="../assets/stock-user_img.jpg"/>
+            <div class="user-events">
+                <h2>Events</h2>
+                <p>Events go here</p>
+            </div>
+        </div>
+        <button @click="logout()">Log Out</button>
     </div>
-    <img class="placeholder-img" src="../assets/stock-user_img.jpg"/>
-    <div class="user-events">
-        <h2>Events</h2>
-        <p>Events go here</p>
-    </div>
-    <button @click="logout()">Log Out</button>
 </template>
 
 <script>
@@ -42,9 +46,8 @@ export default {
     border-color: --bg-100;
 }
 
-template {
+.user-profile {
     display: flex;
-    text-align: center;
 }
 
 
