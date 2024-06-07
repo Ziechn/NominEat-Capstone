@@ -7,6 +7,7 @@ import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LogoutView from '@/views/LogoutView.vue';
+import ProfileView from '@/views/ProfileView.vue';
 
 
 /**
@@ -23,7 +24,6 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      //temporarily set to false
       requiresAuth: true
     }
   },
@@ -32,7 +32,7 @@ const routes = [
     name: 'SearchRestaurants',
     component: SearchRestaurants,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -49,6 +49,14 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
+    meta: {
+      requiresAuth: true
     }
   }
   
