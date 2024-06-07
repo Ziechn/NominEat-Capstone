@@ -9,14 +9,27 @@ import java.util.List;
 
 @Component
 public class RestaurantJdbcDao implements RestaurantDao {
+    public List<Restaurant> addRestaurants(List<Restaurant> restaurants){
+        // Make a new list...
+        List<Restaurant> createdRestaurantList = new ArrayList<>();
+
+        // Create a restaurant for each restaurant in provided list.
+        for (Restaurant restaurant : restaurants){
+            createdRestaurantList.add(createRestaurant(restaurant));
+        }
+
+        // Return that list.
+        return createdRestaurantList;
+    }
     @Override
     public Restaurant createRestaurant(Restaurant restaurant) {
         // Create a new restaurant:
 
-        // Create the sql query:
-
         // Check to see if the id exists in the table
-        // If not, add to the restaurant table
+        if (getRestaurantById(restaurant.getId()) == null) {
+            // If not, add to the restaurant table.
+            String sql = "INSERT INTO...";
+        }
 
         // Add the hours to the restaurant_hours table
 
