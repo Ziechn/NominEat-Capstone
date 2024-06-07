@@ -153,6 +153,13 @@ const store = _createStore({
     //  } finally {
         commit('SET_LOADING', false);
       }
+    },
+    fetchUser({ commit }) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if(user){
+        commit('SET_USER', user);
+      }
+      
     }
   },
   

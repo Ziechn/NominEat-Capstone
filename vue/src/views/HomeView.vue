@@ -7,6 +7,9 @@
       <button type="submit">Submit</button>
     </form> 
     </div>
+    <RouterLink v-bind:to="{name: 'profile'}">
+      Profile
+    </RouterLink>
 </template>
 
 <script>
