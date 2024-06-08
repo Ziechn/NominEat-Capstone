@@ -224,23 +224,39 @@ public class RestaurantJdbcDao implements RestaurantDao {
         // Return the hours from the database.
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
-            if (results.next()){
+            while (results.next()){
                 // Create a new Open object and populate with the relevant information.
                 Open open = new Open();
                 open.setDay(results.getInt("day_id"));
                 open.setDayName(results.getString("day_name"));
-                open.setStart(results.getInt("start"));
-                open.setEnd(results.getInt("end"));
+                open.setStart(results.getInt("start_time"));
+                open.setEnd(results.getInt("end_time"));
 
                 hours.add(open);
             }
-
-            return hours;
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
             throw new CannotGetJdbcConnectionException("" + e);
         } catch (DataIntegrityViolationException e) {
             System.out.println("[Restaurant JDBC DAO] getHours() Problem getting hours for restaurant id: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return hours;
+    }
+
+    public String getCategoryById(int categoryId){
+        String sql = "SELECT category_name FROM category WHERE category_id = ?;";
+
+        try {
+            String categoryName = jdbcTemplate.queryForObject(sql, String.class, categoryId);
+            System.out.println("[Restaurant JDBC DAO] getCategoryById() category name: " + categoryName);
+            return categoryName;
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getCategoryById() Problem getting category name for id: " + categoryId);
             throw new DataIntegrityViolationException("" + e);
         }
     }
@@ -260,6 +276,27 @@ public class RestaurantJdbcDao implements RestaurantDao {
         }
 
         return -1;
+    }
+
+    public List<String> getCategoriesByRestaurantId(String restaurantId){
+        List<String> newCategoryList = new ArrayList<>();
+
+        String sql = "SELECT category_id FROM restaurant_category WHERE restaurant_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
+            while (results.next()){
+                newCategoryList.add(getCategoryById(results.getInt("category_id")));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getCategoriesByRestaurantId() Problem getting categories for restaurant id: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return newCategoryList;
     }
 
     @Override
@@ -283,6 +320,22 @@ public class RestaurantJdbcDao implements RestaurantDao {
         return -1;
     }
 
+    public String getTransactionById(int transactionId){
+        String sql = "SELECT transaction_name FROM transactions WHERE transaction_id = ?;";
+
+        try {
+            String transactionName = jdbcTemplate.queryForObject(sql, String.class, transactionId);
+            System.out.println("[Restaurant JDBC DAO] getTransactionById() category name: " + transactionName);
+            return transactionName;
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getTransactionById() Problem getting category name for id: " + transactionId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+    }
+
     public int getTransactionAssociationRowCount(String restaurantId, String transactionName){
 
         String sql = "SELECT COUNT(*) FROM restaurant_transactions WHERE restaurant_id = ? AND transaction_id = ?;";
@@ -298,6 +351,27 @@ public class RestaurantJdbcDao implements RestaurantDao {
         }
 
         return -1;
+    }
+
+    public List<String> getTransactionsByRestaurantId(String restaurantId){
+        List<String> newTransactionList = new ArrayList<>();
+
+        String sql = "SELECT transaction_id FROM restaurant_transactions WHERE restaurant_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
+            while (results.next()){
+                newTransactionList.add(getTransactionById(results.getInt("transaction_id")));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getTransactionsByRestaurantId() Problem getting transactions for restaurant id: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+         return newTransactionList;
     }
 
     @Override
@@ -483,6 +557,14 @@ public class RestaurantJdbcDao implements RestaurantDao {
                 results.getDouble("latitude"),
                 results.getDouble("longitude")
         ));
+
+        newRestaurant.setHours(getHours(results.getString("restaurant_id")));
+
+        // Get a list of category names.
+        newRestaurant.setCategories(getCategoriesByRestaurantId(results.getString("restaurant_id")));
+
+        // Get a list of transaction names.
+        newRestaurant.setTransactions(getTransactionsByRestaurantId(results.getString("restaurant_id")));
 
         return newRestaurant;
     }
