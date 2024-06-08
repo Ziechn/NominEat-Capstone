@@ -3,8 +3,8 @@
     <h2>Search Restaurants</h2>  
         <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
             <div class="input-group">
-                    <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
-                    <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
+                    <input type="text" v-model="zipCode"  placeholder="Enter Zip Code" />
+                    <input type="text" v-model="category"  placeholder="Search by type of restaurant" />
             <select v-model="limit" class="search-input"> 
             <option value="10">10</option>
             <option value="15">15</option>
