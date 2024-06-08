@@ -86,7 +86,7 @@ CREATE TABLE restaurant_category (
 );
 
 CREATE TABLE restaurant_hours (
-    hours_id INT PRIMARY KEY,
+    hours_id SERIAL PRIMARY KEY,
     restaurant_id VARCHAR (100),
     day_id INT NOT NULL,
     day_name VARCHAR (20) NOT NULL,
