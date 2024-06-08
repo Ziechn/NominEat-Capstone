@@ -26,10 +26,10 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
                     
-                    <!-- <p class="restaurant-hours"
+                    <p class="restaurant-hours"
                         v-for="(hours, index) in restaurant.hours" v-bind:key="index">
                         {{ getDayByDayNum(hours.day) }}: {{ formatHours(hours.start, hours.end) }}
-                    </p> -->
+                    </p>
 
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <!-- added empty div to separate button from menu for now. remove when styling -->
