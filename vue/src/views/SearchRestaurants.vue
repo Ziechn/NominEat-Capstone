@@ -74,7 +74,10 @@ export default{
     },
     methods: {
         ...mapActions(['fetchRestaurants']), //'saveRestaurants'
-        ...mapMutations(['FILTER_BY_CATEGORY']),
+        ...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT']),
+        updateZipCode(event) {
+            this.SET_ZIP_CODE(event.type.value);
+        },
         searchByZipCode() {
             this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
         },
@@ -92,7 +95,7 @@ export default{
     }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: 10 });
+        this.searchByZipCode();
    }
 };
 </script>
