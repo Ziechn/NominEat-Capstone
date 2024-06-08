@@ -1,5 +1,5 @@
 <template>
-  <div class="login-zip-container"></div>
+  <div class="login-zip-container">
     <flipCard ref="flipCard">
       <template #front>
         <div class="form-container">
@@ -44,6 +44,7 @@
         </div>
       </template>
     </flipCard>
+  </div>
 </template>
 
 <script>
@@ -110,6 +111,7 @@ export default {
   flex-direction: column;
   height: 100vh;
   justify-content: center;
+  align-items: center;
 }
 
 .form-container {
