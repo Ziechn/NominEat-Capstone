@@ -1,8 +1,14 @@
 <template>
     <div class="search-restaurants">
         <div>
-                <p>Showing Results near {{  zipCode  }}.</p>
+            <p>Showing Results near {{  zipCode  }}.</p>
             </div>
+
+            <div v-if="loading" class="loading">Loading...please wait...</div>
+        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">  
+            <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"
+            @select="selectRestaurant"/>
+        </div>
             <div v-if="filteredRestaurants.length">
             <input 
              type="text"
@@ -13,24 +19,20 @@
             </div>
 
         <h2>Search Restaurants</h2>
-        <form class="search-form" @submit.prevent="searchByZipCode">
+        <!-- <form class="search-form" @submit.prevent="searchByZipCode">
         <div class="input-group">
             <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
             <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
-            <select v-model="limit" class="search-input">
-            <option value="10">10</option>
+            <select v-model="limit" class="search-input"> -->
+            <!-- <option value="10">10</option>
             <option value="15">15</option>
-            <option value="20">20</option>
-            </select>
+            <option value="20">20</option> -->
+            <!-- </select>
             <button type="submit" class="submit">Search</button>
         </div>
         </form>
-           
-        <div v-if="loading" class="loading">Loading...please wait...</div>
-        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">  
-            <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"
-            @select="selectRestaurant"/>
-        </div>
+            -->
+    
 
         <!-- && !filteredRestaurants.length -->
         <!--<div v-if="!loading && !filteredRestaurants.length">  -->
@@ -57,7 +59,10 @@ export default{
     },
     data() {
         return {
-         category: '',
+            zipCode: this.$store.state.zipCode,
+            category: '',
+            limit: 10,
+            selectedRestaurants: [],
         };
     },
     computed: {
@@ -69,12 +74,16 @@ export default{
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
         },
-        restaurantSelectionList() {
-            if (this.zipCode) {
-                this.$store.commit('SET_ZIP_CODE', this.zipCode);
-                this.$router.push({ name: 'SearchRestaurants' });
-            }
+        searchByZipCode() {
+            this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit 
+            });
         }
+        // restaurantSelectionList() {
+        //     if (this.zipCode) {
+        //         this.$store.commit('SET_ZIP_CODE', this.zipCode);
+        //         this.$router.push({ name: 'SearchRestaurants' });
+        //     }
+        // }
     },
    created() {
         this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit });

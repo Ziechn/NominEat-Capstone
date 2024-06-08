@@ -43,7 +43,7 @@ export default {
     height: 50px;
     border-radius: 50%;
     border-width: 3px;
-    border-color: --bg-100;
+    border-color: var(--bg-100);
 }
 
 .user-profile {
