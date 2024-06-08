@@ -163,6 +163,22 @@ const store = _createStore({
         commit('SET_LOADING', false);
       }
     },
+    async createEvent({ commit }, event) { 
+      try {
+        const response = await axios.post('event/create', event);
+        commit('ADD_EVENT', response.data);
+      } catch (error) {
+        console.error('Error creating event', error);
+      }
+    },
+    async saveRestaurant({ commit }, restaurants) { 
+      try {
+        const response = await axios.post('restaurants/create', restaurants);
+        commit('SET_RESTAURANTS', response.data);
+      } catch (error) {
+        console.error('Error saving restaurants', error);
+      }
+    },
     fetchUser({ commit }) {
       const user = JSON.parse(localStorage.getItem('user'));
       if(user){
