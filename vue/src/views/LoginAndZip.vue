@@ -3,25 +3,25 @@
     <flipCard ref="flipCard">
       <template #front>
         <div class="form-container">
-          <h1 >Please Sign In</h1>
+          <h1>Login</h1>
           <form v-on:submit.prevent="login">
             <div role="alert" v-if="invalidCredentials">
               Invalid username and password!
             </div>
-            <div role="alert" v-if="this.$route.query.registration">
-              Thank you for registering, please sign in.
+            <div class="register-success" role="alert" v-if="this.$route.query.registration">
+              Account created! Please log in.
             </div>
             <div class="form-input-group">
-              <label for="username">Username</label>
-              <input type="text" id="username" v-model="user.username" required autofocus />
+              <!-- <label for="username">Username</label> -->
+              <input placeholder="Username" type="text" id="username" v-model="user.username" required autofocus />
             </div>
             <div class="form-input-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" v-model="user.password" required />
+              <!-- <label for="password">Password</label> -->
+              <input placeholder="Password" type="password" id="password" v-model="user.password" required />
             </div>
             <button type="submit">Sign in</button>
-            <p>
-            <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+            <p> Need an account? 
+            <router-link v-bind:to="{ name: 'register' }">Sign up.</router-link>
             </p>
           </form>
         </div>
@@ -119,10 +119,16 @@ export default {
   padding:20px;
   text-align: center;
 }
+
 .form-input-group {
   margin-bottom: 1rem;
 }
-label {
+
+/* label {
   margin-right: 0.5rem;
+} */
+
+.register-success{
+  margin-bottom: 0.5;
 }
 </style>

@@ -4,7 +4,7 @@
             <div>
                 <h1>User Profile</h1>
                 <p>Username: {{ user.username }}</p>
-                <p>Email: </p>
+                <p>Email: {{ user.email }}</p>
             </div>
             <img class="placeholder-img" src="../assets/stock-user_img.jpg"/>
             <div class="user-events">
