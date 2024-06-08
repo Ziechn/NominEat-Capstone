@@ -60,16 +60,25 @@ public class JdbcEventDao implements EventDao {
         Event newEvent = null;
 
         String sql = "INSERT INTO event (organizer_id, event_name, " +
-                "location, event_link, decision_date)\n" +
-                "VALUES (?, ?, ?, ?, ?)\n" +
+                "location, event_link) " +
+                "VALUES (?, ?, ?, ?) " +
                 "RETURNING event_id;";
         try {
-            int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getOrganizerId(),
-                    event.getEventName(), event.getLocation(),event.getEventLink(),
-                    event.getDecisionDate());
+//            int eventId = jdbcTemplate.queryForObject(sql, int.class,
+//                    event.getOrganizerId(),
+//                    event.getEventName(),
+//                    event.getLocation(),
+//                    event.getEventLink(),
+//                    event.getDecisionDate());
+
+            int eventId = jdbcTemplate.queryForObject(sql, int.class,
+                    event.getOrganizerId(),
+                    event.getEventName(),
+                    event.getLocation(),
+                    event.getEventLink());
 
             newEvent = event;
-            newEvent.setEventId(eventId); // Me be irrelevant.
+            newEvent.setEventId(eventId); // May be irrelevant.
         } catch (Exception ex) {
             System.out.println("Something went wrong" + ex.getMessage());
         }

@@ -1,14 +1,23 @@
 <template>
     <div class="search-restaurants">
-    <h2>Search Restaurants</h2>  
+        <h2>Search Restaurants</h2>  
+        <!-- <div>
+            <p>Showing Results for Zip code: {{ zipCode }}</p>
+        </div> -->
     <div v-if="filteredRestaurants.length">
         <input 
+             type="text"
+             v-model="zipCode" 
+             placeholder="Enter ZIP Code" 
+             @input="updateZipCode"
+            />
+            <input 
              type="text"
              v-model="category" 
              placeholder="Filter by Category" 
              @input="filterByCategory"
             />
-            <select v-model="limit" class="search-input"> 
+            <select v-model="limit" @change="searchByZipCode" class="search-input"> 
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option> 
@@ -18,9 +27,7 @@
         <!-- <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
             <div class="input-group"> -->
                     <!-- <input type="text" v-model="zipCode"  placeholder="Enter Zip Code" /> -->
-                    <!-- <input type="text" v-model="category"  placeholder="Search by type of restaurant" /> -->
          
-            <!-- <button type="submit" class="submit">Search</button> -->
     
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
@@ -67,7 +74,10 @@ export default{
     },
     methods: {
         ...mapActions(['fetchRestaurants']), //'saveRestaurants'
-        ...mapMutations(['FILTER_BY_CATEGORY']),
+        ...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT']),
+        updateZipCode(event) {
+            this.SET_ZIP_CODE(event.type.value);
+        },
         searchByZipCode() {
             this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
         },
@@ -85,7 +95,7 @@ export default{
     }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: 10 });
+        this.searchByZipCode();
    }
 };
 </script>
