@@ -141,7 +141,7 @@ const store = _createStore({
             //uncomment for backup data
     
         commit('SET_RESTAURANTS', backupData);
-        commit('SET_LOADING', false); } , 900);
+        commit('SET_LOADING', false); } , 1000);
         
         
         //fake api call here
