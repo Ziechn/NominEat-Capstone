@@ -1,5 +1,9 @@
 package com.techelevator.dao;
 import com.techelevator.model.Event;
+import com.techelevator.model.Restaurant;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -22,18 +26,22 @@ public class JdbcEventDao implements EventDao {
     @Override
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
-        Event event = null;
 
-        String sql = "SELECT event_id, organizer_id, event_name, " +
-                "location, event_link, decision_date\n" +
-                "FROM event;";
+        String sql = "SELECT * FROM event;";
 
-
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while (results.next()) {
-            event = mapRowToEvent(results);
-            events.add(event);
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                events.add(mapRowToEvent(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getAllEvents() Problem getting all events");
+            throw new DataIntegrityViolationException("" + e);
         }
+
         return events;
     }
 
@@ -41,66 +49,74 @@ public class JdbcEventDao implements EventDao {
     public Event getEventById(int eventId) {
         Event event = null;
 
-        String sql = "SELECT event_id, organizer_id, event_name, " +
-                "location, event_link, decision_date " +
-                "FROM event " +
-                "WHERE event_id = ?;";
+        String sql = "SELECT * FROM event WHERE event_id = ?;";
 
-
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
-        if (results.next()) {
-            event = mapRowToEvent(results);
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
+            if (results.next()) {
+                event = mapRowToEvent(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getEventById() Problem getting event id: " + eventId);
+            throw new DataIntegrityViolationException("" + e);
         }
-        return event;
 
+        return event;
     }
 
     @Override
     public Event createEvent(Event event) {
         Event newEvent = null;
 
-        String sql = "INSERT INTO event (organizer_id, event_name, " +
-                "location, event_link) " +
-                "VALUES (?, ?, ?, ?) " +
-                "RETURNING event_id;";
-        try {
-//            int eventId = jdbcTemplate.queryForObject(sql, int.class,
-//                    event.getOrganizerId(),
-//                    event.getEventName(),
-//                    event.getLocation(),
-//                    event.getEventLink(),
-//                    event.getDecisionDate());
+        String sql = "INSERT INTO event (organizer_id, event_name, location, event_link, decision_date) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING event_id;";
 
+        try {
             int eventId = jdbcTemplate.queryForObject(sql, int.class,
                     event.getOrganizerId(),
                     event.getEventName(),
                     event.getLocation(),
-                    event.getEventLink());
+                    event.getEventLink(),
+                    event.getDecisionDate());
 
-            newEvent = event;
-            newEvent.setEventId(eventId); // May be irrelevant.
-        } catch (Exception ex) {
-            System.out.println("Something went wrong" + ex.getMessage());
+            newEvent = getEventById(eventId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] createEvent() Problem creating event name " + event.getEventName());
+            throw new DataIntegrityViolationException("" + e);
         }
-        return newEvent;
 
+        return newEvent;
     }
 
     @Override
     public Event getEventByLink(String eventLink) {
         Event event = null;
 
-        String sql = "SELECT event_id, organizer_id, event_name, location, event_link, decision_date\n" +
-                "FROM event\n" +
+        String sql = "SELECT event_id, organizer_id, event_name, location, event_link, decision_date " +
+                "FROM event " +
                 "WHERE event_link = ?;";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventLink);
-        if (results.next()) {
-            event = mapRowToEvent(results);
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventLink);
+            if (results.next()) {
+                event = mapRowToEvent(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getEventByLink() Problem getting event from url: " + eventLink);
+            throw new DataIntegrityViolationException("" + e);
         }
+
         return event;
     }
-
 
     private Event mapRowToEvent(SqlRowSet results) {
         Event event = new Event();
@@ -111,8 +127,6 @@ public class JdbcEventDao implements EventDao {
         event.setEventLink(results.getString("event_link"));
         event.setDecisionDate(results.getTimestamp("decision_date"));
         return event;
-
-
     }
 }
 

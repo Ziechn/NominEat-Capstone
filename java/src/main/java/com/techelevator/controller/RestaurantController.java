@@ -39,11 +39,6 @@ public class RestaurantController {
         // 002-backend
     }
 
-    @GetMapping(path = "/event/{eventId}")
-    public List<Restaurant> getRestaurants(@PathVariable int eventId){
-        return restaurantDao.getRestaurantsByEventId(eventId);
-    }
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/create/{eventId}")
     public List<Restaurant> createRestaurant(@RequestBody List<Restaurant> restaurants, @PathVariable int eventId) {
