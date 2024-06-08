@@ -28,19 +28,19 @@ const routes = [
     }
   },
   {
-    path: '/search',
-    name: 'SearchRestaurants',
-    component: SearchRestaurants,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
     path: '/login',
     name: 'login',
     component: LoginAndZip,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: '/search',
+    name: 'SearchRestaurants',
+    component: SearchRestaurants,
+    meta: {
+      requiresAuth: true
     }
   },
   {
