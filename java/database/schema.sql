@@ -44,8 +44,8 @@ CREATE TABLE restaurant (
     country VARCHAR (20),
     state VARCHAR (50),
     zipcode VARCHAR (20),
-    image_url VARCHAR (100),
-    menu_url VARCHAR (100),
+    image_url VARCHAR (300),
+    menu_url VARCHAR (300),
     rating NUMERIC (3,2),
     latitude NUMERIC (10,6),
     longitude NUMERIC (10,6)
