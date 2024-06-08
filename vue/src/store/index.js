@@ -13,7 +13,7 @@ const backupData = [
     name: 'East Village Pizza',
     zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
-    catagories: { title: 'Pizza' },
+    catagories: [{ title: 'Pizza' }],
     category: 'Pizza',
     rating: 8,
     price: '$$',
@@ -28,7 +28,7 @@ const backupData = [
     name: 'Sushi Place',
     zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
-    catagories: { title: 'Sushi' },
+    catagories: [{ title: 'Sushi' }],
     category: 'Sushi',
     rating: 9,
     price: '$$$',
@@ -43,7 +43,7 @@ const backupData = [
     name: 'Burger House',
     zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
-    catagories: { title: 'Burgers' },
+    catagories: [{ title: 'Burgers' }],
     category: 'Burgers',
     rating: 7,
     price: '$$',
@@ -60,8 +60,7 @@ const backupData = [
 const store = _createStore({
   state: {
     zipCode: '',
-    limit: 3,
-    //limit should be 10 for final? or maybe removed - 
+    limit: 10,
     // uncomment for API data
     // restaurants: [],
     // filteredRestaurants: [],
@@ -96,7 +95,7 @@ const store = _createStore({
       state.events = events;
     },
     ADD_EVENT(state, event) {
-      state.event.push(event);
+      state.events.push(event);
     },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
@@ -115,9 +114,7 @@ const store = _createStore({
       axios.defaults.headers.common = {};
     },
     FILTER_BY_CATEGORY(state, category) {
-      if (category === '') {
-        state.filteredRestaurants = state.restaurants;
-      } else if (category) {
+     if (category) {
         state.filteredRestaurants = state.restaurants.filter(restaurant =>
           restaurant.catagories.some(cat =>
             cat.title.toLowerCase().includes(category.toLowerCase()))
@@ -128,43 +125,38 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit, state }, { zipCode, category , limit }) {
+    async fetchRestaurants({ commit }, { zipCode, limit }) {
       commit('SET_LOADING', true);
       try {
-        //uncomment for fake timer on data
+            //uncomment for fake timer on data
+            //const { zipCode, category, limit } = state
         setTimeout(() => {
-        const { zipCode, category, limit } = state
-        //uncomment for API data
-        // const response = await RestaurantService.list(zipCode, limit);
-        // commit('SET_RESTAURANTS', response.data)
+            //uncomment for API data
+            // const response = await RestaurantService.list(zipCode, limit);
+            // commit('SET_RESTAURANTS', response.data)
 
-        // const response = { data: createStore };
-        // const response = { data: backupData};
+            // const response = { data: createStore };
+             // const response = { data: backupData};
 
-       //uncomment for backup data
+            //uncomment for backup data
     
         commit('SET_RESTAURANTS', backupData);
-
-
         commit('SET_LOADING', false); } , 900);
-
+        
+        
         //fake api call here
         // const response = { data: backupData };
         //commit('SET_RESTAURANTS', response.data);
-
         //const response = { data: createStore };
-        //commit('SET_RESTAURANTS', response);
-
-      }
-     catch (error) {
+        } catch (error) {
         console.error('Error fetching restaurants: ', error);
-    //  } finally {
+        commit('SET_RESTAURANTS', backupData);
         commit('SET_LOADING', false);
       }
     },
     async createEvent({ commit }, event) { 
       try {
-        const response = await axios.post('event/create', event);
+        const response = await axios.post('/events/create', event);
         commit('ADD_EVENT', response.data);
       } catch (error) {
         console.error('Error creating event', error);
@@ -172,7 +164,7 @@ const store = _createStore({
     },
     async saveRestaurant({ commit }, restaurants) { 
       try {
-        const response = await axios.post('restaurants/create', restaurants);
+        const response = await axios.post('/restaurants/create', { restaurants } );
         commit('SET_RESTAURANTS', response.data);
       } catch (error) {
         console.error('Error saving restaurants', error);
