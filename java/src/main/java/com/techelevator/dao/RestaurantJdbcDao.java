@@ -1,10 +1,13 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Coordinates;
 import com.techelevator.model.Open;
 import com.techelevator.model.Restaurant;
 import jdk.jfr.Category;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -22,11 +25,16 @@ public class RestaurantJdbcDao implements RestaurantDao {
 
     @Override
     public List<Restaurant> addRestaurants(List<Restaurant> restaurants){
+
+        for (Restaurant restaurant : restaurants) {
+        }
+
         // Make a new list...
         List<Restaurant> createdRestaurantList = new ArrayList<>();
 
         // Create a restaurant for each restaurant in provided list.
         for (Restaurant restaurant : restaurants){
+            System.out.println("[Restaurant JDBC DAO] Original restaurant ID: " + restaurant.getId());
             createdRestaurantList.add(createRestaurant(restaurant));
         }
 
@@ -41,15 +49,19 @@ public class RestaurantJdbcDao implements RestaurantDao {
         // Check to see if the id exists in the table.
         if (doesRestaurantExist(restaurant.getId())) {
             newRestaurant = getRestaurantById(restaurant.getId());
+            System.out.println("[Restaurant JDBC DAO] Existing restaurant ID: " + newRestaurant.getId());
         } else {
+            System.out.println("[Restaurant JDBC DAO] Restaurant does not exist. Creating...");
+
             // If not, add to the restaurant table.
-            String sql = "INSERT INTO restaurant (name, phone, address1, address2, address3, " +
+            String sql = "INSERT INTO restaurant (restaurant_id, name, phone, address1, address2, address3, " +
                     "city, country, state, zipcode, image_url, menu_url, rating, " +
-                    "latitude, longitude" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    "latitude, longitude) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
             try {
                 String restaurantId = jdbcTemplate.queryForObject(sql, String.class,
+                        restaurant.getId(),
                         restaurant.getName(),
                         restaurant.getPhoneNumber(),
                         restaurant.getAddress1(),
@@ -66,9 +78,14 @@ public class RestaurantJdbcDao implements RestaurantDao {
                         restaurant.getCoordinates().getLongitude());
 
                 newRestaurant = getRestaurantById(restaurantId);
-            } catch (Exception ex) {
-                System.out.println("[Restaurant JDBC DAO] Problem adding restaurant to the database. " + ex.getMessage());
+            } catch (CannotGetJdbcConnectionException e) {
+                System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            } catch (DataIntegrityViolationException e) {
+                System.out.println("[Restaurant JDBC DAO] Problem adding restaurant to the database.");
+                throw new DataIntegrityViolationException("" + e);
             }
+
+            System.out.println("[Restaurant JDBC DAO] New Restaurant ID: " + newRestaurant.getId());
 
             // Add the hours to the restaurant_hours table
             createHours(restaurant.getId(), restaurant.getHours());
@@ -118,10 +135,12 @@ public class RestaurantJdbcDao implements RestaurantDao {
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
-            if (results.wasNull()){
-                return false;
-            } else {
+            if (results.next()){
+                System.out.println("[Restaurant JDBC DAO] Restaurant found. ID: " + results.getString("restaurant_id"));
                 return true;
+            } else {
+                System.out.println("[Restaurant JDBC DAO] Restaurant not found.");
+                return false;
             }
         } catch (DataAccessException e) {
             System.out.println("[Restaurant JDBC DAO] Problem checking if restaurant id: " + restaurantId + " exists.");
@@ -257,7 +276,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
 
         // Add a hours to the restaurant_hours table.
         String sql = "INSERT INTO hours (restaurant_id, day_id, day_name," +
-                "start, end " +
+                "start, end) " +
                 "VALUE (?, ?, ?, ?, ?);";
 
         try {
