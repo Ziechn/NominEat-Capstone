@@ -88,43 +88,53 @@ public class RestaurantJdbcDao implements RestaurantDao {
             createHours(restaurant.getId(), restaurant.getHours());
         }
 
-        // Check to see if each category exists in the category table
+        // If not, check to see if each category exists in the category table
         for (String category : restaurant.getCategories()){
-            if (getCategoryId(category) > 0){
-                // If so, return the category_id.
-                int categoryId = getCategoryId(category);
-                System.out.println("[Restaurant JDBC DAO] createRestaurant() Category found. ID: " + categoryId);
+            // First check to see if the association exists.
+            if (getCategoryAssociationRowCount(restaurant.getId(), category) < 1){
+                if (getCategoryId(category) > 0){
+                    // If so, return the category_id.
+                    int categoryId = getCategoryId(category);
+                    System.out.println("[Restaurant JDBC DAO] createRestaurant() Category found. ID: " + categoryId);
 
-                // Associate the restaurant_id with the category_id in the restaurant_category table.
-                associateCategoryAndRestaurant(restaurant.getId(), categoryId);
+                    // Associate the restaurant_id with the category_id in the restaurant_category table.
+                    associateCategoryAndRestaurant(restaurant.getId(), categoryId);
+                } else {
+                    // If not, add them to the category table, and return the category_id.
+                    System.out.println("[Restaurant JDBC DAO] createRestaurant() Category not found. Creating new category.");
+
+                    int categoryId = createCategory(category);
+
+                    // Associate the restaurant_id with the category_id in the restaurant_category table.
+                    associateCategoryAndRestaurant(restaurant.getId(), categoryId);
+                }
             } else {
-                // If not, add them to the category table, and return the category_id.
-                System.out.println("[Restaurant JDBC DAO] createRestaurant() Category not found. Creating new category.");
-
-                int categoryId = createCategory(category);
-
-                // Associate the restaurant_id with the category_id in the restaurant_category table.
-                associateCategoryAndRestaurant(restaurant.getId(), categoryId);
+                System.out.println("[Restaurant JDBC DAO] createRestaurant() Category association found for restaurant ID: " +restaurant.getId() + " and transaction name: " + category);
             }
         }
 
-        // Check to see if each transaction type exists in the transactions table.
+        // If not, check to see if each transaction type exists in the transactions table.
         for (String transaction : restaurant.getTransactions()) {
-            if (getTransactionId(transaction) > 0){
-                // If so, return the category_id.
-                int transactionId = getTransactionId(transaction);
-                System.out.println("[Restaurant JDBC DAO] createRestaurant() Category found. ID: " + transactionId);
+            // First check to see if the association exists...
+            if (getTransactionAssociationRowCount(restaurant.getId(), transaction) < 1) {
+                if (getTransactionId(transaction) > 0) {
+                    // If so, return the category_id.
+                    int transactionId = getTransactionId(transaction);
+                    System.out.println("[Restaurant JDBC DAO] createRestaurant() Category found. ID: " + transactionId);
 
-                // Associate the restaurant_id with the transaction_id on the restaurant_transactions table.
-                associateTransactionAndRestaurant(restaurant.getId(), transactionId);
+                    // Associate the restaurant_id with the transaction_id on the restaurant_transactions table.
+                    associateTransactionAndRestaurant(restaurant.getId(), transactionId);
+                } else {
+                    // If not, add them to the transactions table, and return the transaction_id.
+                    System.out.println("[Restaurant JDBC DAO] createRestaurant() Transaction not found. Creating new transaction.");
+
+                    int transactionId = createTransaction(transaction);
+
+                    // Associate the restaurant_id with the transaction_id on the restaurant_transactions table.
+                    associateTransactionAndRestaurant(restaurant.getId(), transactionId);
+                }
             } else {
-                // If not, add them to the transactions table, and return the transaction_id.
-                System.out.println("[Restaurant JDBC DAO] createRestaurant() Transaction not found. Creating new transaction.");
-
-                int transactionId = createTransaction(transaction);
-
-                // Associate the restaurant_id with the transaction_id on the restaurant_transactions table.
-                associateTransactionAndRestaurant(restaurant.getId(), transactionId);
+                System.out.println("[Restaurant JDBC DAO] createRestaurant() Transaction association found for restaurant ID: " +restaurant.getId() + " and transaction name: " + transaction);
             }
         }
 
@@ -235,6 +245,23 @@ public class RestaurantJdbcDao implements RestaurantDao {
         }
     }
 
+    public int getCategoryAssociationRowCount(String restaurantId, String categoryName) {
+
+        String sql = "SELECT COUNT(*) FROM restaurant_category WHERE restaurant_id = ? AND category_id = ?;";
+
+        try {
+            int rowCount = jdbcTemplate.queryForObject(sql, int.class, restaurantId, getCategoryId(categoryName));
+            System.out.println("[Restaurant JDBC DAO] getCategoryAssociationRowCount() Row count: " + rowCount);
+            return rowCount;
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+        } catch (EmptyResultDataAccessException e){
+            System.out.println("[Restaurant JDBC DAO] getCategoryAssociationRowCount() Category association not found for restaurant ID: " + restaurantId + " and category name: " + categoryName);
+        }
+
+        return -1;
+    }
+
     @Override
     public int getCategoryId(String categoryName) {
         // Check to see if the category exists in the category table.
@@ -251,6 +278,23 @@ public class RestaurantJdbcDao implements RestaurantDao {
             System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
         } catch (EmptyResultDataAccessException e){
             System.out.println("[Restaurant JDBC DAO] getCategoryId() Category ID not found for: " + categoryName);
+        }
+
+        return -1;
+    }
+
+    public int getTransactionAssociationRowCount(String restaurantId, String transactionName){
+
+        String sql = "SELECT COUNT(*) FROM restaurant_transactions WHERE restaurant_id = ? AND transaction_id = ?;";
+
+        try {
+            int rowCount = jdbcTemplate.queryForObject(sql, int.class, restaurantId, getTransactionId(transactionName));
+            System.out.println("[Restaurant JDBC DAO] getTransactionAssociationRowCount() Row count: " + rowCount);
+            return rowCount;
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+        } catch (EmptyResultDataAccessException e){
+            System.out.println("[Restaurant JDBC DAO] getTransactionAssociationRowCount() Category association not found for restaurant ID: " + restaurantId + " and category name: " + transactionName);
         }
 
         return -1;
