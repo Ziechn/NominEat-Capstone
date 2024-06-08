@@ -22,7 +22,6 @@ const backupData = [
     menuUrl: 'http://www.eastvillagepizza.com/menu',
     hours: '6AM - 9PM',
     status: 'Open',
-    zipcode: 12345
   },
   {
     id: 2,
@@ -38,7 +37,6 @@ const backupData = [
     menuUrl: 'http://www.sushiplace.com/menu',
     hours: '6AM - 9PM',
     status: 'Open',
-    zipcode: 12345
   },
   {
     id: 3,
@@ -54,7 +52,6 @@ const backupData = [
     menuUrl: 'http://www.burgerhouse.com/menu',
     hours: '6AM - 9PM',
     status: 'Open',
-    zipcode: 12345
     // coordinates;
   }
 
@@ -74,6 +71,7 @@ const store = _createStore({
     filteredRestaurants: backupData,
     events: [],
     loading: false,
+    selectedRestaurants: [],
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
   },
@@ -119,22 +117,23 @@ const store = _createStore({
     FILTER_BY_CATEGORY(state, category) {
       if (category === '') {
         state.filteredRestaurants = state.restaurants;
-      } else {
+      } else if (category) {
         state.filteredRestaurants = state.restaurants.filter(restaurant =>
           restaurant.catagories.some(cat =>
             cat.title.toLowerCase().includes(category.toLowerCase()))
             );
+    } else { 
+      state.filteredRestaurants = state.restaurants;
       }
     }
   },
   actions: {
-    async fetchRestaurants({ commit, state }) {
+    async fetchRestaurants({ commit, state }, { zipCode, category , limit }) {
       commit('SET_LOADING', true);
       try {
-
         //uncomment for fake timer on data
         setTimeout(() => {
-        const { zipCode, limit } = state
+        const { zipCode, category, limit } = state
         //uncomment for API data
         // const response = await RestaurantService.list(zipCode, limit);
         // commit('SET_RESTAURANTS', response.data)
