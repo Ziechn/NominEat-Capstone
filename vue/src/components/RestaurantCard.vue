@@ -1,9 +1,10 @@
 <!-- MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
 Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
 <template>
-    <div class="restaurant-card" @click="flipCard">
-        <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered }">
+    <div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" 
+    @click="flipCard">
 
+        <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered }">
             <div class="card-front" aria-label="restaurant-card-front-of-card">
                 <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" />
                 <div class="restaurant-info">
@@ -14,10 +15,10 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         </span>
                     </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
-                    <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>
-                    
+                    <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>    
                 </div>
             </div>
+
             <div class="card-back" aria-label="restaurant-back">
                 <div class="restaurant-info">
                     <h2 class="restaurant-name">{{ restaurant.name }}</h2>
@@ -36,19 +37,13 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     </p>
 
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
-                    <!-- added empty div to separate button from menu for now. remove when styling -->
-                    <div></div>
-                    <button class="call-button" v-if="restaurant.phoneNumber !== null" @click="showNumber">Call to order</button>
-                    <div v-if="isVisible">
-                        {{ restaurant.phoneNumber }}
-                    </div>
+                    <button class="call-button" v-if="restaurant.phoneNumber !== null" @click.stop="showNumber">Call to order</button>
+                    <div v-if="isVisible"> {{ restaurant.phoneNumber }} </div>
                     <button @click.stop="selectRestaurant">select</button>
                 </div>
             </div>
         </div>
-        <!-- <div v-if="isEnlarged" class="overlay" @click="enlargeCard"> -->
     </div>
-    <!-- </div> -->
 </template>
 
 
@@ -87,7 +82,7 @@ export default {
             return `${this.formatTime(start)} - ${this.formatTime(end)}`
         },
         getDayByDayNum(dayNum){
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'];
             return days[dayNum];
         }
         
@@ -104,30 +99,24 @@ export default {
 </script>
 
 <style scoped>
-/* just added this so i could make sure all the hours were displaying correctly */
-.restaurant-hours{
-    font-size: 0.6em;
-}
 .restaurant-card {
     perspective: 1000px; 
     width: 300px;
     height: 400px;
     margin: 20px;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 }
-
 .restaurant-card:hover {
     transform: scale(1.05);
 }
-
 .card-inner {
     width: 100%;
     height: 100%;
-    transition: transform 0.6s 0.3s;
+    transition: transform 0.6s;
     transform-style: preserve-3d;
     position: relative;
-}
-
+} 
 
 .card-inner.flipped {
     transform: rotateY(180deg);
@@ -143,34 +132,26 @@ export default {
     border-radius: 10px;
     background-color: var(--bg-100);
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, .3);
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} 
 
 
 .card-back {
-    background-color: var(--bg-100);
     transform: rotateY(180deg);
-}
-
-
-.card-inner.enlarged {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transition: translate(-50%, -50%) scale(1.5);
-    z-index: 1000;
-    background-color: var(--bg-100);
-    box-shadow: 0 4px 8px rgba(0,0,0,.3);
 }
 
 .restaurant-image {
     width: 100%;
-    height: 150px;
+    height: 60%;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .restaurant-info {
-    padding: 15px;
+    padding: 10px;
     text-align: center;
 }
 
@@ -180,10 +161,14 @@ export default {
     color: var(--text-100);
 }
 
-/* .restaurant-category {
-    font-size: .09em;
+.restaurant-category,
+.restaurant-price,
+.restaurant-rating,
+.restaurant-status,
+.restaurant-address {
+    font-size: 1em;
     color: var(--text-200);
-} */
+}
 
 .menu-link {
     margin-top: 20px;
@@ -212,14 +197,14 @@ export default {
     color: var(--primary-300);
 }
 
-.restaurant-card-wrapper.enlarged .restaurant-card {
+/* .restaurant-card-wrapper.enlarged .restaurant-card {
     width: 500px;
     height: 700px;
     z-index: 10001;
     transform: scale(1.5);
-}
+} */
 
-.overlay {
+/* .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -227,6 +212,6 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-}
+} */
 
 </style>

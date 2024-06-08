@@ -153,31 +153,27 @@ const store = _createStore({
     async fetchRestaurants({ commit }, { zipCode, limit }) {
       commit('SET_LOADING', true);
       try {
-            //uncomment for fake timer on data
-            //const { zipCode, category, limit } = state
-        setTimeout(() => {
-            //uncomment for API data
-            // const response = await RestaurantService.list(zipCode, limit);
-            // commit('SET_RESTAURANTS', response.data)
+                        //const { zipCode, category, limit } = state
+                        // setTimeout(() => {
+                        //uncomment for API data
+        const response = await RestaurantService.list(zipCode, limit);
+                        // commit('SET_RESTAURANTS', response.data)
+                        // const response = { data: createStore };
+                        // const response = { data: backupData};
 
-            // const response = { data: createStore };
-             // const response = { data: backupData};
-
-            //uncomment for backup data
+                        //uncomment for backup data
+                        //  commit('SET_LOADING', false); } , 1000);
     
-        commit('SET_RESTAURANTS', backupData);
-        commit('SET_LOADING', false); } , 1000);
-        
-        
-        //fake api call here
-        // const response = { data: backupData };
-        //commit('SET_RESTAURANTS', response.data);
-        //const response = { data: createStore };
-        } catch (error) {
+                        //fake api call here
+                        // const response = { data: backupData };
+                        //commit('SET_RESTAURANTS', response.data);
+                        //const response = { data: createStore };
+        commit('SET_RESTAURANTS', response.data);
+       } catch (error) {
         console.error('Error fetching restaurants: ', error);
         commit('SET_RESTAURANTS', backupData);
-        commit('SET_LOADING', false);
-    }
+        }finally { commit('SET_LOADING', false);
+      }
     },
     async createEvent({ commit }, event) { 
       try {
