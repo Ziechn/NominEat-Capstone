@@ -45,11 +45,11 @@ public class RestaurantController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "/create")
-    public List<Restaurant> createRestaurant(@RequestBody List<Restaurant> restaurants) {
+    @PostMapping(path = "/create/{eventId}")
+    public List<Restaurant> createRestaurant(@RequestBody List<Restaurant> restaurants, @PathVariable int eventId) {
         if (restaurants.size() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide a restaurant object.");
         }
-        return restaurantDao.addRestaurants(restaurants);
+        return restaurantDao.addRestaurants(restaurants, eventId);
     }
 }

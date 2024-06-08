@@ -25,7 +25,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
     }
 
     @Override
-    public List<Restaurant> addRestaurants(List<Restaurant> restaurants){
+    public List<Restaurant> addRestaurants(List<Restaurant> restaurants, int eventId){
         // Make a new list...
         List<Restaurant> createdRestaurantList = new ArrayList<>();
 
@@ -33,6 +33,8 @@ public class RestaurantJdbcDao implements RestaurantDao {
         for (Restaurant restaurant : restaurants){
             System.out.println("[Restaurant JDBC DAO] addRestaurants() Original restaurant ID: " + restaurant.getId());
             createdRestaurantList.add(createRestaurant(restaurant));
+
+            associateEventWithRestaurants(restaurant.getId(), eventId);
         }
 
         // Return that list.
@@ -496,6 +498,24 @@ public class RestaurantJdbcDao implements RestaurantDao {
             System.out.println("Restaurant JDBC DAO] createTransaction() Problem creating transaction: " + transactionName);
             throw new DataIntegrityViolationException("" + e);
         }
+    }
+
+    public void associateEventWithRestaurants(String restaurantId, int eventId){
+        String sql = "INSERT INTO restaurant_event (restaurant_id, event_id, yes_votes, no_votes) " +
+                "VALUES (?, ?, ?, ?)";
+
+        try {
+            jdbcTemplate.update(sql, restaurantId, eventId, 0, 0);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] associateEventWithRestaurants() problem associating restaurant id: " + restaurantId + " with event id: " + eventId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        System.out.println("[Restaurant JDBC DAO] Restaurant ID: " + restaurantId + " successfully associated with event ID: " + eventId);
+
     }
 
     public void associateCategoryAndRestaurant(String restaurantId, int categoryId){

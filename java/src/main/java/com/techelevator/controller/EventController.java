@@ -70,8 +70,6 @@ public class EventController {
 
         Event newEvent = eventDao.createEvent(event);
 
-        // Link restaurants to the event.
-
         return newEvent.getEventId();
     }
 
