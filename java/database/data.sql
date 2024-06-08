@@ -62,13 +62,13 @@ VALUES      ('A123', 1),
             ('D456', 4);
 
 
-INSERT INTO restaurant_hours (hours_id, restaurant_id, day_id, day_name, start_time, end_time)
-VALUES (1,'A123', 1, 'Monday', '1100', '1800'),
-       (2,'B234', 2, 'Tuesday', '1100', '1400'),
-       (3,'C345', 3, 'Wednesday', '1100', '2000'),
-       (4,'D456', 4, 'Thursday', '1100', '1800'),
-       (5,'A123', 5, 'Friday', '1100', '1700'),
-       (6,'B234', 6, 'Saturday', '1100', '1500');
+INSERT INTO restaurant_hours (restaurant_id, day_id, day_name, start_time, end_time)
+VALUES ('A123', 1, 'Monday', '1100', '1800'),
+       ('B234', 2, 'Tuesday', '1100', '1400'),
+       ('C345', 3, 'Wednesday', '1100', '2000'),
+       ('D456', 4, 'Thursday', '1100', '1800'),
+       ('A123', 5, 'Friday', '1100', '1700'),
+       ('B234', 6, 'Saturday', '1100', '1500');
 
 
 
