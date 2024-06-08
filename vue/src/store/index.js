@@ -11,10 +11,10 @@ const backupData = [
   {
     id: 1,
     name: 'East Village Pizza',
-    zipCode: '11222',
+   // zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
     catagories: [{ title: 'Pizza' }],
-    category: 'Pizza',
+    // category: 'Pizza',
     rating: 8,
     price: '$$',
     address1: '1234 Pizza St, New York, NY',
@@ -26,10 +26,10 @@ const backupData = [
   {
     id: 2,
     name: 'Sushi Place',
-    zipCode: '11222',
+   // zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
     catagories: [{ title: 'Sushi' }],
-    category: 'Sushi',
+    // category: 'Sushi',
     rating: 9,
     price: '$$$',
     address1: '678 Sushi Place, New York, NY',
@@ -41,10 +41,10 @@ const backupData = [
   {
     id: 3,
     name: 'Burger House',
-    zipCode: '11222',
+   // zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
     catagories: [{ title: 'Burgers' }],
-    category: 'Burgers',
+    // category: 'Burgers',
     rating: 7,
     price: '$$',
     address1: '1234 Burger Blvd, New York, NY',
@@ -66,11 +66,11 @@ const store = _createStore({
     // filteredRestaurants: [],
 
     //uncomment for backup data
-    restaurants: backupData,
-    filteredRestaurants: backupData,
+    restaurants: [],
+    filteredRestaurants: [],
     events: [],
     loading: false,
-    selectedRestaurants: [],
+    //selectedRestaurants: [],
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
   },
@@ -88,15 +88,15 @@ const store = _createStore({
     SET_LOADING(state, loading) {
       state.loading = loading;
     },
-    ADD_SELECTED_RESTAURANTS(state, restaurant) {
-      state.selectedRestaurants.push(restaurant);
-    },
-    SET_EVENTS(state, events) {
-      state.events = events;
-    },
-    ADD_EVENT(state, event) {
-      state.events.push(event);
-    },
+    // ADD_SELECTED_RESTAURANTS(state, restaurant) {
+    //   state.selectedRestaurants.push(restaurant);
+    // },
+    // SET_EVENTS(state, events) {
+    //   state.events = events;
+    // },
+    // ADD_EVENT(state, event) {
+    //   state.events.push(event);
+    // },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
@@ -152,7 +152,7 @@ const store = _createStore({
         console.error('Error fetching restaurants: ', error);
         commit('SET_RESTAURANTS', backupData);
         commit('SET_LOADING', false);
-      }
+    }
     },
     async createEvent({ commit }, event) { 
       try {

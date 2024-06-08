@@ -1,6 +1,9 @@
 <template>
     <div class="search-restaurants">
-    <h2>Search Restaurants</h2>  
+        <div>
+            <p>Showing Results for Zip code: {{ zipCode }}</p>
+        </div>
+    <!-- <h2>Search Restaurants</h2>   -->
     <div v-if="filteredRestaurants.length">
         <input 
              type="text"
