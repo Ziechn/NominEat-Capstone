@@ -30,18 +30,18 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
                     
-                    <!-- <p class="restaurant-hours"
+                    <p class="restaurant-hours"
                         v-for="(hours, index) in restaurant.hours" v-bind:key="index">
                         {{ getDayByDayNum(hours.day) }}: {{ formatHours(hours.start, hours.end) }}
-                    </p> -->
+                    </p>
 
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <!-- added empty div to separate button from menu for now. remove when styling -->
-                    <!-- <div></div>
+                    <div></div>
                     <button class="call-button" v-if="restaurant.phoneNumber !== null" @click="showNumber">Call to order</button>
                     <div v-if="isVisible">
                         {{ restaurant.phoneNumber }}
-                    </div> -->
+                    </div>
                     <button @click.stop="selectRestaurant">select</button>
                 </div>
             </div>
@@ -76,20 +76,20 @@ export default {
         selectRestaurant() {
             this.$emit('selectRestaurant', this.restaurant);
         },
-        // formatTime(time) {
-        // let hour = parseInt(time.substring(0, 2), 10);
-        // const minute = time.substring(2, 4);
-        // const ampm = hour >= 12 ? 'PM' : 'AM';
-        // hour = hour % 12 || 12; 
-        // return `${hour}:${minute} ${ampm}`;
-        // },
-        // formatHours(start, end) {
-        //     return `${this.formatTime(start)} - ${this.formatTime(end)}`
-        // },
-        // getDayByDayNum(dayNum){
-        //     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        //     return days[dayNum];
-        // }
+        formatTime(time) {
+        let hour = parseInt(time.substring(0, 2), 10);
+        const minute = time.substring(2, 4);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12 || 12; 
+        return `${hour}:${minute} ${ampm}`;
+        },
+        formatHours(start, end) {
+            return `${this.formatTime(start)} - ${this.formatTime(end)}`
+        },
+        getDayByDayNum(dayNum){
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            return days[dayNum];
+        }
         
         // enlargeCard() {
         //     this.isEnlarged = !this.isEnlarged;
