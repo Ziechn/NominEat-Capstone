@@ -125,7 +125,7 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit, state }, { zipCode, category , limit }) {
+    async fetchRestaurants({ commit }, { zipCode, limit }) {
       commit('SET_LOADING', true);
       try {
             //uncomment for fake timer on data

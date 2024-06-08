@@ -84,13 +84,13 @@ export default {
           }
         });
     },
-    //setzip if else
     flip() {
       this.$refs.flipCard.flipCard();
     },
     goToSearch() {
       if (this.zipCode) {
           this.$store.commit('SET_ZIP_CODE', this.zipCode);
+          this.$store.dispatch( 'fetchRestaurants', { zipCode: this.zipCode, limit: 10}); //we needed to also get the restaurants
           this.$router.push({ name: 'SearchRestaurants' });
         }
     }
