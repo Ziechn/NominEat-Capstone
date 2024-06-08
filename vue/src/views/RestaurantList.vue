@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="restaurant-list">
         <h2>Restaurants Near You</h2>
         <form class="search-form"
@@ -97,4 +97,4 @@ export default{
         color: var(--text-200);
     }
 
-</style>
+</style> -->
