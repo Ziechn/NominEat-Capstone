@@ -1,13 +1,12 @@
 <template>
     <div class="search-restaurants">
     <h2>Search Restaurants</h2>  
-    <div v-if="filteredRestaurant.length">
+    <div v-if="filteredRestaurants.length">
         <input 
              type="text"
              v-model="category" 
              placeholder="Filter by Category" 
              @input="filterByCategory"
-             v-if="!hasSelected"
             />
             <select v-model="limit" class="search-input"> 
             <option value="10">10</option>
@@ -86,7 +85,7 @@ export default{
     }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit });
+        this.fetchRestaurants({ zipCode: this.zipCode, limit: 10 });
    }
 };
 </script>
