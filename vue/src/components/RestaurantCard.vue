@@ -9,9 +9,9 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                 <div class="restaurant-info">
                     <h2 class="restaurant-name" >{{ restaurant.name }} </h2>
                     <p class="restaurant-category">
-                        <!-- <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
+                        <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
-                        </span> -->
+                        </span>
                     </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>
@@ -21,15 +21,19 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
             <div class="card-back" aria-label="restaurant-back">
                 <div class="restaurant-info">
                     <h2 class="restaurant-name">{{ restaurant.name }}</h2>
-                    <p class="restaurant-category">{{ restaurant.categories }}</p>
+                    <p class="restaurant-category">
+                        <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
+                            {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
+                        </span>
+                    </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
                     
-                    <p class="restaurant-hours"
+                    <!-- <p class="restaurant-hours"
                         v-for="(hours, index) in restaurant.hours" v-bind:key="index">
                         {{ getDayByDayNum(hours.day) }}: {{ formatHours(hours.start, hours.end) }}
-                    </p>
+                    </p> -->
 
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <!-- added empty div to separate button from menu for now. remove when styling -->

@@ -1,17 +1,23 @@
 <template>
     <div class="search-restaurants">
+        <h2>Search Restaurants</h2>  
         <div>
             <p>Showing Results for Zip code: {{ zipCode }}</p>
         </div>
-    <!-- <h2>Search Restaurants</h2>   -->
     <div v-if="filteredRestaurants.length">
         <input 
+             type="text"
+             v-model="zipCode" 
+             placeholder="Enter ZIP Code" 
+             @input="updateZipCode"
+            />
+            <input 
              type="text"
              v-model="category" 
              placeholder="Filter by Category" 
              @input="filterByCategory"
             />
-            <select v-model="limit" class="search-input"> 
+            <select v-model="limit" @change="searchByZipCode" class="search-input"> 
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option> 
@@ -21,9 +27,7 @@
         <!-- <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
             <div class="input-group"> -->
                     <!-- <input type="text" v-model="zipCode"  placeholder="Enter Zip Code" /> -->
-                    <!-- <input type="text" v-model="category"  placeholder="Search by type of restaurant" /> -->
          
-            <!-- <button type="submit" class="submit">Search</button> -->
     
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
