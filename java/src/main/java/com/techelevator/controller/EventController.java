@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.EventDao;
+import com.techelevator.dao.RestaurantDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Event;
 import com.techelevator.model.Restaurant;
@@ -29,6 +30,9 @@ public class EventController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RestaurantDao restaurantDao;
 
 
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -81,14 +85,9 @@ public class EventController {
         return newUrl;
     }
 
-    @RequestMapping(path = "/{eventId}/restaurants", method = RequestMethod.GET)
-    public List<Restaurant> getEventRestaurants (@PathVariable int eventId, @RequestParam (defaultValue = "10") int limit,@RequestParam (defaultValue = "food") String term) {
-       Event event = eventDao.getEventById(eventId);
-
-       if (event == null) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
-       }
-        return yelpService.getSearchResults(event.getLocation(), limit, term);
+    @GetMapping(path = "/{eventId}/restaurants")
+    public List<Restaurant> getRestaurants(@PathVariable int eventId){
+        return restaurantDao.getRestaurantsByEventId(eventId);
     }
 
     @RequestMapping(path = "/access/{eventLink}", method = RequestMethod.GET)

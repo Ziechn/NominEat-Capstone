@@ -202,7 +202,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
 
-            if (results.next()){
+            while (results.next()){
                 newRestaurants.add(getRestaurantById(results.getString("restaurant_id")));
             }
 
