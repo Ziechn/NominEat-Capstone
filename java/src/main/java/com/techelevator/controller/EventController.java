@@ -1,6 +1,5 @@
 package com.techelevator.controller;
 
-
 import com.techelevator.dao.EventDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Event;
@@ -42,32 +41,46 @@ public class EventController {
         return eventDao.getEventById(eventId);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    //@ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/create")
-    public Event createEvent(@RequestBody Event event, Principal principal) {
-        if (event.getEventName() == null || event.getEventName().isEmpty() ||
-                event.getLocation() == null || event.getLocation().isEmpty() ||
-                event.getDecisionDate() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
-        }
-        User organizer = userDao.getUserByUsername(principal.getName());
-        if (organizer == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
-        }
-        event.setOrganizerId(organizer.getId());
+    public int createEvent(@RequestBody Event event) {
 
-       if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
-           event.setEventLink(generateUniqueEventLink());
-        }
+        System.out.println("[Event Controller] createEvent()");
 
-        return eventDao.createEvent(event);
+//        if (event.getEventName() == null || event.getEventName().isEmpty() ||
+//                event.getLocation() == null || event.getLocation().isEmpty() ||
+//                event.getDecisionDate() == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
+//        }
+
+//        User organizer = userDao.getUserByUsername(principal.getName());
+//        if (organizer == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
+//        }
+
+        // event.setOrganizerId(organizer.getId());
+        // event.setOrganizerId(1);
+
+//       if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
+//        }
+
+        String newUrl =generateUniqueEventLink();
+        event.setEventLink(newUrl);
+        System.out.println("[Event Controller] createEvent() Event unique URL: " );
+
+        Event newEvent = eventDao.createEvent(event);
+
+        // Link restaurants to the event.
+
+        return newEvent.getEventId();
     }
 
     private String generateUniqueEventLink() {
-       String url = "http://localhost:9000/event/";
+        String url = "http://localhost:9000/event/";
         String uniqueId = UUID.randomUUID().toString();
-        return url + uniqueId;
-
+        String newUrl = url + uniqueId;
+        System.out.println("[Event Controller] generateUniqueEventLink() Unique URL: " + newUrl);
+        return newUrl;
     }
 
     @RequestMapping(path = "/{eventId}/restaurants", method = RequestMethod.GET)
