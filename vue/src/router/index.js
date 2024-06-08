@@ -3,9 +3,10 @@ import { useStore } from 'vuex';
 
 // Import components
 import HomeView from '@/views/HomeView.vue';
-import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
+import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import RegisterView from '@/views/RegisterView.vue';
+//import EventCreation from '@/components/EventCreation.vue';
 import LogoutView from '@/views/LogoutView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 
@@ -40,7 +41,7 @@ const routes = [
     name: 'SearchRestaurants',
     component: SearchRestaurants,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -51,6 +52,14 @@ const routes = [
       requiresAuth: false
     }
   },
+  // {
+  //   path: '/event-create',
+  //   name: 'EventCreation',
+  //   component: EventCreation,
+  //   meta: {
+  //     requiresAuth: false
+  //   }
+  // },
   {
     path: '/profile',
     name: 'profile',
