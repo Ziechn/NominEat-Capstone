@@ -1,10 +1,10 @@
 <template>
     <div class="search-restaurants">
     <h2>Search Restaurants</h2>  
-                <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
-                    <div class="input-group">
-                        <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
-                        <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
+        <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
+            <div class="input-group">
+                    <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
+                    <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
             <select v-model="limit" class="search-input"> 
             <option value="10">10</option>
             <option value="15">15</option>
@@ -15,13 +15,12 @@
          </form>
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
-        </div>
-            <div v-if="filteredRestaurants.length">
             <input 
              type="text"
              v-model="category" 
              placeholder="Filter by Category" 
              @input="filterByCategory"
+             v-if="!hasSelected"
             />
          <div class ="restaurant-cards">
             <RestaurantCard
@@ -57,7 +56,6 @@ export default{
     data() {
         return {
             zipCode: this.$store.state.zipCode,
-            type: '',
             category: '',
             limit: 10,
             selectedRestaurants: [],
@@ -71,7 +69,7 @@ export default{
         ...mapActions(['fetchRestaurants', 'saveRestaurants']),
         ...mapMutations(['FILTER_BY_CATEGORY']),
         searchByZipCode() {
-            this.fetchRestaurants({ zipCode: this.zipCode, type: this.type, limit: this.limit });
+            this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit });
         },
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
@@ -87,7 +85,7 @@ export default{
     }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, type: this.type, limit: this.limit });
+        this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit });
    }
 };
 </script>
