@@ -1,13 +1,20 @@
 <template>
     <div class="search-restaurants">
-        <div>
-            <p>Showing Results near {{  zipCode  }}.</p>
+    <h2>Search Restaurants</h2>  
+                <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
+                    <div class="input-group">
+                        <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
+                        <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
+            <select v-model="limit" class="search-input"> 
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option> 
+            </select>
+            <button type="submit" class="submit">Search</button>
             </div>
-
-            <div v-if="loading" class="loading">Loading...please wait...</div>
-        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">  
-            <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"
-            @select="selectRestaurant"/>
+         </form>
+        <div v-if="loading" class="loading">Loading...please wait...</div>
+        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
         </div>
             <div v-if="filteredRestaurants.length">
             <input 
@@ -16,40 +23,30 @@
              placeholder="Filter by Category" 
              @input="filterByCategory"
             />
-            </div>
-
-        <h2>Search Restaurants</h2>
-        <!-- <form class="search-form" @submit.prevent="searchByZipCode">
-        <div class="input-group">
-            <input type="text" v-model="zipCode"   placeholder="Enter Zip Code" />
-            <input type="text" v-model="category"   placeholder="Search by type of restaurant" />
-            <select v-model="limit" class="search-input"> -->
-            <!-- <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option> -->
-            <!-- </select>
-            <button type="submit" class="submit">Search</button>
-        </div>
-        </form>
-            -->
-    
-
-        <!-- && !filteredRestaurants.length -->
-        <!--<div v-if="!loading && !filteredRestaurants.length">  -->
-        <div v-if="!loading && !filteredRestaurants.length">
-            No results found...
-        </div>
-        <div v-if="selectedRestaurant.length" class="selected-list">
+         <div class ="restaurant-cards">
+            <RestaurantCard
+            v-for="restaurant in filteredRestaurants" 
+            v-bind:key="restaurant.id" 
+            v-bind:restaurant="restaurant"
+            @select="selectRestaurant"
+            />
+         </div>
+         </div>
+         <div v-if="!loading && !filteredRestaurants.length">
+        No results found...
+        </div> 
+        <div v-if="selectedRestaurants.length">
         <h3>Selected Restaurants</h3>
         <ul>
             <li v-for="restaurant in selectedRestaurant" :key="restaurant.id">{{  restaurant.name  }}</li>
         </ul>
+        <button @click="saveSelectedRestaurants">Save Selected Restaurants</button>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState,  mapActions, mapMutations } from 'vuex';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 
 
@@ -60,34 +57,39 @@ export default{
     data() {
         return {
             zipCode: this.$store.state.zipCode,
+            type: '',
             category: '',
             limit: 10,
             selectedRestaurants: [],
+            hasSelected: false
         };
     },
     computed: {
-        ...mapState(['zipCode','filteredRestaurants', 'restaurants','loading']),
+        ...mapState(['filteredRestaurants', 'loading']),
     },
     methods: {
-        ...mapActions(['fetchRestaurants']),
+        ...mapActions(['fetchRestaurants', 'saveRestaurants']),
         ...mapMutations(['FILTER_BY_CATEGORY']),
+        searchByZipCode() {
+            this.fetchRestaurants({ zipCode: this.zipCode, type: this.type, limit: this.limit });
+        },
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
         },
-        searchByZipCode() {
-            this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit 
-            });
-        }
-        // restaurantSelectionList() {
-        //     if (this.zipCode) {
-        //         this.$store.commit('SET_ZIP_CODE', this.zipCode);
-        //         this.$router.push({ name: 'SearchRestaurants' });
-        //     }
-        // }
+        selectRestaurant(restaurant) {
+            if (!this.selectedRestaurants.includes(restaurant)) {
+                this.selectedRestaurants.push(restaurant);
+                this.hasSelected = true;
+            }
+        },
+        saveSelectedRestaurants() {
+            this.selectedRestaurants(this.selectedRestaurants);
+    }
     },
    created() {
-        this.fetchRestaurants({ zipCode: this.zipCode, category: this.category, limit: this.limit });
-}};
+        this.fetchRestaurants({ zipCode: this.zipCode, type: this.type, limit: this.limit });
+   }
+};
 </script>
 
 <style scoped>
