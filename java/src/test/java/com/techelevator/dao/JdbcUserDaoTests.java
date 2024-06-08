@@ -13,9 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 public class JdbcUserDaoTests extends BaseDaoTests {
-    protected static final User USER_1 = new User(1, "user1", "user1", "ROLE_USER");
-    protected static final User USER_2 = new User(2, "user2", "user2", "ROLE_USER");
-    private static final User USER_3 = new User(3, "user3", "user3", "ROLE_USER");
+    protected static final User USER_1 = new User(1, "user1", "user1", "ROLE_USER", "user1@fakeemail.com", "http://example.com/profiles/user1.jpg");
+    protected static final User USER_2 = new User(2, "user2", "user2", "ROLE_USER", "user2@fakeemail.com", "http://example.com/profiles/user2.jpg");
+    private static final User USER_3 = new User(3, "user3", "user3", "ROLE_USER","user3@fakeemail.com","http://example.com/profiles/user3.jpg");
 
     private JdbcUserDao sut;
 
@@ -73,6 +73,8 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         registerUserDto.setUsername(null);
         registerUserDto.setPassword(USER_3.getPassword());
         registerUserDto.setRole("ROLE_USER");
+        registerUserDto.setEmail(USER_3.getEmail());
+        registerUserDto.setProfileImageUrl(USER_3.getProfileImageUrl());
         sut.createUser(registerUserDto);
     }
 
@@ -82,6 +84,8 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         registerUserDto.setUsername(USER_1.getUsername());
         registerUserDto.setPassword(USER_3.getPassword());
         registerUserDto.setRole("ROLE_USER");
+        registerUserDto.setEmail(USER_3.getEmail());
+        registerUserDto.setProfileImageUrl(USER_3.getProfileImageUrl());
         sut.createUser(registerUserDto);
     }
 
@@ -91,6 +95,8 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         registerUserDto.setUsername(USER_3.getUsername());
         registerUserDto.setPassword(null);
         registerUserDto.setRole("ROLE_USER");
+        registerUserDto.setEmail(USER_3.getEmail());
+        registerUserDto.setProfileImageUrl(USER_3.getProfileImageUrl());
         sut.createUser(registerUserDto);
     }
 
@@ -100,6 +106,8 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         user.setUsername("new");
         user.setPassword("user");
         user.setRole("ROLE_USER");
+        user.setEmail("user1@fakeemail.com");
+        user.setProfileImageUrl("http://example.com/profiles/newuser.jpg");
         User createdUser = sut.createUser(user);
 
         Assert.assertNotNull(createdUser);

@@ -9,18 +9,12 @@
             <div class="card-back">
                 <slot name="back"></slot>
             </div>
-
-
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: {
-        restaurant: Object
-    },
-
     data() {
         return {
             isFlipped: false
@@ -36,7 +30,7 @@ export default {
 
 <style scoped>
     .flip-card {
-        perspective: 1000px; 
+    perspective: 1000px; 
     width: 300px;
     height: 400px;
     }
