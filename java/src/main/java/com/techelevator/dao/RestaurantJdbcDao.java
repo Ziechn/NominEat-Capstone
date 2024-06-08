@@ -7,6 +7,7 @@ import com.techelevator.model.Restaurant;
 import jdk.jfr.Category;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -239,17 +240,20 @@ public class RestaurantJdbcDao implements RestaurantDao {
         // Check to see if the category exists in the category table.
         String sql = "SELECT category_id FROM category WHERE category_name = ?;";
 
+        System.out.println("[Restaurant JDBC DAO] getCategoryById() Category name: " + categoryName);
+
         try {
             // Return the category id.
-            int categoryId = jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
+            int categoryId = jdbcTemplate.queryForObject(sql, int.class, categoryName);
+            System.out.println("[Restaurant JDBC DAO] getCategoryById() Category ID: " + categoryId);
             return categoryId;
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
-            throw new CannotGetJdbcConnectionException("" + e);
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("[Restaurant JDBC DAO] getCategoryId() Problem accessing category id for " + categoryName);
-            throw new DataIntegrityViolationException("" + e);
+        } catch (EmptyResultDataAccessException e){
+            System.out.println("[Restaurant JDBC DAO] getCategoryId() Category ID not found for: " + categoryName);
         }
+
+        return -1;
     }
 
     @Override
@@ -259,14 +263,16 @@ public class RestaurantJdbcDao implements RestaurantDao {
 
         try {
             // Return the transaction id.
-            return jdbcTemplate.queryForObject(sql, Integer.class, transactionName);
+            int transactionId = jdbcTemplate.queryForObject(sql, Integer.class, transactionName);
+            System.out.println("[Restaurant JDBC DAO] getCategoryById() Category ID: " + transactionId);
+            return transactionId;
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
-            throw new CannotGetJdbcConnectionException("" + e);
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("[Restaurant JDBC DAO] getTransactionId() Problem accessing transaction id for: " + transactionName);
-            throw new DataIntegrityViolationException("" + e);
+        } catch (EmptyResultDataAccessException e){
+            System.out.println("[Restaurant JDBC DAO] getCategoryId() Category ID not found for: " + transactionName);
         }
+
+        return -1;
     }
 
     public Open getOpen(int openId) {
