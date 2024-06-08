@@ -42,9 +42,9 @@ public class JdbcEventDao implements EventDao {
         Event event = null;
 
         String sql = "SELECT event_id, organizer_id, event_name, " +
-                "location, event_link, decision_date\n" +
-                "FROM event\n" +
-                "WHERE event_id =?;";
+                "location, event_link, decision_date " +
+                "FROM event " +
+                "WHERE event_id = ?;";
 
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
