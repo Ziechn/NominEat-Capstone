@@ -10,7 +10,7 @@ public class Event {
 
     private int organizerId;
 
-    private String zipcode;
+    private String location;
 
     private String eventLink;
 
@@ -24,12 +24,12 @@ public class Event {
 
 
 
-    public Event(int eventId, String eventName, int organizerId, String zipcode,
+    public Event(int eventId, String eventName, int organizerId, String location,
                  String eventLink, Timestamp decisionDate) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.organizerId = organizerId;
-        this.zipcode = zipcode;
+        this.location = location;
         this.eventLink = eventLink;
         this.decisionDate = decisionDate;
 
@@ -61,12 +61,12 @@ public class Event {
         this.organizerId = organizerId;
     }
 
-    public String getZipcode(){
-        return zipcode;
+    public String getLocation(){
+        return location;
     }
 
-    public void setZipcode(String location) {
-        this.zipcode = zipcode;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getEventLink () {

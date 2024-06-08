@@ -46,7 +46,7 @@ public class EventController {
     @PostMapping(path = "/create")
     public Event createEvent(@RequestBody Event event, Principal principal) {
         if (event.getEventName() == null || event.getEventName().isEmpty() ||
-                event.getZipcode() == null || event.getZipcode().isEmpty() ||
+                event.getLocation() == null || event.getLocation().isEmpty() ||
                 event.getDecisionDate() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
         }
@@ -77,7 +77,7 @@ public class EventController {
        if (event == null) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
        }
-        return yelpService.getSearchResults(event.getZipcode(), limit, term);
+        return yelpService.getSearchResults(event.getLocation(), limit, term);
     }
 
     @RequestMapping(path = "/access/{eventLink}", method = RequestMethod.GET)
