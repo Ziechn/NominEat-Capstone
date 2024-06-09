@@ -9,13 +9,13 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                 <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" />
                 <div class="restaurant-info">
                     <h2 class="restaurant-name" >{{ restaurant.name }} </h2>
-                    <p class="restaurant-category">
+                    <!-- <p class="restaurant-category"> 
                         <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
-                    </p>
+                    </p> -->
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
-                    <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>    
+                    <p class="restaurant-rating">Rating {{ restaurant.rating }}</p>    
                 </div>
             </div>
 
@@ -31,10 +31,12 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
                     
-                    <p class="restaurant-hours"
-                        v-for="(hours, index) in restaurant.hours" v-bind:key="index">
-                        {{ getDayByDayNum(hours.day) }}: {{ formatHours(hours.start, hours.end) }}
-                    </p>
+                    <div class="restaurant-hours">
+                    <div  v-for="(hours, index) in restaurant.hours" v-bind:key="index" class="hours-row" >
+                        <span>{{ getDayByDayNum(hours.day) }}</span>
+                        <span>{{ formatHours(hours.start, hours.end) }}</span>
+                    </div>  
+                    </div>
 
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <button class="call-button" v-if="restaurant.phoneNumber !== null" @click.stop="showNumber">Call to order</button>
@@ -57,7 +59,6 @@ export default {
         return {
             isFlipped: false,
             isHovered: false,
-            isEnlarged: false,
             isVisible: false
         };
     },
@@ -84,7 +85,9 @@ export default {
         getDayByDayNum(dayNum){
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'];
             return days[dayNum];
-        }
+        },
+       
+    
         
         // enlargeCard() {
         //     this.isEnlarged = !this.isEnlarged;
@@ -106,6 +109,8 @@ export default {
     margin: 20px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
+    display: grid;
+    place-items: center;
 }
 .restaurant-card:hover {
     transform: scale(1.05);
@@ -128,26 +133,26 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 1px solid #ccc;
     border-radius: 10px;
     background-color: var(--bg-100);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
 } 
-
-
 .card-back {
     transform: rotateY(180deg);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 10px;
 }
 
 .restaurant-image {
     width: 100%;
-    height: 60%;
+    height: auto;
+    aspect-ratio: 16/9;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
 }
 
 .restaurant-info {
@@ -156,7 +161,7 @@ export default {
 }
 
 .restaurant-name {
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin: 5px 0;
     color: var(--text-100);
 }
@@ -166,36 +171,53 @@ export default {
 .restaurant-rating,
 .restaurant-status,
 .restaurant-address {
-    font-size: 1em;
+    font-size: .9em;
     color: var(--text-200);
 }
-
+.hours-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.9em;
+}
+/* .restaurant-hours {
+    font-size: 0.8em;
+    margin:0px;
+    color: var(--text-200);
+    border-top: 1px solid var(--bg-200);
+    border-bottom: 1px solid var(--bg-200);
+    padding: 10px 0;
+    width: 100%;
+    text-align: left;
+} */
 .menu-link {
-    margin-top: 20px;
+    margin-top: 10px;
     text-decoration: none;
-    color: var(--text-100);
-    font-weight: bold;
+    color: var(--primary-100);
 }
 
 .call-button {
-    margin: 15px;
+    margin: 10px;
     background-color: var(--bg-100);
     border: none;
     cursor: pointer;
     color: var(--text-100);
     padding: 5px;
+    border-radius: 5px;
+;
 }
 
 .call-button:hover {
     color: var(--accent-100);
-}
-.open {
+    border-color: var(--accent-100);
+ }
+/* .open {
     color: var(--accent-100);
 }
 
 .closed {
     color: var(--primary-300);
-}
+} */
 
 /* .restaurant-card-wrapper.enlarged .restaurant-card {
     width: 500px;
