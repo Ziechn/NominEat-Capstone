@@ -14,6 +14,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
                     </p>
+                   
                     <p class="restaurant-rating">{{ restaurant.rating }} out of 5 stars</p> 
                     <button @click.stop="selectRestaurant" class="select-button">select</button>   
                 </div>
@@ -198,26 +199,35 @@ export default {
 .menu-link {
     margin-top: 10px;
     text-decoration: none;
-    color: var(--primary-100);
+    color: var(--text-200);
 }
-
+.menu-link:hover {
+    color: var(--accent-100);
+}
 .call-button {
     margin: 10px;
     background-color: var(--bg-100);
     border: none;
     cursor: pointer;
-    color: var(--text-100);
+    color: var(--text-200);
     padding: 5px;
     border-radius: 5px;
+    font-weight: bold;
 }
 .select-button {
     margin: 10px;
-    background-color: var(--primary-100);
+    background-color: var(--bg-100);
     border: none;
     cursor: pointer;    
-    color: white;
-    padding: 20x;
+    color: var(--accent-200);
+    padding-top: 0px;
     border-radius: 5px;
+    font-weight: bold;
+    font-size: large;
+}
+.select-button:hover {
+    color: var(--accent-100);
+    font-size: x-large;
 }
 
 .call-button:hover {
