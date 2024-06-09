@@ -1,5 +1,5 @@
-<template>
-    <div class="selected-restaurants-list">
+<!-- <template>
+    <div class="event-list">
         <h2>Your Restaurants</h2>
 
         <div v-if="!loading && restaurants.length" class="restaurant-cards">
@@ -27,4 +27,4 @@ export default{
     }
 };
 
-</script>
+</script> -->
