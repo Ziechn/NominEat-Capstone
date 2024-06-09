@@ -8,14 +8,15 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
             <div class="card-front" aria-label="restaurant-card-front-of-card">
                 <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" />
                 <div class="restaurant-info">
-                    <h2 class="restaurant-name" >{{ restaurant.name }} </h2>
-                    <!-- <p class="restaurant-category"> 
+                    <h2 class="restaurant-name" >{{ restaurant.name }}</h2>
+                    <p class="restaurant-category"> 
                         <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
-                    </p> -->
+                    </p>
                     <p class="restaurant-price" >{{ restaurant.price }}</p>
-                    <p class="restaurant-rating">Rating {{ restaurant.rating }}</p>    
+                    <p class="restaurant-rating">{{ restaurant.rating }} out of 5 stars</p> 
+                    <button @click.stop="selectRestaurant" class="select-button">select</button>   
                 </div>
             </div>
 
@@ -41,7 +42,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <button class="call-button" v-if="restaurant.phoneNumber !== null" @click.stop="showNumber">Call to order</button>
                     <div v-if="isVisible"> {{ restaurant.phoneNumber }} </div>
-                    <button @click.stop="selectRestaurant">select</button>
+                    <button @click.stop="selectRestaurant" class="select-button">select</button>
                 </div>
             </div>
         </div>
@@ -204,7 +205,15 @@ export default {
     color: var(--text-100);
     padding: 5px;
     border-radius: 5px;
-;
+}
+.select-button {
+    margin: 10px;
+    background-color: var(--bg-100);
+    border: none;
+    cursor: pointer;
+    color: var(--text-100);
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .call-button:hover {
