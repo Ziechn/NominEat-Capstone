@@ -31,8 +31,8 @@ export default {
 <style scoped>
     .flip-card {
     perspective: 1000px; 
-    width: 300px;
-    height: 400px;
+    width: 700px;
+    height: 425px;
     }
 
     .card-inner {

@@ -107,17 +107,23 @@ export default{
     padding: 20px;
     background-color: var(--bg-100);
     color: var(--text-100);
+    text-align: center;
 }
 
-.search-form input,
-.search-form button{
+.search-form {
+    display: flex;
+}
+
+
+.search-input,
+.search-button{
     margin: 5px 0;
     padding: 10px;
     border: 1px solid var(--bg-300);
     border-radius: 5px;
 }
 
-.search-form input {
+.search-input {
     width: calc(100% - 22px);
 }
 

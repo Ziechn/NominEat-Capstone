@@ -8,7 +8,7 @@
             {{ registrationErrorMsg }}
           </div>
           <div class="form-input-group">
-            <input placeholder="Username" type="text" id="email" v-model="user.email" required />
+            <input placeholder="Username" type="text" id="username" v-model="user.username" required />
           </div>
           <div class="form-input-group">
             <input placeholder="Email Address" type="text" id="email" v-model="user.email" required />
@@ -84,8 +84,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 450px;
+  width: 700px;
+  height: 500px;
 }
 
 .form-container {
