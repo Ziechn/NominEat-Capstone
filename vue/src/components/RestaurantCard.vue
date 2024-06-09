@@ -14,7 +14,6 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
                     </p>
-                    <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-rating">{{ restaurant.rating }} out of 5 stars</p> 
                     <button @click.stop="selectRestaurant" class="select-button">select</button>   
                 </div>
@@ -28,9 +27,9 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
                     </p>
-                    <p class="restaurant-price" >{{ restaurant.price }}</p>
                     <p class="restaurant-address" >{{ restaurant.address1 }}</p>
                     <p class="restaurant-status" >{{ restaurant.isOpenNow ? 'Open now' : 'Closed' }}</p>
+                    <p class="restaurant-price" >{{ restaurant.price }}</p>
                     
                     <div class="restaurant-hours">
                     <div  v-for="(hours, index) in restaurant.hours" v-bind:key="index" class="hours-row" >
@@ -143,9 +142,10 @@ export default {
 } 
 .card-back {
     transform: rotateY(180deg);
-    display: grid;
+    padding: 15px;
+    /* display: grid;
     grid-template-rows: auto 1fr auto;
-    gap: 10px;
+    gap: 10px; */
 }
 
 .restaurant-image {
@@ -168,12 +168,16 @@ export default {
 }
 
 .restaurant-category,
-.restaurant-price,
 .restaurant-rating,
 .restaurant-status,
 .restaurant-address {
     font-size: .9em;
     color: var(--text-200);
+}
+
+.restaurant-price {
+    font-size: .9em;
+    color: var(--accent-100);
 }
 .hours-row {
     display: flex;
@@ -208,11 +212,11 @@ export default {
 }
 .select-button {
     margin: 10px;
-    background-color: var(--bg-100);
+    background-color: var(--primary-100);
     border: none;
-    cursor: pointer;
-    color: var(--text-100);
-    padding: 5px;
+    cursor: pointer;    
+    color: white;
+    padding: 20x;
     border-radius: 5px;
 }
 
