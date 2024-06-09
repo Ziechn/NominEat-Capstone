@@ -12,11 +12,9 @@
               Account created! Please log in.
             </div>
             <div class="form-input-group">
-              <!-- <label for="username">Username</label> -->
               <input placeholder="Username" type="text" id="username" v-model="user.username" required autofocus />
             </div>
             <div class="form-input-group">
-              <!-- <label for="password">Password</label> -->
               <input placeholder="Password" type="password" id="password" v-model="user.password" required />
             </div>
             <button type="submit">Sign in</button>
@@ -123,10 +121,6 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
-
-/* label {
-  margin-right: 0.5rem;
-} */
 
 .register-success{
   margin-bottom: 0.5;

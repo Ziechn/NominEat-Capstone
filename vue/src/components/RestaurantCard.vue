@@ -15,7 +15,10 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         </span>
                     </p>
                    
-                    <p class="restaurant-rating">{{ restaurant.rating }} out of 5 stars</p> 
+                    <!-- <div class="restaurant-rating">
+                        <img :src="getStarImage(restaurant.rating)" alt="Rating" class="star-rating" />
+                        <span> {{ restaurant.rating }}</span>
+                </div> -->
                     <button @click.stop="selectRestaurant" class="select-button">select</button>   
                 </div>
             </div>
@@ -87,6 +90,10 @@ export default {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'];
             return days[dayNum];
         },
+        getStarRatingImage(rating) {
+            const roundedRating = Math.round(rating);
+            return require(`.../assets/yelp_stars/large_${roundedRating}.png`);
+        }
        
     
         
@@ -99,7 +106,7 @@ export default {
         //     }
         //   }
     }
-}
+};
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@
             {{ registrationErrorMsg }}
           </div>
           <div class="form-input-group">
-            <input placeholder="Username" type="text" id="username" v-model="user.username" required autofocus />
+            <input placeholder="Username" type="text" id="email" v-model="user.email" required />
           </div>
           <div class="form-input-group">
             <input placeholder="Email Address" type="text" id="email" v-model="user.email" required />
@@ -79,25 +79,6 @@ export default {
 </script>
 
 <style scoped>
-/* .form-input-group {
-  margin-bottom: 1rem;
-} */
-/* 
-.create-account-button {
-  margin-top: 1em;
-}
-
-.form {
-  margin-left: 1rem;
-}
-
-.nomineat {
-  margin-left: 5px;
-} */
-
-/* .header {
-  
-} */
 
 .card-front {
   display: flex;
@@ -126,8 +107,4 @@ h1 {
   padding-bottom: 0.6em;
 }
 
-/* input[type = "text"],
-input[type = "password"] {
-
-} */
 </style>
