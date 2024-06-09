@@ -15,7 +15,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         </span>
                     </p>
                    
-                    <!-- <div class="restaurant-rating">
+                     <!-- <div class="restaurant-rating">
                         <img :src="getStarImage(restaurant.rating)" alt="Rating" class="star-rating" />
                         <span> {{ restaurant.rating }}</span>
                 </div> -->
@@ -92,7 +92,7 @@ export default {
         },
         getStarRatingImage(rating) {
             const roundedRating = Math.round(rating);
-            return require(`.../assets/yelp_stars/large_${roundedRating}.png`);
+            return require(`../assets/yelp_stars/large_${roundedRating}.png`);
         }
        
     
@@ -180,6 +180,8 @@ export default {
     margin: 5px 0;
     color: var(--text-100);
 }
+
+
 .restaurant-category,
 .restaurant-rating,
 .restaurant-status,
