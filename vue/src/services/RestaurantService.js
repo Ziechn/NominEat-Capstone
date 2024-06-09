@@ -5,7 +5,7 @@ const http = axios.create({
 });
 
 export default {
-    list(zipCode, limit){
-        return http.get(`/search?zipcode=${zipCode}&limit=${limit}`)
+    list(zipCode, limit, category){
+        return http.get(`/restaurants/search?zipcode=${zipCode}&limit=${limit}&term=${category}`)
     }
 };

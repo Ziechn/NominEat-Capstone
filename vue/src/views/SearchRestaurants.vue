@@ -4,7 +4,7 @@
         <!-- <div>
             <p>Showing Results for Zip code: {{ zipCode }}</p>
         </div> -->
-    <div v-if="filteredRestaurants.length">
+    <!--<div v-if="filteredRestaurants.length">
         <input 
              type="text"
              v-model="zipCode" 
@@ -23,7 +23,7 @@
             <option value="20">20</option> 
             </select>
             <button @click="searchByZipCode">Search</button>
-            </div>
+            </div> -->
         <!-- <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
             <div class="input-group"> -->
                     <!-- <input type="text" v-model="zipCode"  placeholder="Enter Zip Code" /> -->
@@ -65,7 +65,7 @@ export default{
             // zipCode: this.$store.state.zipCode,
             category: '',
             limit: 10,
-            // selectedRestaurants: [],
+            selectedRestaurants: [],
             // hasSelected: false
         };
     },

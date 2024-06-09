@@ -34,7 +34,7 @@ const routes = [
     name: 'login',
     component: LoginAndZip,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
