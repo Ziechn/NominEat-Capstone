@@ -1,25 +1,30 @@
 <template>
-  <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
-      <h1>Create Account</h1>
-      <div role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
+  <div id="register" class="register-container">
+    <div class="card-front">
+      <div class="form-container">
+        <form class="form" v-on:submit.prevent="register">
+          <h1 class="create-account">Create Account</h1>
+          <div role="alert" v-if="registrationErrors">
+            {{ registrationErrorMsg }}
+          </div>
+          <div class="form-input-group">
+            <input placeholder="Username" type="text" id="username" v-model="user.username" required />
+          </div>
+          <div class="form-input-group">
+            <input placeholder="Email Address" type="text" id="email" v-model="user.email" required />
+          </div>
+          <div class="form-input-group">
+            <input placeholder="Password" type="password" id="password" v-model="user.password" required />
+          </div>
+          <div class="form-input-group">
+            <input placeholder="Confirm Password" type="password" id="confirmPassword" v-model="user.confirmPassword"
+              required />
+          </div>
+          <button class="create-account-button" type="submit">Create Account</button>
+          <p>Already have an account? <router-link v-bind:to="{ name: 'login' }">Log in.</router-link></p>
+        </form>
       </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
-      <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -31,6 +36,7 @@ export default {
     return {
       user: {
         username: '',
+        email: '',
         password: '',
         confirmPassword: '',
         role: 'user',
@@ -73,10 +79,32 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+
+.card-front {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  height: 500px;
 }
-label {
-  margin-right: 0.5rem;
+
+.form-container {
+  width: 90%;
+  padding:20px;
+  text-align: center;
 }
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  margin: 10px;
+  padding-bottom: 0.6em;
+}
+
 </style>

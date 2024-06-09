@@ -1,7 +1,7 @@
 package com.techelevator.controller;
 
-
 import com.techelevator.dao.EventDao;
+import com.techelevator.dao.RestaurantDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Event;
 import com.techelevator.model.Restaurant;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +31,9 @@ public class EventController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private RestaurantDao restaurantDao;
+
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Event> getAllEvents() {
@@ -41,42 +45,49 @@ public class EventController {
         return eventDao.getEventById(eventId);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    //@ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/create")
-    public Event createEvent(@RequestBody Event event, @RequestParam String username) {
-        if (event.getEventName() == null || event.getEventName().isEmpty() ||
-                event.getZipcode() == null || event.getZipcode().isEmpty() ||
-                event.getDecisionDate() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
-        }
-        User organizer = userDao.getUserByUsername(username);
-        if (organizer == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
-        }
-        event.setOrganizerId(organizer.getId());
+    public int createEvent(@RequestBody Event event) {
 
-       if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
-           event.setEventLink(generateUniqueEventLink());
-        }
+        System.out.println("[Event Controller] createEvent()");
 
-        return eventDao.createEvent(event);
+//        if (event.getEventName() == null || event.getEventName().isEmpty() ||
+//                event.getLocation() == null || event.getLocation().isEmpty() ||
+//                event.getDecisionDate() == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, zipcode and date/time.");
+//        }
+
+//        User organizer = userDao.getUserByUsername(principal.getName());
+//        if (organizer == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
+//        }
+
+        // event.setOrganizerId(organizer.getId());
+        // event.setOrganizerId(1);
+
+//       if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
+//        }
+
+        String newUrl =generateUniqueEventLink();
+        event.setEventLink(newUrl);
+        System.out.println("[Event Controller] createEvent() Event unique URL: " );
+
+        Event newEvent = eventDao.createEvent(event);
+
+        return newEvent.getEventId();
     }
 
     private String generateUniqueEventLink() {
-       String url = "http://localhost:9000/event/";
+        String url = "http://localhost:9000/event/";
         String uniqueId = UUID.randomUUID().toString();
-        return url + uniqueId;
-
+        String newUrl = url + uniqueId;
+        System.out.println("[Event Controller] generateUniqueEventLink() Unique URL: " + newUrl);
+        return newUrl;
     }
 
-    @RequestMapping(path = "/{eventId}/restaurants", method = RequestMethod.GET)
-    public List<Restaurant> getEventRestaurants (@PathVariable int eventId, @RequestParam (defaultValue = "10") int limit,@RequestParam (defaultValue = "food") String term) {
-       Event event = eventDao.getEventById(eventId);
-
-       if (event == null) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
-       }
-        return yelpService.getSearchResults(event.getZipcode(), limit, term);
+    @GetMapping(path = "/{eventId}/restaurants")
+    public List<Restaurant> getRestaurants(@PathVariable int eventId){
+        return restaurantDao.getRestaurantsByEventId(eventId);
     }
 
     @RequestMapping(path = "/access/{eventLink}", method = RequestMethod.GET)

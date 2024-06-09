@@ -1,25 +1,46 @@
 BEGIN TRANSACTION;
 
-INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (username,password_hash,role, email, profile_image_url) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER', 'supercoolmel@gmail.com', 'http://example.com/profiles/user.jpg');
+INSERT INTO users (username,password_hash,role, email, profile_image_url) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN', 'maryb@gmail.com', 'http://example.com/profiles/user.jpg');
 
-INSERT INTO event (organizer_id, event_name, zipcode, event_link, decision_date)
-VALUES (1, 'Birthday Brunch', '90210', 'http://fakeurl.com/event1', '2024-06-04 23:59:59' ),
-       (2, 'Meet and Greet', '10466','http://fakeurl.com/event2', '2024-06-04 23:59:59'),
-       (1, 'Friendsgiving', '19139','http://fakeurl.com/event3', '2024-06-04 23:59:59'),
-       (2, 'Holiday Night', '10454','http://fakeurl.com/event4', '2024-06-04 23:59:59'),
-       (1, 'BabyShower Brunch', '10030','http://fakeurl.com/event5', '2024-06-04 23:59:59'),
-       (2, 'Engagement Dinner', '11212','http://fakeurl.com/event6', '2024-06-04 23:59:59');
+INSERT INTO event (organizer_id, event_name, location, event_link, decision_date)
+VALUES (1, 'Birthday Brunch', 'New York', 'http://fakeurl.com/event1', '2024-06-04 23:59:59' );
+
 
 INSERT INTO event_attendees (user_id, event_id)
-VALUES (1, 1),
-       (2, 1),
-       (1, 2),
-       (2, 3),
-       (2, 6),
-       (1, 4),
-       (2, 5);
+VALUES (1, 1);
 
---INSERT INTO restaurant_event (event_id, restaurant_id, yes_votes, no_votes )
+
+INSERT INTO restaurant (restaurant_id, name, phone, address1, address2, address3, city, country, state, zipcode, image_url, menu_url, rating, latitude, longitude)
+VALUES ('A123','Five Guys', '123-456-7890', '123 Melly St', '', '', 'Philadelphia', 'USA', 'PA', '19107', 'http://example.com/image1.jpg', 'http://example.com/menu1.pdf', 4.5, 40.712776, -74.005974);
+
+
+INSERT INTO restaurant_event (event_id, restaurant_id, yes_votes, no_votes )
+VALUES (1, 'A123', 5, 3);
+
+
+INSERT INTO transactions (transaction_name)
+VALUES ('Pickup');
+
+
+INSERT INTO restaurant_transactions (restaurant_id, transaction_id)
+VALUES ('A123', 1);
+
+
+
+INSERT INTO category (category_name)
+VALUES ('Fast Food');
+
+
+INSERT INTO restaurant_category (restaurant_id, category_id)
+VALUES      ('A123', 1);
+
+
+
+INSERT INTO restaurant_hours (restaurant_id, day_id, day_name, start_time, end_time)
+VALUES ('A123', 1, 'Monday', '1100', '1800');
+
+
+
 
 COMMIT TRANSACTION;

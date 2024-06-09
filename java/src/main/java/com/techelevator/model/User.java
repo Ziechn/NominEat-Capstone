@@ -16,14 +16,20 @@ public class User {
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
 
+   private String email;
+
+   private String profileImageUrl;
+
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
+   public User(int id, String username, String password, String authorities, String email, String profileImageUrl) {
       this.id = id;
       this.username = username;
       this.password = password;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
+      this.email = email;
+      this.profileImageUrl = profileImageUrl;
    }
 
    public int getId() {
@@ -74,6 +80,22 @@ public class User {
       }
    }
 
+   public String getEmail () {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public String getProfileImageUrl() {
+      return profileImageUrl;
+   }
+
+   public void setProfileImageUrl(String profileImageUrl) {
+      this.profileImageUrl = profileImageUrl;
+   }
+
    @Override
    public boolean equals(Object o) {
       if (this == o) return true;
@@ -83,12 +105,15 @@ public class User {
               activated == user.activated &&
               Objects.equals(username, user.username) &&
               Objects.equals(password, user.password) &&
-              Objects.equals(authorities, user.authorities);
+              Objects.equals(authorities, user.authorities) &&
+              Objects.equals(email, user.email) &&
+              Objects.equals(profileImageUrl, user.profileImageUrl);
+
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(id, username, password, activated, authorities, email, profileImageUrl);
    }
 
    @Override
@@ -98,6 +123,8 @@ public class User {
               ", username='" + username + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
+              ", email='" + email + '\'' +
+              ", profileImageUrl='" + profileImageUrl + '\'' +
               '}';
    }
 }

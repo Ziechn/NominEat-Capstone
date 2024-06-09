@@ -3,10 +3,13 @@ import { useStore } from 'vuex';
 
 // Import components
 import HomeView from '@/views/HomeView.vue';
+import LoginAndZip from '@/views/LoginAndZip.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
-import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
-import LogoutView from '@/views/LogoutView.vue';
+import ProfileView from '@/views/ProfileView.vue';
+//import EventCreation from '@/components/EventCreation.vue';
+// import LogoutView from '@/views/LogoutView.vue';
+
 
 
 /**
@@ -18,12 +21,19 @@ import LogoutView from '@/views/LogoutView.vue';
  * If they have (or don't need to) they're allowed to go about their way.
  */
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: LoginAndZip,
+  //   meta: {
+  //     requiresAuth: true
+  //   }
+  // },
   {
-    path: '/',
-    name: 'home',
-    component: HomeView,
+    path: '/login',
+    name: 'login',
+    component: LoginAndZip,
     meta: {
-      //temporarily set to false
       requiresAuth: false
     }
   },
@@ -36,19 +46,27 @@ const routes = [
     }
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginView,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
     path: '/register',
     name: 'register',
     component: RegisterView,
     meta: {
       requiresAuth: false
+    }
+  },
+  // {
+  //   path: '/event-create',
+  //   name: 'EventCreation',
+  //   component: EventCreation,
+  //   meta: {
+  //     requiresAuth: false
+  //   }
+  // },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
+    meta: {
+      requiresAuth: true
     }
   }
   

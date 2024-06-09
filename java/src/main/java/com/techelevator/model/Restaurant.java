@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
@@ -23,6 +24,25 @@ public class Restaurant {
     private Coordinates coordinates;
 
     private List<String> transactions;
+
+    public Restaurant(){
+        this.id = "temp0r4ry1d";
+        this.name = "New Restaurant";
+        this.phoneNumber = "(513) 555-0289";
+        this.categories = new ArrayList<>();
+        this.address1 = "1234 East St";
+        this.address2 = "";
+        this.address3 = "";
+        this.city = "city";
+        this.state = "ST";
+        this.country = "US";
+        this.zipcode = "12345";
+        this.imageUrl = "no image";
+        this.menuUrl = "no menu";
+        this.rating = 4.6;
+        this.coordinates = new Coordinates(0.0,0.0);
+        this.transactions = new ArrayList<>();
+    }
 
     public Restaurant(String restaurantId, String restaurantName,
                       String phoneNumber, List<String> categories,
@@ -122,11 +142,80 @@ public class Restaurant {
         return transactions;
     }
 
+    // Setters:
     public void setHours(List<Open> hours) {
         this.hours = hours;
     }
 
     public void SetIsOpenNow(boolean isOpenNow){
         this.isOpenNow = isOpenNow;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setOpenNow(boolean openNow) {
+        isOpenNow = openNow;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setTransactions(List<String> transactions) {
+        this.transactions = transactions;
     }
 }
