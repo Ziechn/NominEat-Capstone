@@ -144,6 +144,9 @@ const store = _createStore({
       axios.defaults.headers.common = ['Authorization'];
     axios.defaults.headers.common = {};
     },
+    SET_CATEGORY(state, category) {
+      state.category = category;
+    },
     FILTER_BY_CATEGORY(state, category) {
      if (category) {
         state.filteredRestaurants = state.restaurants.filter(restaurant =>
@@ -156,10 +159,10 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { state }) {
+    async fetchRestaurants({ commit }, { zipCode, limit = 10, category = '' }) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(state.zipCode, state.limit, state.category);
+        const response = await RestaurantService.list(zipCode, limit, category);
         //console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
        } catch (error) {

@@ -16,7 +16,7 @@ http.interceptors.request.use(config => {
   
 export default {
     list(zipCode, limit, category){ 
-        const params = { zipcode: zipCode, limit };
+        const params = { zipCode: zipCode, limit };
         if (category) params.term = category;
         return http.get('/restaurants/search', { params });
     },

@@ -100,10 +100,10 @@ export default{
    created() {
     if (this.zipCode) {
         if(this.zipCode) {
-            this.fetchRestaurants();
+            this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
         }
     }
-//        this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit }); OR //this.searchByZipCode();
+//        this.fetchRestaurants(); OR //this.searchByZipCode();
 }
     
 };
