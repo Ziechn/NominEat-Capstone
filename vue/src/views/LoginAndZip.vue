@@ -35,7 +35,7 @@
             <button type="submit">Submit</button>
             </form> 
           </div>
-          <router-link v-bind:to="{name: 'profile'}">
+          <router-link v-bind:to="{ name: 'profile' }">
             View Profile
           </router-link>
         </div>
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import FlipCard from "../components/FlipCard.vue";
-import authService from "../services/AuthService";
+import FlipCard from '../components/FlipCard.vue';
+import authService from '../services/AuthService';
 
 export default {
   components: {
@@ -92,7 +92,6 @@ export default {
           this.$router.push({ name: 'SearchRestaurants' });
         }
     }
-
   },
   computed: {
     isAuthenticated(){

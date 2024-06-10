@@ -53,14 +53,14 @@ const routes = [
       requiresAuth: false
     }
   },
-  {
-    path: '/event-create',
-    name: 'EventCreation',
-    component: EventCreation,
-    meta: {
-      requiresAuth: false
-    }
-  },
+  // {
+  //   path: '/event-create',
+  //   name: 'EventCreation',
+  //   component: EventCreation,
+  //   meta: {
+  //     requiresAuth: false
+  //   }
+  // },
   {
     path: '/profile',
     name: 'profile',

@@ -73,9 +73,9 @@ export default {
         showNumber() {
             this.isVisible = !this.isVisible;
         },
-        selectRestaurant() {
-            this.$emit('selectRestaurant', this.restaurant);
-        },
+        // selectRestaurant() {
+        //     this.$emit('selectRestaurant', this.restaurant);
+        // },
         formatTime(time) {
         let hour = parseInt(time.substring(0, 2), 10);
         const minute = time.substring(2, 4);

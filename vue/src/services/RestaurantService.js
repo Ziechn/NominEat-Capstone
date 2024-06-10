@@ -11,9 +11,7 @@ http.interceptors.request.use(config => {
     }
     return config;
   });
-
-
-
+  
 export default {
     list(zipCode, limit, category){ 
         const params = { zipCode: zipCode, limit };

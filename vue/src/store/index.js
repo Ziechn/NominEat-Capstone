@@ -93,7 +93,7 @@ const store = _createStore({
    // events: [],
     loading: false,
     token: localStorage.getItem('token') || '',
-    user: JSON.parse(localStorage.getItem('user')) || {}
+    user: JSON.parse(localStorage.getItem('user')) || {},
   },
   mutations: {
     SET_ZIP_CODE(state, zipCode) {
@@ -199,16 +199,16 @@ const store = _createStore({
     //     console.error('Error fetching event restaurants:', error);
     //   }
     // },
-    async associateRestaurantsWithEvent({ commit }, { eventId, restaurants }) { 
-      try {
-        //const response = await axios.post(`/restaurants/create/${eventId}`, { restaurants });
+    // async associateRestaurantsWithEvent({ commit }, { eventId, restaurants }) { 
+    //   try {
+    //     //const response = await axios.post(`/restaurants/create/${eventId}`, { restaurants });
 
-        const response = await RestaurantService.associateRestaurantWithEvent(eventId, restaurants);
-        return response;
-      } catch (error) {
-        console.error('Error saving restaurants to event:', error);
-      }
-    },
+    //     const response = await RestaurantService.associateRestaurantWithEvent(eventId, restaurants);
+    //     return response;
+    //   } catch (error) {
+    //     console.error('Error saving restaurants to event:', error);
+    //   }
+    // },
     fetchUser({ commit }) {
       const user = JSON.parse(localStorage.getItem('user'));
       if(user){

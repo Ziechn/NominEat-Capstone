@@ -26,24 +26,19 @@
             v-for="restaurant in filteredRestaurants" 
             v-bind:key="restaurant.id" 
             v-bind:restaurant="restaurant"
-            @selectRestaurant="toggleRestaurantSelection"
             />
          </div>
          <div v-if="!loading && !filteredRestaurants.length">
         No results found...
-        <!-- </div> 
-        <div v-if="selectedRestaurants.length">
-        <h3>Selected Restaurants</h3>
-        <ul>
-            <li v-for="restaurant in selectedRestaurant" :key="restaurant.id">{{  restaurant.name  }}</li>
-        </ul>
-        <button @click="saveSelectedRestaurants">Save Selected Restaurants</button> -->
+        
         </div>
+        <!-- <div v-if="selectedRestaurants.length >= 3" @click="createEvent">
+        Create an Event with Selected Restaurants</div>  -->
     </div>
 </template>
 
 <script>
-import { mapState,  mapActions, mapMutations } from 'vuex';
+import { mapState,  mapActions, mapMutations } from 'vuex'; //
 import RestaurantCard from '@/components/RestaurantCard.vue';
 
 
@@ -55,42 +50,56 @@ export default{
         return {
             zipCode: this.$store.state.zipCode,
             category: '',
-            limit: 10,
-           // selectedRestaurants: [],
-            // hasSelected: false
+            limit: 10
+           //selectedRestaurants: [],
+          //  hasSelected: false
         };
     },
     computed: {
-        ...mapState(['filteredRestaurants', 'loading']),
+        ...mapState(['filteredRestaurants', 'loading']), //'selectedRestaurants'
     },
     methods: {
-        ...mapActions(['fetchRestaurants']), //'saveRestaurants'
-        ...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT']),
-        updateZipCode(event) {
-            this.SET_ZIP_CODE(event.type.value);
-        },
+        ...mapActions(['fetchRestaurants']), //'createEvent', 'saveRestaurants'
+        //...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT']),
+        // updateZipCode(event) {
+        //     this.SET_ZIP_CODE(event.type.value);
+        // },
         searchRestaurants() {
             this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit, category: this.category });
         },
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
-        },
-        selectRestaurant(restaurant) {
-            if (!this.selectedRestaurants.includes(restaurant)) {
-                this.selectedRestaurants.push(restaurant);
-                this.hasSelected = true;
-            }
-        },
-        saveSelectedRestaurants() {
-            this.selectedRestaurants(this.selectedRestaurants);
-    }
+        }
     },
+        // toggleRestaurantSelection(restaurant) {
+        //     if (!this.selectedRestaurants.some(r => r.id === restaurant.id)) {
+        //         this.$store.commit('REMOVE_SELECTED_RESTAURANT', restaurant.id);
+        //         this.selectedRestaurants.push(restaurant);
+        //         this.hasSelected = true;
+        //     }else {
+        //         this.$store.commit('ADD_SELECTED_RESTAURANT', restaurant);
+        //     }
+        // },
+        // createEvent() {
+        //     const event = {
+        //         eventName: 'My Event',
+        //         location: this.zipCode,
+        //         decisionDate: new Date().toISOString(),
+        //         restaurants: this.searchRestaurants
+        //     };
+        //     this.createEvent(event);
+        // }
+    //     saveSelectedRestaurants() {
+    //         this.selectedRestaurants(this.selectedRestaurants);
+    // }
+ //},
    created() {
     if(this.zipCode) {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
+        this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit});
     }
-        //this.searchByZipCode();
-   }
+//         //this.searchByZipCode();
+}
+    
 };
 </script>
 
