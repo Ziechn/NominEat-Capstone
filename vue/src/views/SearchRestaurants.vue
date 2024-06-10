@@ -6,34 +6,42 @@
         <label for="zipCode"></label>
         <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
         </div>
-        <div>
+        <!-- <div>
         <label for="category"></label>
         <input type="text" v-model="category" placeholder="Filter by Category"/>
-        </div>
-            <div>
+        </div> -->
+            <!-- <div>
             <label for="limit"></label>
             <select v-model="limit" class="search-input"> 
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option> 
             </select>
-        </div>
+        </div> -->
         <button type="submit">Search</button>
         </form>
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
             <RestaurantCard
-            v-for="restaurant in filteredRestaurants" 
+            v-for="restaurant in restaurants" 
             v-bind:key="restaurant.id" 
-            v-bind:restaurant="restaurant"
-            />
+            v-bind:restaurant="restaurant"/> 
+            <!--@selectRestaurant="selectRestaurant-->
          </div>
-         <div v-if="!loading && !filteredRestaurants.length">
+         <div v-if="!loading && !restaurants.length">
         No results found...
         
         </div>
-        <!-- <div v-if="selectedRestaurants.length >= 3" @click="createEvent">
-        Create an Event with Selected Restaurants</div>  -->
+        <!-- v-for="restaurant in filteredRestaurants"  -->
+        <!-- <div v-if="selectedRestaurants.length">
+            <h3>Selected Restaurants</h3>
+                <ul>
+                    <li v-for="restaurant in selectedRestaurants" :key="restaurant.id" >{{  restaurant.name }}
+                     </li>
+                </ul>
+                <button @click="createEvent">Create Event</button>
+        </div> -->
+      
     </div>
 </template>
 
@@ -48,32 +56,32 @@ export default{
     },
     data() {
         return {
-            zipCode: this.$store.state.zipCode,
-            category: '',
-            limit: 10
+            zipCode: '',
+            // category: '',
+            // limit: 10
            //selectedRestaurants: [],
           //  hasSelected: false
         };
     },
     computed: {
-        ...mapState(['filteredRestaurants', 'loading']), //'selectedRestaurants'
+        ...mapState(['restaurants', 'loading']), //'selectedRestaurants'
     },
     methods: {
         ...mapActions(['fetchRestaurants']), //'createEvent', 'saveRestaurants'
-        ...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT', 'SET_CATEGORY']),
-        updateZipCode(event) {
-            this.SET_ZIP_CODE(event.type.value);
-        },
+        ...mapMutations(['SET_ZIP_CODE']), //'FILTER_BY_CATEGORY', 'SET_LIMIT', 'SET_CATEGORY'
+        // updateZipCode(event) {
+        //     this.SET_ZIP_CODE(event.type.value);
+        // },
         searchRestaurants() {
           this.SET_ZIP_CODE(this.zipCode);
-          this.SET_CATEGORY(this.category);
-          this.SET_LIMIT(this.limit);
-          this.fetchRestaurants();
-            //this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit, category: this.category });
+        //   this.SET_CATEGORY(this.category);
+        //   this.SET_LIMIT(this.limit);
+        //   this.fetchRestaurants();
+        this.fetchRestaurants({ zipCode: this.zipCode }); //limit: this.limit, category: this.category
         },
-        filterByCategory() {
-            this.FILTER_BY_CATEGORY(this.category);
-        }
+        // filterByCategory() {
+        //     this.FILTER_BY_CATEGORY(this.category);
+        // }
     },
         // toggleRestaurantSelection(restaurant) {
         //     if (!this.selectedRestaurants.some(r => r.id === restaurant.id)) {
@@ -98,10 +106,9 @@ export default{
     // }
    // },
    created() {
-    if (this.zipCode) {
-        if(this.zipCode) {
-            this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
-        }
+        if(this.$store.state.zipCode) {
+            this.zipCode = this.$store.state.zipCode;
+            this.fetchRestaurants({ zipCode: this.zipCode });
     }
 //        this.fetchRestaurants(); OR //this.searchByZipCode();
 }

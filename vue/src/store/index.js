@@ -91,7 +91,7 @@ const store = _createStore({
     category: '',
     filteredRestaurants: [],
     //selectedRestaurants: [],
-   // events: [],
+    //events: null,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -115,9 +115,9 @@ const store = _createStore({
     //     restaurant => restaurant.id !== restaurantId
     //   );
     // },
-    CREATE_EVENT(state, event) {
-      state.events.push(event);
-    },
+    // CREATE_EVENT(state, event) {
+    //   state.events.push(event);
+    // },
     SET_LOADING(state, loading) {
       state.loading = loading;
     },
