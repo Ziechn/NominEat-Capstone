@@ -60,12 +60,16 @@ export default{
     },
     methods: {
         ...mapActions(['fetchRestaurants']), //'createEvent', 'saveRestaurants'
-        ...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT']),
+        ...mapMutations(['SET_ZIP_CODE','FILTER_BY_CATEGORY', 'SET_LIMIT', 'SET_CATEGORY']),
         updateZipCode(event) {
             this.SET_ZIP_CODE(event.type.value);
         },
         searchRestaurants() {
-            this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit, category: this.category });
+          this.SET_ZIP_CODE(this.zipCode);
+          this.SET_CATEGORY(this.category);
+          this.SET_LIMIT(this.limit);
+          this.fetchRestaurants();
+            //this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit, category: this.category });
         },
         filterByCategory() {
             this.FILTER_BY_CATEGORY(this.category);
@@ -95,9 +99,11 @@ export default{
    // },
    created() {
     if (this.zipCode) {
-        this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit });
+        if(this.zipCode) {
+            this.fetchRestaurants();
+        }
     }
-//         //this.searchByZipCode();
+//        this.fetchRestaurants({ zipCode: this.zipCode, limit: this.limit }); OR //this.searchByZipCode();
 }
     
 };

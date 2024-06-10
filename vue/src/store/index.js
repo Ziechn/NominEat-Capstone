@@ -88,6 +88,7 @@ const store = _createStore({
     zipCode: '',
     limit: 10,
     restaurants: [],
+    category: '',
     filteredRestaurants: [],
     //selectedRestaurants: [],
    // events: [],
@@ -141,7 +142,7 @@ const store = _createStore({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = ['Authorization'];
-     // axios.defaults.headers.common = {};
+    axios.defaults.headers.common = {};
     },
     FILTER_BY_CATEGORY(state, category) {
      if (category) {
@@ -149,17 +150,16 @@ const store = _createStore({
           restaurant.categories.some(cat =>
             cat.title.toLowerCase().includes(category.toLowerCase())
             )
-          );
-    } else { 
+          )   } else { 
       state.filteredRestaurants = state.restaurants;
       }
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit, category }) {
+    async fetchRestaurants({ commit }, { state }) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit, category);
+        const response = await RestaurantService.list(state.zipCode, state.limit, state.category);
         //console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
        } catch (error) {
