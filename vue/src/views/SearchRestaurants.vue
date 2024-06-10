@@ -3,41 +3,22 @@
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
         <div>
-        <label for="zipCode">Zip Code: </label>
-        <input type="text" v-model="zipCode" />
+        <label for="zipCode"></label>
+        <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
         </div>
         <div>
-        <label for="zipCode">Category: </label>
-        <input type="text" v-model="category" />
+        <label for="zipCode"> </label>
+        <input type="text" v-model="category" placeholder="Filter by Category"/>
         </div>
-                                <!-- <div v-if="filteredRestaurants.length"> -->
-                                <!-- <p>Showing Results for Zip code: {{ zipCode }}</p> -->
-                                <!-- <input 
-                                    type="text"
-                                    v-model="zipCode" 
-                                    placeholder="Enter ZIP Code" 
-                                    @input="updateZipCode"
-                                    />
-                                    <input 
-                                    type="text"
-                                    v-model="category" 
-                                    placeholder="Filter by Category" 
-                                    @input="filterByCategory"
-                                    <select v-model="limit" @change="searchByZipCode" class="search-input"> 
-                                    /> -->
             <div>
-            <label for="limit">Limit:  </label>
+            <label for="limit"></label>
             <select v-model="limit" class="search-input"> 
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option> 
             </select>
-                         <!-- <button @click="searchByZipCode">Search</button> -->
         </div>
         <button type="submit">Search</button>
-        <!-- <form class="search-form" @submit.prevent="searchByZipCode" v-if="!hasSelected"> 
-            <div class="input-group"> -->
-                    <!-- <input type="text" v-model="zipCode"  placeholder="Enter Zip Code" /> -->
         </form>
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
@@ -45,8 +26,8 @@
             v-for="restaurant in filteredRestaurants" 
             v-bind:key="restaurant.id" 
             v-bind:restaurant="restaurant"
+            @selectRestaurant="toggleRestaurantSelection"
             />
-                        <!-- @select="selectRestaurant" -->
          </div>
          <div v-if="!loading && !filteredRestaurants.length">
         No results found...

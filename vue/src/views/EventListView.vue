@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
     <div class="event-list">
         <h2>Your Restaurants</h2>
 
@@ -27,4 +27,4 @@ export default{
     }
 };
 
-</script> -->
+</script>

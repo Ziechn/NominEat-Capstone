@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
     <div class="event-creation">
         <h2>Create Event</h2>
         <form @submit.prevent="createEvent">
@@ -68,4 +68,4 @@ export default {
 </script>
 
 <style scoped>
-</style> -->
+</style>
