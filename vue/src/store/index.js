@@ -159,11 +159,11 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit = 10, category = '' }) {
+    async fetchRestaurants({ commit }, { zipCode, limit = 10}) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit, category);
-        //console.log('Restaurants fetched:', response.data);
+        const response = await RestaurantService.list(zipCode, limit);
+        console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
        } catch (error) {
         console.error('Error fetching restaurants: ', error);

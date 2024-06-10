@@ -21,7 +21,7 @@
         <button type="submit">Search</button>
         </form>
         <div v-if="loading" class="loading">Loading...please wait...</div>
-        <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards"> 
+        <div v-if="!loading && restaurants.length" class="restaurant-cards"> 
             <RestaurantCard
             v-for="restaurant in restaurants" 
             v-bind:key="restaurant.id" 
