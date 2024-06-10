@@ -5,9 +5,6 @@
         <div class="form-container">
           <h1>Login</h1>
           <form v-on:submit.prevent="login">
-            <div role="alert" v-if="invalidCredentials">
-              Invalid username and password!
-            </div>
             <div class="register-success" role="alert" v-if="this.$route.query.registration">
               Account created! Please log in.
             </div>
@@ -18,6 +15,9 @@
               <input placeholder="Password" type="password" id="password" v-model="user.password" required />
             </div>
             <button type="submit">Sign in</button>
+            <div role="alert" class="alert" v-if="invalidCredentials">
+              Invalid username and password!
+            </div>
             <p> Need an account? 
             <router-link v-bind:to="{ name: 'register' }">Sign up.</router-link>
             </p>
@@ -122,5 +122,9 @@ export default {
 
 .register-success{
   margin-bottom: 0.5;
+}
+
+.alert {
+  margin-top: 1.2em;
 }
 </style>
