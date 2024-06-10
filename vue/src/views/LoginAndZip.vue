@@ -23,7 +23,6 @@
             </p>
           </form>
         </div>
-      
       </template>
 
       <template #back>
@@ -36,9 +35,9 @@
             <button type="submit">Submit</button>
             </form> 
           </div>
-          <RouterLink v-bind:to="{name: 'profile'}">
+          <router-link v-bind:to="{name: 'profile'}">
             View Profile
-          </RouterLink>
+          </router-link>
         </div>
       </template>
     </flipCard>

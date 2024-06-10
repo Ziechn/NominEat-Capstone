@@ -1,19 +1,19 @@
-<!-- <template>
+<template>
     <div class="restaurant-list">
         <h2>Restaurants Near You</h2>
         <form class="search-form"
-            @submit="searchByCategory">
+            @submit.prevent="searchByCategory">
             <input placeholder="Enter Category" type="text" v-model="category" />
             <button type="submit">Search</button>
          </form>
         
          <div v-if="loading" class="loading">Loading...Please Wait...</div>
 
-         <div v-if="!loading && restaurants.length" class="restaurant-cards">
-            <RestaurantCard v-for="restaurant in restaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"/>
+         <div v-if="!loading && filteredRestaurants.length" class="restaurant-cards">
+            <RestaurantCard v-for="restaurant in filteredRestaurants" v-bind:key="restaurant.id" v-bind:restaurant="restaurant"/>
         </div>
 
-        <div v-if="!loading && !restaurants.length">
+        <div v-if="!loading && !filteredRestaurants.length">
             No results found...
         </div>
 
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 
 
@@ -38,15 +38,17 @@ export default{
     computed: {
         ...mapState(['filteredRestaurants', 'loading']),
     },
-    methods: {
+    methods: { //search component 
         ...mapActions(['fetchRestaurants']),
         searchByCategory() {
-            this.$store.commit('FILTER_BY_CATEGORY', this.category);
+            this.fetchRestaurants({ zipCode: this.$store.state.zipCode, 
+                limit: this.$store.state.limit, category: this.$store.state.category });
+            // $store.commit('FILTER_BY_CATEGORY', this.category);
         }
         
     },
     created() {
-        //default load for now
+        //default load initial zip search
         this.fetchRestaurants({ zipCode: this.$store.state.zipCode, limit: this.$store.state.limit });
     }
 };
@@ -97,4 +99,4 @@ export default{
         color: var(--text-200);
     }
 
-</style> -->
+</style>

@@ -21,14 +21,14 @@ import ProfileView from '@/views/ProfileView.vue';
  * If they have (or don't need to) they're allowed to go about their way.
  */
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: LoginAndZip,
-  //   meta: {
-  //     requiresAuth: true
-  //   }
-  // },
+  {
+    path: '/',
+    name: 'home',
+    component: LoginAndZip,
+    meta: {
+      requiresAuth: true
+    }
+  },
   {
     path: '/login',
     name: 'login',
