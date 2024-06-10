@@ -90,8 +90,8 @@ const store = _createStore({
     restaurants: [],
     category: '',
     filteredRestaurants: [],
-    //selectedRestaurants: [],
-   // events: [],
+    selectedRestaurants: [],
+    events: [],
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -107,6 +107,7 @@ const store = _createStore({
       state.restaurants = restaurants;
       state.filteredRestaurants = restaurants;
     },
+
     // ADD_SELECTED_RESTAURANTS(state, restaurant) {
     //   state.selectedRestaurants.push(restaurant);
     // },
@@ -120,6 +121,14 @@ const store = _createStore({
     },
     SET_LOADING(state, loading) {
       state.loading = loading;
+    },
+    ADD_SELECTED_RESTAURANT(state,restaurant){
+      state.selectedRestaurants.push(restaurant);
+    },
+    REMOVE_SELECTED_RESTAURANT (state, restaurantId) {
+      state.selectedRestaurants = state.selectedRestaurants.filter (
+        restaurant  => restaurant.id !==restaurantId  
+      );
     },
     // SET_EVENTS(state, events) {
     //   state.events = events;
@@ -172,6 +181,7 @@ const store = _createStore({
           commit('SET_LOADING', false);
       }
     },
+    
     // async createEvent({ commit }, event) { 
     //   console.log('Creating new event with:', event);
     //   try {
@@ -212,6 +222,14 @@ const store = _createStore({
     //     console.error('Error saving restaurants to event:', error);
     //   }
     // },
+    async createEvent({commit}, event) {
+      try {
+        const response =await axios.post  ('/events/create', event);
+        commit ('CREATE_EVENT', response.data );
+      }catch (error) {
+        console.error ('Error creating an event',error);
+      }
+    },
     fetchUser({ commit }) {
       const user = JSON.parse(localStorage.getItem('user'));
       if(user){
