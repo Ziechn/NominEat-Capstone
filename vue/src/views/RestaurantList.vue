@@ -1,6 +1,6 @@
 <template>
     <div class="restaurant-list">
-        <h2>Restaurants Near You</h2>
+        <!-- <h2>Restaurants Near You</h2>
         <form class="search-form"
             @submit.prevent="searchByCategory">
             <input placeholder="Enter Category" type="text" v-model="category" />
@@ -16,44 +16,44 @@
         <div v-if="!loading && !filteredRestaurants.length">
             No results found...
         </div>
-
+ -->
 
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import RestaurantCard from '@/components/RestaurantCard.vue';
+// import { mapState, mapActions } from 'vuex';
+// import RestaurantCard from '@/components/RestaurantCard.vue';
 
 
-export default{
-    components: {
-        RestaurantCard,
-    },
-    data() {
-        return {
-            category: '',
-        };
-    },
-    computed: {
-        ...mapState(['filteredRestaurants', 'loading']),
-    },
-    methods: { //search component 
-        ...mapActions(['fetchRestaurants']),
-        searchByCategory() {
-            this.fetchRestaurants({ zipCode: this.$store.state.zipCode, 
-                limit: this.$store.state.limit, category: this.$store.state.category });
-            // $store.commit('FILTER_BY_CATEGORY', this.category);
-        }
+// export default{
+//     components: {
+//         RestaurantCard,
+//     },
+//     data() {
+//         return {
+//             category: '',
+//         };
+//     },
+//     computed: {
+//         ...mapState(['filteredRestaurants', 'loading']),
+//     },
+//     methods: { //search component 
+//         ...mapActions(['fetchRestaurants']),
+//         searchByCategory() {
+//             this.fetchRestaurants({ zipCode: this.$store.state.zipCode, 
+//                 limit: this.$store.state.limit, category: this.$store.state.category });
+//             // $store.commit('FILTER_BY_CATEGORY', this.category);
+//         }
         
-    },
-    created() {
-        //default load initial zip search
-        this.fetchRestaurants({ zipCode: this.$store.state.zipCode, limit: this.$store.state.limit });
-    }
-};
+//     },
+//     created() {
+//         //default load initial zip search
+//         this.fetchRestaurants({ zipCode: this.$store.state.zipCode, limit: this.$store.state.limit });
+//     }
+// };
 </script>
-<style scoped>
+<!-- <style scoped>
 .restaurant-list {
     max-width: 800px;
     margin: auto;
@@ -99,4 +99,4 @@ export default{
         color: var(--text-200);
     }
 
-</style>
+</style> -->

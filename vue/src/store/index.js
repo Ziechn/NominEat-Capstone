@@ -14,7 +14,7 @@ const backupData = [
     name: 'East Village Pizza',
    // zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
-    catagories: [{ title: 'Pizza' }],
+    categories: ['Pizza'],
     rating: 3.5,
     price: '$$',
     address1: '1234 Pizza St, New York, NY',
@@ -37,7 +37,7 @@ const backupData = [
     name: 'Sushi Place',
    // zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
-    catagories: [{ title: 'Sushi' }],
+    categories: [ 'Sushi' ],
     // category: 'Sushi',
     rating: 4,
     price: '$$$',
@@ -61,7 +61,7 @@ const backupData = [
     name: 'Burger House',
    // zipCode: '11222',
     imageUrl: 'https://via.placeholder.com/250',
-    catagories: [{ title: 'Burgers' }],
+    categories: ['Burgers'],
     rating: 5,
     price: '$$',
     address1: '1234 Burger Blvd, New York, NY',
@@ -93,7 +93,7 @@ const store = _createStore({
    // events: [],
     loading: false,
     token: localStorage.getItem('token') || '',
-    user: JSON.parse(localStorage.getItem('user')) || {},
+    user: JSON.parse(localStorage.getItem('user')) || {}
   },
   mutations: {
     SET_ZIP_CODE(state, zipCode) {
@@ -106,14 +106,14 @@ const store = _createStore({
       state.restaurants = restaurants;
       state.filteredRestaurants = restaurants;
     },
-    ADD_SELECTED_RESTAURANTS(state, restaurant) {
-      state.selectedRestaurants.push(restaurant);
-    },
-    REMOVE_SELECTED_RESTAURANTS(state, restaurantId) {
-      state.selectedRestaurants = state.selectedRestaurants.filter(
-        restaurant => restaurant.id !== restaurantId
-      );
-    },
+    // ADD_SELECTED_RESTAURANTS(state, restaurant) {
+    //   state.selectedRestaurants.push(restaurant);
+    // },
+    // REMOVE_SELECTED_RESTAURANTS(state, restaurantId) {
+    //   state.selectedRestaurants = state.selectedRestaurants.filter(
+    //     restaurant => restaurant.id !== restaurantId
+    //   );
+    // },
     CREATE_EVENT(state, event) {
       state.events.push(event);
     },
@@ -146,7 +146,7 @@ const store = _createStore({
     FILTER_BY_CATEGORY(state, category) {
      if (category) {
         state.filteredRestaurants = state.restaurants.filter(restaurant =>
-          restaurant.catagories.some(cat =>
+          restaurant.categories.some(cat =>
             cat.title.toLowerCase().includes(category.toLowerCase())
             )
           );
@@ -160,7 +160,7 @@ const store = _createStore({
       commit('SET_LOADING', true);
       try {
         const response = await RestaurantService.list(zipCode, limit, category);
-        console.log('Restaurants fetched:', response.data);
+        //console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
        } catch (error) {
         console.error('Error fetching restaurants: ', error);
@@ -169,18 +169,18 @@ const store = _createStore({
           commit('SET_LOADING', false);
       }
     },
-    async createEvent({ commit }, event) { 
-      console.log('Creating new event with:', event);
-      try {
-       // const response = await axios.post('/events/create', event);
+    // async createEvent({ commit }, event) { 
+    //   console.log('Creating new event with:', event);
+    //   try {
+    //    // const response = await axios.post('/events/create', event);
         
-        const response = await RestaurantService.createEvent(event);
-        console.log('Event created: ', response.data);
-        commit('CREATE_EVENT', response.data);
-      } catch (error) {
-        console.error('Error creating event', error);
-      }
-    },
+    //     const response = await RestaurantService.createEvent(event);
+    //     console.log('Event created: ', response.data);
+    //     commit('CREATE_EVENT', response.data);
+    //   } catch (error) {
+    //     console.error('Error creating event', error);
+    //   }
+    // },
     // async fetchEvent({ commit }, eventId ) {
     //   try {
     //     const response = await axios.get(`/events/${eventId}`);

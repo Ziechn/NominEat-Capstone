@@ -38,7 +38,7 @@ const routes = [
     }
   },
   {
-    path: '/search',
+    path: '/restaurants/search',
     name: 'SearchRestaurants',
     component: SearchRestaurants,
     meta: {

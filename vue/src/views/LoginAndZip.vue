@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import FlipCard from '../components/FlipCard.vue';
-import authService from '../services/AuthService';
+import FlipCard from "../components/FlipCard.vue";
+import authService from "../services/AuthService";
 
 export default {
   components: {
@@ -87,9 +87,9 @@ export default {
     },
     goToSearch() {
       if (this.zipCode) {
-          this.$store.commit('SET_ZIP_CODE', this.zipCode);
-          this.$store.dispatch( 'fetchRestaurants', { zipCode: this.zipCode, limit: 10}); 
-          this.$router.push({ name: 'SearchRestaurants' });
+          this.$store.commit("SET_ZIP_CODE", this.zipCode);
+          this.$store.dispatch( "fetchRestaurants", { zipCode: this.zipCode, limit: 10}); 
+          this.$router.push({ name: "SearchRestaurants" });
         }
     }
   },

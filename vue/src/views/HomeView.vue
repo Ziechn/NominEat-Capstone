@@ -1,4 +1,15 @@
+<template>
+  <div>
+
+  </div>
+</template>
+
+
+
+
+
 <!-- <template>
+
   <div class="home">
     <h1>NominEat</h1>
     <p>Welcome! Please enter your ZIP to find restaurants near you.</p>

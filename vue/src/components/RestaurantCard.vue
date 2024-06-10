@@ -73,9 +73,9 @@ export default {
         showNumber() {
             this.isVisible = !this.isVisible;
         },
-        // selectRestaurant() {
-        //     this.$emit('selectRestaurant', this.restaurant);
-        // },
+        selectRestaurant() {
+            this.$emit('selectRestaurant', this.restaurant);
+        },
         formatTime(time) {
         let hour = parseInt(time.substring(0, 2), 10);
         const minute = time.substring(2, 4);
@@ -89,11 +89,11 @@ export default {
         getDayByDayNum(dayNum){
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'];
             return days[dayNum];
-        },
-        getStarRatingImage(rating) {
-            const roundedRating = Math.round(rating);
-            return require(`../assets/yelp_stars/large_${roundedRating}.png`);
         }
+        // getStarRatingImage(rating) {
+        //     const roundedRating = Math.round(rating);
+        //     return require(`../assets/yelp_stars/large_${roundedRating}.png`);
+        // }
        
     
         
