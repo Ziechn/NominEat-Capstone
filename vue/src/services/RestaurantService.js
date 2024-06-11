@@ -11,23 +11,18 @@ http.interceptors.request.use(config => {
     }
     return config;
   });
-
-  ///restaurants/search?zipcode={zip}&limit={limit}&term={category]
   
 export default {
     list(zipCode, limit){  //, category
-        const params = { zipcode: zipCode, limit };
+        const params = { zipcode: zipCode, limit: 10 };
        // if (category) params.term = category;
         return http.get('/restaurants/search', { params });
     },
-    create(event) {
-        return http.post('/events/create/', event);
-    },
-    // associateRestaurantWithEvent(eventId, restaurants) {
-    //     return http.post(`restaurants/create/${eventId}`,  { restaurants });
-    // }
+    // create(event) {
+    //     return http.post('/events/create', event);
+    // },
 };
 
 
 
-// return http.get(`/restaurants/search?zipcode=${zipCode}&limit=${limit}&term=${category}`)
+//searchRestaurants...
