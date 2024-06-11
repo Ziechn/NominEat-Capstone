@@ -7,8 +7,11 @@ import LoginAndZip from '@/views/LoginAndZip.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
-//import EventCreation from '@/views/EventCreationView.vue';
-// import LogoutView from '@/views/LogoutView.vue';
+import EventCreationPopup from '@/components/EventCreationPopup.vue';
+import Voting from '@/views/Voting.vue';
+import LogoutView from '@/views/LogoutView.vue';
+
+
 
 
 
@@ -26,7 +29,7 @@ const routes = [
     name: 'home',
     component: LoginAndZip,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -54,19 +57,35 @@ const routes = [
     }
   },
   // {
-  //   path: '/event-create',
-  //   name: 'EventCreation',
+  //   path: '/events',
+  //   name: 'createEvent',
   //   component: EventCreation,
   //   meta: {
   //     requiresAuth: false
   //   }
   // },
   {
+    path: '/voting', 
+    name: 'Voting',
+    component: Voting,
+    meta: {
+      requiresAuth: false
+    }
+    },
+  {
     path: '/profile',
     name: 'profile',
     component: ProfileView,
     meta: {
       requiresAuth: true
+    }
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView,
+    meta: {
+      requiresAuth: false
     }
   }
   

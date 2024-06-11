@@ -49,9 +49,9 @@ public class EventController {
         return eventDao.getEventById(eventId);
     }
 
-    //@ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/create")
-    public Event createEvent(@RequestBody Event event) {
+    public Event createEvent(@RequestBody Event event, Principal principal) {
 
 //        if (event.getEventName() == null || event.getEventName().isEmpty() ||
 //                event.getLocation() == null || event.getLocation().isEmpty() ||
@@ -69,6 +69,8 @@ public class EventController {
 
 //       if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
 //        }
+
+        event.setOrganizerId(userDao.getUserByUsername(principal.getName()).getId());
 
         String newUrl = generateUniqueEventLink();
         event.setEventLink(newUrl);
