@@ -87,7 +87,7 @@ const backupData = [
 const store = _createStore({
   state: {
     zipCode: '',
-    limit: 10,
+    limit: 2,
     restaurants: [],
     events: [],
     loading: false,
@@ -167,11 +167,10 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit = 10 }) {
+    async fetchRestaurants({ commit }, { zipCode, limit, category }) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit);
-       // const responseEvents = await EventService.getEventRestaurants({ zipCode, limit });
+        const response = await RestaurantService.list(zipCode, limit, category);
         console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
         //commit('SET_RESTAURANTS', responseEvents);

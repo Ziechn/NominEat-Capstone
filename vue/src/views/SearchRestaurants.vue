@@ -1,16 +1,11 @@
 <template>
-    <HeaderComp/>
-    <div class="search-container">
-
-        <RestaurantList :restaurants="restaurants"/>
-    
-    <!-- <div class="search-restaurants">
+    <div class="search-restaurants">
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
         <div>
         <label for="zipCode"></label>
         <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
-        </div> -->
+        </div>
         <!-- <div>
         <label for="category"></label>
         <input type="text" v-model="category" placeholder="Filter by Category"/>
@@ -23,8 +18,12 @@
             <option value="20">20</option> 
             </select>
         </div> -->
-        <!-- <button type="submit">Search</button>
-        </form> -->
+        <button type="submit">Search</button>
+        </form>
+
+        <!-- Create Event -->
+        <CreateEvent v-bind:location="zipCode" v-bind:restaurants="restaurants" /> 
+
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && restaurants.length" class="restaurant-cards"> 
             <RestaurantCard
@@ -35,7 +34,7 @@
          <div v-if="!loading && !restaurants.length">
         No results found...
         </div>
-        <button  @click="openEventCreationPopup" class="create-event-button">Create Event</button>
+        <!-- <button  @click="openEventCreationPopup" class="create-event-button">Create Event</button>
         <EventCreationPopup
         v-if="showEventCreationPopup"
         :restaurants="restaurants"
@@ -46,7 +45,7 @@
         v-if="showEventCreationConfirmation"
         :eventLink="createdEventLink"
         @close="closeEventCreationConfirmation"
-        />
+        /> -->
         <!-- v-for="restaurant in filteredRestaurants"  -->
         <!-- <div v-if="selectedRestaurants.length">
             <h3>Selected Restaurants</h3>
@@ -66,15 +65,15 @@ import RestaurantCard from '@/components/RestaurantCard.vue';
 import EventCreationPopup from '@/components/EventCreationPopup.vue';
 import EventCreationConfirmation from '@/components/EventCreationConfirmation.vue';
 import HeaderComp from '../components/HeaderComp.vue';
-
+import CreateEvent from '../components/CreateEvent.vue';
 
 export default{
     components: {
-        RestaurantList,
-    RestaurantCard,
-    EventCreationPopup,
-    HeaderComp
-
+        // RestaurantList,
+        RestaurantCard,
+        CreateEvent
+        // EventCreationPopup,
+        // HeaderComp
 },
     // data() {
     //     return {
@@ -100,11 +99,12 @@ export default{
             this.showEventCreationPopup = false
         },
         searchRestaurants() {
+            console.log("Button Pressed");
           this.SET_ZIP_CODE(this.zipCode);
         //   this.SET_CATEGORY(this.category);
         //   this.SET_LIMIT(this.limit);
         //   this.fetchRestaurants();
-        this.fetchRestaurants({ zipCode: this.zipCode }); //limit: this.limit, category: this.category
+        this.fetchRestaurants({ zipCode: this.zipCode}); //limit: this.limit, category: this.category
                              },
                             // filterByCategory() {
                             //     this.FILTER_BY_CATEGORY(this.category);
@@ -142,10 +142,12 @@ export default{
         created() {
         if(this.$store.state.zipCode) {
             this.zipCode = this.$store.state.zipCode;
-            this.fetchRestaurants({ zipCode: this.zipCode });
-                                     }
-                 }
-    };
+            this.fetchRestaurants({ zipCode: this.zipCode, limit: 2 });
+    }
+//        this.fetchRestaurants(); OR //this.searchByZipCode();
+}
+    
+};
 </script>
 
 <style scoped>

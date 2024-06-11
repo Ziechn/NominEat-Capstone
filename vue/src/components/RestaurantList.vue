@@ -21,9 +21,9 @@ export default {
     components: {
         RestaurantCard
     },
-    props: {
-        eventId: this.Number
-    }
+    //props: {
+    //    eventId: this.Number
+    //}
 };
 </script>
 

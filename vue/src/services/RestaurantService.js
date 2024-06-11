@@ -15,13 +15,13 @@ http.interceptors.request.use(config => {
   ///restaurants/search?zipcode={zip}&limit={limit}&term={category]
   
 export default {
-    list(zipCode, limit){  //, category
-        const params = { zipcode: zipCode, limit };
+    list(zipcodeParam, limitParam, termParam){  //, category
+        const params = { zipcode: zipcodeParam, limit: limitParam, term: termParam };
        // if (category) params.term = category;
         return http.get('/restaurants/search', { params });
     },
     create(event) {
-        return http.post('/events/create/', event);
+        return http.post('/events/create', event);
     },
     // associateRestaurantWithEvent(eventId, restaurants) {
     //     return http.post(`restaurants/create/${eventId}`,  { restaurants });
