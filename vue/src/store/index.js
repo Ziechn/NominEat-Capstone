@@ -4,6 +4,7 @@ import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
 import createPersistedState from 'vuex-persistedstate';
 import RestaurantService from '../services/RestaurantService';
+import EventService from '../services/EventService';
 // import AuthService from '../services/AuthService';
 //import backupData from '@/backupData';
 
@@ -88,12 +89,14 @@ const store = _createStore({
     zipCode: '',
     limit: 10,
     restaurants: [],
+    events: [],
+    loading: false,
+    error: null,
     category: '',
     filteredRestaurants: [],
 
     //selectedRestaurants: [],
     //events: null,
-    loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
   },
@@ -117,26 +120,21 @@ const store = _createStore({
     //     restaurant => restaurant.id !== restaurantId
     //   );
     // },
-    // CREATE_EVENT(state, event) {
+    CREATE_EVENT(state, event) {
+      state.events.push(event);
+    },
+        // ADD_EVENT(state, event) {
     //   state.events.push(event);
     // },
+    SET_ERROR(state, error) {
+      state.error = error;
+    },
     SET_LOADING(state, loading) {
       state.loading = loading;
     },
-    ADD_SELECTED_RESTAURANT(state,restaurant){
-      state.selectedRestaurants.push(restaurant);
+    SET_EVENTS(state, events) {
+      state.events = events;
     },
-    REMOVE_SELECTED_RESTAURANT (state, restaurantId) {
-      state.selectedRestaurants = state.selectedRestaurants.filter (
-        restaurant  => restaurant.id !==restaurantId  
-      );
-    },
-    // SET_EVENTS(state, events) {
-    //   state.events = events;
-    // },
-    // ADD_EVENT(state, event) {
-    //   state.events.push(event);
-    // },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
@@ -169,32 +167,48 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit = 10}) {
+    async fetchRestaurants({ commit }, { zipCode, limit = 10 }) {
       commit('SET_LOADING', true);
       try {
         const response = await RestaurantService.list(zipCode, limit);
+       // const responseEvents = await EventService.getEventRestaurants({ zipCode, limit });
         console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
+        //commit('SET_RESTAURANTS', responseEvents);
        } catch (error) {
         console.error('Error fetching restaurants: ', error);
-        commit('SET_RESTAURANTS', backupData); // Fallback to backup data 
+        //commit('SET_RESTAURANTS', backupData); // Fallback to backup data 
         }finally { 
           commit('SET_LOADING', false);
+        }
+      
+    },
+    async createEvent({ commit, state }, eventData) { 
+      commit('SET_LOADING', true);
+      try {
+        eventData.organizerId = state.user.id;
+        const eventResponse = await EventService.createEvent(eventData);
+        const eventId = eventResponse.data.id;
+        await EventService.addRestaurantsToEvent(eventId, eventData.restaurants);
+        return eventResponse.data;
+      } catch(error) {
+        commit('SET_ERROR', error);
+        throw error;
+      } finally {
+        commit ('SET_LOADING', false);
       }
     },
-    
-    // async createEvent({ commit }, event) { 
-    //   console.log('Creating new event with:', event);
-    //   try {
-    //    // const response = await axios.post('/events/create', event);
-        
-    //     const response = await RestaurantService.createEvent(event);
-    //     console.log('Event created: ', response.data);
-    //     commit('CREATE_EVENT', response.data);
-    //   } catch (error) {
-    //     console.error('Error creating event', error);
-    //   }
-    // },
+                  //    create event og method const response = await EventService.createEvent(eventData);
+                  //     commit('SET_EVENTS', [...this.state.events, response.data]);
+                  //     return response.data;
+                  //   } catch (error) {
+                  //     console.error('Error creating event', error);
+                  //     commit('SET_ERROR', error);
+                  //     throw error;
+                  //   } finally {
+                  //     commit('SET_LOADING', false);
+                  //   }
+                  // },
     // async fetchEvent({ commit }, eventId ) {
     //   try {
     //     const response = await axios.get(`/events/${eventId}`);
@@ -236,13 +250,22 @@ const store = _createStore({
       if(user){
         console.log('Retrieving user: ', user);
         commit('SET_USER', user);
-      }
       
     }
   },
-  
+  // getters: {
+  //   isAuthenticated(state) {
+  //     return ! !state.user;
+  //   },
+  //   eventById: (state) => (id) => {
+  //     return state.events.find(event => event.id === id);
+  //   },
+  //   restaurantsForEvent: (state) => (eventId) => {
+  //     return state.restaurants.filter(restaurant => restaurant.eventId === eventId);
+  //   },
+   },
   plugins: [createPersistedState(),]
-});
+}); 
 export default store;
 
 

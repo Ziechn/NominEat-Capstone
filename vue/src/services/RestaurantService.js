@@ -20,18 +20,12 @@ export default {
        // if (category) params.term = category;
         return http.get('/restaurants/search', { params });
     },
-    createEvent(event) {
+    create(event) {
         return http.post('/events/create/', event);
     },
-    getEvent (eventId) {
-        return http.get(`/events/${eventId}`);
-    },
-    getEventRestaurants(eventId) {
-        return http.get(`/events/${eventId}/restaurants`);
-    },
-    associateRestaurantWithEvent(eventId, restaurants) {
-        return http.post(`restaurants/create/${eventId}`,  { restaurants });
-    }
+    // associateRestaurantWithEvent(eventId, restaurants) {
+    //     return http.post(`restaurants/create/${eventId}`,  { restaurants });
+    // }
 };
 
 
