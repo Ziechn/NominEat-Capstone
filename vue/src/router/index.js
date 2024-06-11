@@ -2,7 +2,7 @@ import { createRouter as createRouter, createWebHistory } from 'vue-router';
 import { useStore } from 'vuex';
 
 // Import components
-//import HomeView from '@/views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import RegisterView from '@/views/RegisterView.vue';
@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: LoginAndZip,
+    component: HomeView,
     meta: {
       requiresAuth: false
     }

@@ -1,4 +1,5 @@
 <template>
+  <HeaderComp/>
   <div id="register" class="register-container">
     <div class="card-front">
       <div class="form-container">
@@ -29,62 +30,66 @@
 </template>
 
 <script>
+import HeaderComp from '../components/HeaderComp.vue';
 import authService from '../services/AuthService';
 
 export default {
-  data() {
-    return {
-      user: {
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        passwordStrength: '',
-        role: 'user',
-      },
-      registrationErrors: false,
-      registrationErrorMsg: 'There were problems registering this user.',
-    };
-  },
-  methods: {
-    register() {
-      this.clearErrors();
-      if (this.user.password != this.user.confirmPassword) {
-        this.registrationErrors = true;
-        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
-      } else if (!this.checkPasswordStrength(this.user.password) || !this.checkPasswordStrength(this.user.confirmPassword)) {
-        this.registrationErrors = true;
-        this.registrationErrorMsg = 'Password must be at least 8 characters long and contain one uppercase letter, one lowercase letter, one special character, and one number;'
-        return; //exits register early if password issues are still present
-      } else {
-        authService
-          .register(this.user)
-          .then((response) => {
-            if (response.status == 201) {
-              this.$router.push({
-                path: '/login',
-                query: { registration: 'success' },
-              });
-            }
-          })
-          .catch((error) => {
-            const response = error.response;
-            this.registrationErrors = true;
-            if (response.status === 400) {
-              this.registrationErrorMsg = 'Bad Request: Validation Errors';
-            }
-          });
-      }
+    data() {
+        return {
+            user: {
+                username: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                passwordStrength: '',
+                role: 'user',
+            },
+            registrationErrors: false,
+            registrationErrorMsg: 'There were problems registering this user.',
+        };
     },
-    clearErrors() {
-      this.registrationErrors = false;
-      this.registrationErrorMsg = 'Email already in use. Please enter a different email.';
+    methods: {
+        register() {
+            this.clearErrors();
+            if (this.user.password != this.user.confirmPassword) {
+                this.registrationErrors = true;
+                this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+            }
+            else if (!this.checkPasswordStrength(this.user.password) || !this.checkPasswordStrength(this.user.confirmPassword)) {
+                this.registrationErrors = true;
+                this.registrationErrorMsg = 'Password must be at least 8 characters long and contain one uppercase letter, one lowercase letter, one special character, and one number;';
+                return; //exits register early if password issues are still present
+            }
+            else {
+                authService
+                    .register(this.user)
+                    .then((response) => {
+                    if (response.status == 201) {
+                        this.$router.push({
+                            path: '/login',
+                            query: { registration: 'success' },
+                        });
+                    }
+                })
+                    .catch((error) => {
+                    const response = error.response;
+                    this.registrationErrors = true;
+                    if (response.status === 400) {
+                        this.registrationErrorMsg = 'Bad Request: Validation Errors';
+                    }
+                });
+            }
+        },
+        clearErrors() {
+            this.registrationErrors = false;
+            this.registrationErrorMsg = 'Email already in use. Please enter a different email.';
+        },
+        checkPasswordStrength(password) {
+            const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,}$)/;
+            return passwordCriteria.test(password);
+        }
     },
-    checkPasswordStrength(password) {
-      const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,}$)/;
-      return passwordCriteria.test(password);
-    }
-  },
+    components: { HeaderComp }
 };
 </script>
 

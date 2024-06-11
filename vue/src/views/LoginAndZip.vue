@@ -5,6 +5,7 @@
       <template #front>
         <div class="form-container">
           <h1>Login</h1>
+          {{ user.username }}
           <form v-on:submit.prevent="login">
             <div class="register-success" role="alert" v-if="this.$route.query.registration">
               Account created! Please log in.
@@ -47,13 +48,13 @@
 
 <script>
 import FlipCard from "../components/FlipCard.vue";
-//import HeaderComp from "../components/HeaderComp.vue";
+import HeaderComp from "../components/HeaderComp.vue";
 import authService from "../services/AuthService";
 
 export default {
   components: {
     FlipCard,
-    //HeaderComp
+    HeaderComp
 },
   data() {
     return {
@@ -111,7 +112,7 @@ export default {
   height: 100vh;
   justify-content: center;
   align-items: center;
-  padding-top: 40px;
+  /* padding-top: 40px; */
 }
 
 .form-container {
