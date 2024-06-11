@@ -83,7 +83,7 @@ public class EventController {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
 //        }
 
-        return eventDao.getEventById(eventId);
+        return event;
 
     }
 
