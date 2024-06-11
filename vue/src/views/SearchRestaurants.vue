@@ -1,4 +1,5 @@
 <template>
+    <HeaderComp/>
     <div class="search-restaurants">
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
@@ -59,11 +60,15 @@ import { mapState,  mapActions, mapMutations } from 'vuex'; //
 import RestaurantCard from '@/components/RestaurantCard.vue';
 import EventCreationPopup from '@/components/EventCreationPopup.vue';
 import EventCreationConfirmation from '@/components/EventCreationConfirmation.vue';
+import HeaderComp from '../components/HeaderComp.vue';
+
 
 export default{
     components: {
     RestaurantCard,
-    EventCreationPopup
+    EventCreationPopup,
+    HeaderComp
+
 },
     data() {
         return {
@@ -145,6 +150,7 @@ export default{
     background-color: var(--bg-100);
     color: var(--text-100);
     text-align: center;
+    padding-top: 70px;
 }
 
 .search-form {

@@ -95,4 +95,12 @@ CREATE TABLE restaurant_hours (
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id)
 );
 
+CREATE TABLE event_attendee_link (
+    event_link VARCHAR PRIMARY KEY,
+    event_id INT NOT NULL,
+    yes_votes INT NOT NULL,
+    no_votes INT NOT NULL,
+    FOREIGN KEY (event_id) REFERENCES event (event_id)
+);
+
 COMMIT TRANSACTION;

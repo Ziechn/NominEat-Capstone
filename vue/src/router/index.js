@@ -13,6 +13,8 @@ import LogoutView from '@/views/LogoutView.vue';
 
 
 
+
+
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -27,7 +29,7 @@ const routes = [
     name: 'home',
     component: LoginAndZip,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -76,6 +78,14 @@ const routes = [
     component: ProfileView,
     meta: {
       requiresAuth: true
+    }
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView,
+    meta: {
+      requiresAuth: false
     }
   }
   

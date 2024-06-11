@@ -36,11 +36,12 @@ INSERT INTO restaurant_category (restaurant_id, category_id)
 VALUES      ('A123', 1);
 
 
-
 INSERT INTO restaurant_hours (restaurant_id, day_id, day_name, start_time, end_time)
 VALUES ('A123', 1, 'Monday', '1100', '1800');
 
 
+INSERT INTO event_attendee_link (event_link, event_id, yes_votes, no_votes)
+VALUES ('t3m0r4ry', 1, 0, 0);
 
 
 COMMIT TRANSACTION;

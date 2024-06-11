@@ -1,4 +1,5 @@
 <template>
+  <HeaderComp/>
   <div class="login-zip-container">
     <flipCard ref="flipCard">
       <template #front>
@@ -16,7 +17,7 @@
             </div>
             <button type="submit">Sign in</button>
             <div role="alert" class="alert" v-if="invalidCredentials">
-              Invalid username and password!
+              Invalid username or password.
             </div>
             <p> Need an account? 
             <router-link v-bind:to="{ name: 'register' }">Sign up.</router-link>
@@ -46,12 +47,14 @@
 
 <script>
 import FlipCard from "../components/FlipCard.vue";
+import HeaderComp from "../components/HeaderComp.vue";
 import authService from "../services/AuthService";
 
 export default {
   components: {
-    FlipCard
-  },
+    FlipCard,
+    HeaderComp
+},
   data() {
     return {
       user: {
@@ -108,6 +111,7 @@ export default {
   height: 100vh;
   justify-content: center;
   align-items: center;
+  padding-top: 40px;
 }
 
 .form-container {
