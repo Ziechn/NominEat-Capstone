@@ -1,4 +1,8 @@
 <template>
+    <form v-on:submit.prevent="getEventInformation">
+    <input type="text" v-model="tempEventId">
+    <button type="submit">Submit</button>
+    </form>
   <div>
     Temp Event ID: {{ eventId }} <br>
     Event Name: {{ eventName }} <br>
@@ -23,7 +27,7 @@ export default {
     props: ['eventId'],
     methods: {
         getEventInformation(){
-            EventService.getEvent(this.eventId).then(
+            EventService.getEvent(this.tempEventId).then(
                 (response) => {
                     if (response.status === 200) {
                         this.eventName = response.data.eventName;
