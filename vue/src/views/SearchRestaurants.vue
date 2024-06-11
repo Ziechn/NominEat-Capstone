@@ -1,4 +1,9 @@
 <template>
+    <div>
+        Testing... <br>
+        Zip Code: {{ zipCode }}
+        Restaurants: {{ restaurants }}
+    </div>
     <div class="search-restaurants">
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
@@ -20,6 +25,10 @@
         </div> -->
         <button type="submit">Search</button>
         </form>
+
+        <!-- Create Event -->
+        <CreateEvent v-bind:restaurants="restaurants" v-bind:location="zipCode" /> 
+
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && restaurants.length" class="restaurant-cards"> 
             <RestaurantCard
@@ -48,11 +57,12 @@
 <script>
 import { mapState,  mapActions, mapMutations } from 'vuex'; //
 import RestaurantCard from '@/components/RestaurantCard.vue';
-
+import CreateEvent from '../components/CreateEvent.vue';
 
 export default{
     components: {
         RestaurantCard,
+        CreateEvent
     },
     data() {
         return {
@@ -108,7 +118,7 @@ export default{
    created() {
         if(this.$store.state.zipCode) {
             this.zipCode = this.$store.state.zipCode;
-            this.fetchRestaurants({ zipCode: this.zipCode });
+            this.fetchRestaurants({ zipCode: this.zipCode, limit: 2 });
     }
 //        this.fetchRestaurants(); OR //this.searchByZipCode();
 }

@@ -20,6 +20,11 @@
 <script>
 export default{
   name: 'App',
+  data() {
+    return {
+      date: ''
+    }
+  },
 };
 </script>
 

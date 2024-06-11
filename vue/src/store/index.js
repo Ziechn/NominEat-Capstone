@@ -86,12 +86,12 @@ const backupData = [
 const store = _createStore({
   state: {
     zipCode: '',
-    limit: 10,
+    limit: 2,
     restaurants: [],
     category: '',
-    filteredRestaurants: [],
-    //selectedRestaurants: [],
-    //events: null,
+    // filteredRestaurants: [],
+    // selectedRestaurants: [],
+    // events: null,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -159,10 +159,10 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit = 10}) {
+    async fetchRestaurants({ commit }, { zipCode, limit, category }) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit);
+        const response = await RestaurantService.list(zipCode, limit, category);
         console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
        } catch (error) {
