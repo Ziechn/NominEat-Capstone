@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping (path = "/events")
+@RequestMapping(path = "/events")
 @CrossOrigin
 public class EventController {
 
@@ -47,7 +47,44 @@ public class EventController {
 
     @RequestMapping(path = "/{eventId}", method = RequestMethod.GET)
     public Event getEventById(@PathVariable int eventId) {
+
+
+        Event event = eventDao.getEventById(eventId);
+
+        if (event == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found.");
+        }
+
+        LocalDateTime now =LocalDateTime.now();
+        DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        String now2 = now.toString().substring(0,16);
+        if(now2.compareTo(event.getDecisionDate())<0){
+         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+        }
+
+
+        //return eventDao.getEventById(eventId);
+        // Get the event from the database...
+        //Event event = eventDao.getEventById(eventId);
+
+        // Check to see if the event decision time is later than the current time.
+        // If so throw the exception.
+        // Otherwise return the event.
+
+        //I need to check the current date and time against the decision date and time
+        //the decision date format is Timestamp and how the front end sends the time is not
+        //find out if there is a way to covert the time from timestamp to how it's received?
+
+        // Chris commented this for the time being
+//        LocalDateTime now = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//        String now2 = now.toString().substring(0, 16);
+//        if (now2.compareTo(event.getDecisionDate()) < 0) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+//        }
+
         return eventDao.getEventById(eventId);
+
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -55,43 +92,40 @@ public class EventController {
     public Event createEvent(@RequestBody Event event, Principal principal) {
 
         if (event.getEventName() == null || event.getEventName().isEmpty() ||
-               event.getLocation() == null || event.getLocation().isEmpty() ||
-               event.getDecisionDate() == null) {
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, location and date/time.");
-       }
-        User organizer = userDao.getUserByUsername(principal.getName());
-        if(organizer ==null) {
-
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
-     }
-        event.setOrganizerId(organizer.getId());
-
-
-      //I need to check the current date and time against the decision date and time
-      //the decision date format is Timestamp and how the front end sends the time is not
-      //find out if there is a way to covert the time from timestamp to how it's received?
-        LocalDateTime now =LocalDateTime.now();
-       // LocalDateTime decisionDate = event.getDecisionDate();
-        DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        String now2 = now.toString().substring(0,16);
-        if(now2.compareTo(event.getDecisionDate())<0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+                event.getLocation() == null || event.getLocation().isEmpty() ||
+                event.getDecisionDate() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide event name, location and date/time.");
         }
+
+        User organizer = userDao.getUserByUsername(principal.getName());
+
+
+
+        //LocalDateTime now =LocalDateTime.now();
+        //DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        //String now2 = now.toString().substring(0,16);
+        //if(now2.compareTo(event.getDecisionDate())<0){
+          // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+        //}
 
        if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
-           event.setEventLink(generateUniqueUserEventLink(1));
+           event.setEventLink(generateUniqueEventLink());
         }
 
-        //String newUrl = generateUniqueEventLink();
-       // event.setEventLink(newUrl);
-        //System.out.println("[Event Controller] createEvent() Event unique URL: " );
+        System.out.println("[Event Controller] createEvent() Event unique URL: " );
 
-        // Make a decision date...
-        // Date date = new Date(2024, 7, 10);
-        // long time = date.getTime();
-        // System.out.println(time);
-        //event.setDecisionDate(new Timestamp(time));
+        if (organizer == null) {
 
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exist.");
+        }
+
+        event.setOrganizerId(organizer.getId());
+
+        if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
+            event.setEventLink(generateUniqueEventLink());
+        }
+
+        System.out.println("[Event Controller] createEvent() Event unique URL: " + event.getEventLink() );
 
 
         return eventDao.createEvent(event);
@@ -109,15 +143,15 @@ public class EventController {
     }
 
     @GetMapping(path = "/{eventId}/restaurants")
-    public List<Restaurant> getRestaurants(@PathVariable int eventId){
+    public List<Restaurant> getRestaurants(@PathVariable int eventId) {
         return restaurantDao.getRestaurantsByEventId(eventId);
     }
 
     @RequestMapping(path = "/link/{eventLink}", method = RequestMethod.GET)
-    public Event accessEventLink (@PathVariable String eventLink) {
+    public Event accessEventLink(@PathVariable String eventLink) {
         Event event = eventDao.getEventByLink(eventLink);
 
-        if( event == null) {
+        if (event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
         }
 
@@ -133,7 +167,7 @@ public class EventController {
     // Chris's Edits...
     // This creates a unique link for an event that the organizer can sent to a specific user.
     @GetMapping(path = "/{eventId}/create-link")
-    public String generateUniqueUserEventLink(@PathVariable int eventId){
+    public String generateUniqueUserEventLink(@PathVariable int eventId) {
         String uniqueId = UUID.randomUUID().toString();
         System.out.println("[Event Controller] generateUniqueEventLink() Unique URL: " + uniqueId);
         eventDao.insertUniqueEventUserLink(uniqueId, eventId); // Hardcoded user ID needs to get the principal ID.
@@ -143,27 +177,27 @@ public class EventController {
 
     // This returns the event based on its unique event link.
     @GetMapping(path = "/attendee-link/{eventLink}")
-    public Event getEventByLink(@PathVariable String eventLink){
+    public Event getEventByLink(@PathVariable String eventLink) {
         return new Event();
     }
 
     @GetMapping(path = "/yes-votes/{eventId}/{restaurantId}")
-    public int getRestaurantEventYesVotes(@PathVariable int eventId, @PathVariable String restaurantId){
+    public int getRestaurantEventYesVotes(@PathVariable int eventId, @PathVariable String restaurantId) {
         return eventDao.getRestaurantEventYesVotes(eventId, restaurantId);
     }
 
     @GetMapping(path = "/no-votes/{eventId}/{restaurantId}")
-    public int getRestaurantEventNoVotes(@PathVariable int eventId, @PathVariable String restaurantId){
+    public int getRestaurantEventNoVotes(@PathVariable int eventId, @PathVariable String restaurantId) {
         return eventDao.getRestaurantEventNoVotes(eventId, restaurantId);
     }
 
     @PostMapping(path = "/add-yes-vote/{eventId}/{restaurantId}")
-    public String addRestaurantEventYesVote(@PathVariable int eventId, @PathVariable String restaurantId){
+    public String addRestaurantEventYesVote(@PathVariable int eventId, @PathVariable String restaurantId) {
         return eventDao.addRestaurantEventYesVote(eventId, restaurantId);
     }
 
     @PostMapping(path = "/add-no-vote/{eventId}/{restaurantId}")
-    public String addRestaurantEventNoVote(@PathVariable int eventId, @PathVariable String restaurantId){
+    public String addRestaurantEventNoVote(@PathVariable int eventId, @PathVariable String restaurantId) {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
     }
 }

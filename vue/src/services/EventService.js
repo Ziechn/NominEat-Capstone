@@ -6,8 +6,8 @@ const http = axios.create({
 
   export default {
  
-    createEvent(eventData) {
-        return http.post('/events/create', eventData);
+    createEvent(event) {
+        return http.post('/events/create', event);
     },
     addRestaurantsToEvent(eventId, restaurants) {
         return http.post(`restaurants/create/${eventId}`, restaurants);
