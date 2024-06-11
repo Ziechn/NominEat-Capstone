@@ -43,21 +43,26 @@ export default {
             RestaurantService.create(newEvent).then(
                 (response) => {
                     if (response.status === 201) {
-                        console.log("Created!");
-                        console.log(response);
+                        eventId = response.data.eventId;
                     }
-                }
-            ).catch(
+
+                EventService.addRestaurantsToEvent(eventId, this.restaurants).then(
+                    (response) => {
+                        if (response.status === 201) {
+                            console.log("Restaurants added to the event.");
+                            console.log(response.data);
+                        }
+                    }
+                ).catch(
+                    (error) => {
+                        this.handleErrorResponse(error, "Error associating restaurants with the event.");
+                    }
+                );
+            }).catch(
                 (error) => {
                     this.handleErrorResponse(error, "Error creating an event.");
                 }
             );
-            // let createdEventId = createdEvent.eventId;
-
-            // EventService.addRestaurantsToEvent(this.restaurants, createdEventId);
-            // RestaurantService.createRestaurants(this.restaurants);
-
-            // Send the list of restaurants to teh API with the event id...
         }
     }
 }

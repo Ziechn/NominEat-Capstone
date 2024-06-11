@@ -48,11 +48,24 @@ public class EventController {
     @RequestMapping(path = "/{eventId}", method = RequestMethod.GET)
     public Event getEventById(@PathVariable int eventId) {
         // Get the event from the database...
+        Event event = eventDao.getEventById(eventId);
 
         // Check to see if the event decision time is later than the current time.
         // If so throw the exception.
         // Otherwise return the event.
-        return eventDao.getEventById(eventId);
+
+        //I need to check the current date and time against the decision date and time
+        //the decision date format is Timestamp and how the front end sends the time is not
+        //find out if there is a way to covert the time from timestamp to how it's received?
+        LocalDateTime now = LocalDateTime.now();
+        // LocalDateTime decisionDate = event.getDecisionDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        String now2 = now.toString().substring(0, 16);
+        if (now2.compareTo(event.getDecisionDate()) < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+        }
+
+        return event;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -73,17 +86,6 @@ public class EventController {
         }
 
         event.setOrganizerId(organizer.getId());
-
-        //I need to check the current date and time against the decision date and time
-        //the decision date format is Timestamp and how the front end sends the time is not
-        //find out if there is a way to covert the time from timestamp to how it's received?
-        LocalDateTime now = LocalDateTime.now();
-        // LocalDateTime decisionDate = event.getDecisionDate();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        String now2 = now.toString().substring(0, 16);
-        if (now2.compareTo(event.getDecisionDate()) < 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
-        }
 
         if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
             event.setEventLink(generateUniqueEventLink());
