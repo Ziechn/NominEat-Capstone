@@ -47,13 +47,13 @@
 
 <script>
 import FlipCard from "../components/FlipCard.vue";
-import HeaderComp from "../components/HeaderComp.vue";
+//import HeaderComp from "../components/HeaderComp.vue";
 import authService from "../services/AuthService";
 
 export default {
   components: {
     FlipCard,
-    HeaderComp
+    //HeaderComp
 },
   data() {
     return {

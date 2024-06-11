@@ -1,12 +1,16 @@
 <template>
     <HeaderComp/>
-    <div class="search-restaurants">
+    <div class="search-container">
+
+        <RestaurantList :restaurants="restaurants"/>
+    
+    <!-- <div class="search-restaurants">
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
         <div>
         <label for="zipCode"></label>
         <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
-        </div>
+        </div> -->
         <!-- <div>
         <label for="category"></label>
         <input type="text" v-model="category" placeholder="Filter by Category"/>
@@ -19,8 +23,8 @@
             <option value="20">20</option> 
             </select>
         </div> -->
-        <button type="submit">Search</button>
-        </form>
+        <!-- <button type="submit">Search</button>
+        </form> -->
         <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && restaurants.length" class="restaurant-cards"> 
             <RestaurantCard
@@ -51,12 +55,13 @@
                      </li>
                 </ul>
         </div> -->
-      
+    
     </div>
 </template>
 
 <script>
-import { mapState,  mapActions, mapMutations } from 'vuex'; //
+import { mapState,  mapActions } from 'vuex'; //, mapMutations
+import RestaurantList from '../components/RestaurantList.vue';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 import EventCreationPopup from '@/components/EventCreationPopup.vue';
 import EventCreationConfirmation from '@/components/EventCreationConfirmation.vue';
@@ -65,28 +70,29 @@ import HeaderComp from '../components/HeaderComp.vue';
 
 export default{
     components: {
+        RestaurantList,
     RestaurantCard,
     EventCreationPopup,
     HeaderComp
 
 },
-    data() {
-        return {
-            showEventCreationPopup: false,
-            showEventCreationConfirmation: false,
-            zipCode: '',
-            // category: '',
-            limit: 10
-           //selectedRestaurants: [],
-          //  hasSelected: false
-        };
-    },
+    // data() {
+    //     return {
+    //         showEventCreationPopup: false,
+    //         showEventCreationConfirmation: false,
+    //         zipCode: '',
+    //         // category: '',
+    //         limit: 10
+    //        //selectedRestaurants: [],
+    //       //  hasSelected: false
+    //     };
+    // },
     computed: {
         ...mapState(['restaurants', 'loading']), //'selectedRestaurants'
     },
     methods: {
         ...mapActions(['fetchRestaurants']), //'createEvent', 'saveRestaurants'
-        ...mapMutations(['SET_ZIP_CODE']), //'FILTER_BY_CATEGORY', 'SET_LIMIT', 'SET_CATEGORY'
+        //...mapMutations(['SET_ZIP_CODE']), //'FILTER_BY_CATEGORY', 'SET_LIMIT', 'SET_CATEGORY'
         openEventCreationPopup() {
             this.showEventCreationPopup = true;
         },
@@ -124,7 +130,7 @@ export default{
                 const response = await this.$store.dispatch('createEvent', eventData );
                 this.createdEventLink = response.eventLink;
                 this.showEventCreationConfirmation = true;
-                //this.$router.push({ name: 'EventOrganizer', query: { eventLink: response.eventLink } });
+                    this.$router.push({ name: 'EventOrganizer', query: { eventLink: response.eventLink } });
             } catch(error) {
                 console.log('Error creating event: ', error);
              }

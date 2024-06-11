@@ -45,8 +45,7 @@
   border-bottom-width: 1.1px;
   border-bottom-color: var(--primary-100);
   box-shadow: 0 2px 6px var(--primary-100);
-border-bottom-style: solid;
-chnged top fixed to top because its distracting yo look at */
+border-bottom-style: solid;*/
 .nav-container {
   display: flex;
   justify-content: flex-end;
