@@ -6,7 +6,7 @@
           <img class="logo" src="../assets/cropped-logo.png">
         </div>
         <nav class="nav-container">
-          <router-link v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE</router-link>
+          <router-link v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE & EVENTS</router-link>
           <router-link v-if="!isSignedIn && showLoginLink" v-bind:to="{ name: 'login' }">LOG IN</router-link>
           <router-link v-if="showHomeLink" v-bind:to="{ name: 'home' }">HOME</router-link>
         </nav> 
