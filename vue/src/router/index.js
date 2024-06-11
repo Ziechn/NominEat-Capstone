@@ -7,7 +7,7 @@ import LoginAndZip from '@/views/LoginAndZip.vue';
 import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
-import EventCreation from '@/views/EventCreationView.vue';
+//import EventCreation from '@/views/EventCreationView.vue';
 // import LogoutView from '@/views/LogoutView.vue';
 
 

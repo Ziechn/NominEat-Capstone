@@ -90,8 +90,9 @@ const store = _createStore({
     restaurants: [],
     category: '',
     filteredRestaurants: [],
-    selectedRestaurants: [],
-    events: [],
+
+    //selectedRestaurants: [],
+    //events: null,
     loading: false,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
@@ -116,9 +117,9 @@ const store = _createStore({
     //     restaurant => restaurant.id !== restaurantId
     //   );
     // },
-    CREATE_EVENT(state, event) {
-      state.events.push(event);
-    },
+    // CREATE_EVENT(state, event) {
+    //   state.events.push(event);
+    // },
     SET_LOADING(state, loading) {
       state.loading = loading;
     },
@@ -168,11 +169,11 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit = 10, category = '' }) {
+    async fetchRestaurants({ commit }, { zipCode, limit = 10}) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit, category);
-        //console.log('Restaurants fetched:', response.data);
+        const response = await RestaurantService.list(zipCode, limit);
+        console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
        } catch (error) {
         console.error('Error fetching restaurants: ', error);
