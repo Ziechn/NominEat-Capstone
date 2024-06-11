@@ -5,7 +5,6 @@
       <template #front>
         <div class="form-container">
           <h1>Login</h1>
-          {{ user.username }}
           <form v-on:submit.prevent="login">
             <div class="register-success" role="alert" v-if="this.$route.query.registration">
               Account created! Please log in.

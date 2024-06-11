@@ -75,14 +75,14 @@ export default {
                     const response = error.response;
                     this.registrationErrors = true;
                     if (response.status === 400) {
-                        this.registrationErrorMsg = 'Bad Request: Validation Errors';
+                        this.registrationErrorMsg = 'Username is already in use. Please enter a different username.';
                     }
                 });
             }
         },
         clearErrors() {
             this.registrationErrors = false;
-            this.registrationErrorMsg = 'Email already in use. Please enter a different email.';
+            this.registrationErrorMsg = 'Email already in use. Please enter a different username.';
         },
         checkPasswordStrength(password) {
             const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,}$)/;
