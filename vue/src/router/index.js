@@ -8,7 +8,7 @@ import SearchRestaurants from '@/views/SearchRestaurants.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 //import EventCreation from '@/views/EventCreationView.vue';
-// import LogoutView from '@/views/LogoutView.vue';
+import LogoutView from '@/views/LogoutView.vue';
 
 
 
@@ -24,9 +24,9 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: LoginAndZip,
+    component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -67,6 +67,14 @@ const routes = [
     component: ProfileView,
     meta: {
       requiresAuth: true
+    }
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView,
+    meta: {
+      requiresAuth: false
     }
   }
   

@@ -1,4 +1,5 @@
 <template>
+    <HeaderComp/>
     <div class="search-restaurants">
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
@@ -48,12 +49,14 @@
 <script>
 import { mapState,  mapActions, mapMutations } from 'vuex'; //
 import RestaurantCard from '@/components/RestaurantCard.vue';
+import HeaderComp from '../components/HeaderComp.vue';
 
 
 export default{
     components: {
-        RestaurantCard,
-    },
+    RestaurantCard,
+    HeaderComp
+},
     data() {
         return {
             zipCode: '',
@@ -124,6 +127,7 @@ export default{
     background-color: var(--bg-100);
     color: var(--text-100);
     text-align: center;
+    padding-top: 70px;
 }
 
 .search-form {
