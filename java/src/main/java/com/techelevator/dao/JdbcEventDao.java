@@ -7,6 +7,8 @@ import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,14 +75,16 @@ public class JdbcEventDao implements EventDao {
 
         String sql = "INSERT INTO event (organizer_id, event_name, location, event_link, decision_date) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING event_id;";
-
+        String date= event.getDecisionDate().substring(0,10)+ " "+ event.getDecisionDate().substring(11)+":00";
+        Timestamp time= Timestamp.valueOf(date);
         try {
             int eventId = jdbcTemplate.queryForObject(sql, int.class,
                     event.getOrganizerId(),
                     event.getEventName(),
                     event.getLocation(),
                     event.getEventLink(),
-                    event.getDecisionDate());
+                    time);
+
 
             newEvent = getEventById(eventId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -122,7 +126,7 @@ public class JdbcEventDao implements EventDao {
         event.setOrganizerId(results.getInt("organizer_id"));
         event.setLocation(results.getString("location"));
         event.setEventLink(results.getString("event_link"));
-        event.setDecisionDate(results.getTimestamp("decision_date"));
+        event.setDecisionDate(results.getString("decision_date"));
         return event;
     }
 

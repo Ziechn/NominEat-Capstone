@@ -14,7 +14,7 @@ public class Event {
 
     private String eventLink;
 
-    private Timestamp decisionDate;
+    private String decisionDate;
 
 
 
@@ -25,7 +25,7 @@ public class Event {
 
 
     public Event(int eventId, String eventName, int organizerId, String location,
-                 String eventLink, Timestamp decisionDate) {
+                 String eventLink, String decisionDate) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.organizerId = organizerId;
@@ -77,11 +77,11 @@ public class Event {
         this.eventLink = eventLink;
     }
 
-    public Timestamp getDecisionDate () {
+    public String getDecisionDate () {
         return  decisionDate;
     }
 
-    public void setDecisionDate(Timestamp decisionDate) {
+    public void setDecisionDate(String decisionDate) {
         this.decisionDate = decisionDate;
     }
 }

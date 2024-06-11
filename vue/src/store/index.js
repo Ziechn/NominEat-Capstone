@@ -94,6 +94,7 @@ const store = _createStore({
     error: null,
     category: '',
     filteredRestaurants: [],
+
     //selectedRestaurants: [],
     //events: null,
     token: localStorage.getItem('token') || '',
@@ -110,6 +111,7 @@ const store = _createStore({
       state.restaurants = restaurants;
       state.filteredRestaurants = restaurants;
     },
+
     // ADD_SELECTED_RESTAURANTS(state, restaurant) {
     //   state.selectedRestaurants.push(restaurant);
     // },
@@ -234,6 +236,14 @@ const store = _createStore({
     //     console.error('Error saving restaurants to event:', error);
     //   }
     // },
+    async createEvent({commit}, event) {
+      try {
+        const response =await axios.post  ('/events/create', event);
+        commit ('CREATE_EVENT', response.data );
+      }catch (error) {
+        console.error ('Error creating an event',error);
+      }
+    },
     fetchUser({ commit }) {
       const user = JSON.parse(localStorage.getItem('user'));
       if(user){
