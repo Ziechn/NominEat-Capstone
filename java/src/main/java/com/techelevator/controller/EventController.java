@@ -47,6 +47,11 @@ public class EventController {
 
     @RequestMapping(path = "/{eventId}", method = RequestMethod.GET)
     public Event getEventById(@PathVariable int eventId) {
+        // Get the event from the database...
+
+        // Check to see if the event decision time is later than the current time.
+        // If so throw the exception.
+        // Otherwise return the event.
         return eventDao.getEventById(eventId);
     }
 

@@ -38,17 +38,23 @@ export default {
             console.log(this.restaurants);
 
             // Send the event to the API
-            // let eventId = 0;
-
+            let eventId = 0;
             
             RestaurantService.create(newEvent).then(
                 (response) => {
-                    if (response.status === )
+                    if (response.status === 201) {
+                        console.log("Created!");
+                        console.log(response);
+                    }
+                }
+            ).catch(
+                (error) => {
+                    this.handleErrorResponse(error, "Error creating an event.");
                 }
             );
-            let createdEventId = createdEvent.eventId;
+            // let createdEventId = createdEvent.eventId;
 
-            EventService.addRestaurantsToEvent(this.restaurants, createdEventId);
+            // EventService.addRestaurantsToEvent(this.restaurants, createdEventId);
             // RestaurantService.createRestaurants(this.restaurants);
 
             // Send the list of restaurants to teh API with the event id...
