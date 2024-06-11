@@ -47,13 +47,13 @@
 
 <script>
 import FlipCard from "../components/FlipCard.vue";
-//import HeaderComp from "../components/HeaderComp.vue";
+import HeaderComp from "../components/HeaderComp.vue";
 import authService from "../services/AuthService";
 
 export default {
   components: {
     FlipCard,
-    //HeaderComp
+    HeaderComp
 },
   data() {
     return {
@@ -111,7 +111,7 @@ export default {
   height: 100vh;
   justify-content: center;
   align-items: center;
-  padding-top: 40px;
+  /* padding-top: 40px; */
 }
 
 .form-container {

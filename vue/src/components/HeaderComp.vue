@@ -6,9 +6,9 @@
           <img class="logo" src="../assets/cropped-logo.png">
         </div>
         <nav class="nav-container">
-          <router-link v-if="showProfileLink" v-bind:to="{ name: 'profile' }">Profile</router-link>
-          <router-link v-if="showLoginLink" v-bind:to="{ name: 'login' }">Login</router-link>
-          <router-link v-if="showLogoutLink" v-bind:to="{ name: 'logout' }" >Logout</router-link>
+          <router-link v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE & EVENTS</router-link>
+          <router-link v-if="!isSignedIn && showLoginLink" v-bind:to="{ name: 'login' }">LOG IN</router-link>
+          <router-link v-if="showHomeLink" v-bind:to="{ name: 'home' }">HOME</router-link>
         </nav> 
         
       </header>
@@ -16,17 +16,41 @@
   </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from 'vuex';
+
   export default {
     computed: {
+      ...mapState([ 'user' ]), 
+      showHomeLink(){
+        return this.$route.path !== '/'
+      },
       showProfileLink() {
-        return this.$router.path !== '/profile' && this.$router.path !== '/login';
+        return this.$route.path !== '/profile';
       },
       showLoginLink() {
-        return this.$router.path !== '/login' && this.$router.path !== '/register';
+        return this.$route.path !== '/login' && this.$route.path !== '/register';
       },
       showLogoutLink() {
-        return (this.$router.path !== '/logout' && this.$router.path !== '/login' && this.$router.path !== '/register');
+        return this.$route.path !== '/login' && this.$route.path !== '/register';
+      },
+      isSignedIn(){
+        if (this.$store.state.user.id != undefined){
+          return true;
+        } else {
+          return false;
+        }
       }
+    },
+    methods: {
+      ...mapMutations([ 'LOGOUT' ]),
+      ...mapActions([ 'fetchUser' ]),
+      logout(){
+        this.LOGOUT();
+        this.$router.push({ name: 'login' });
+      }
+    },
+    created(){
+      this.fetchUser();
     }
   }
 </script>
@@ -72,9 +96,6 @@ h1 {
 .logo {
   height: 47px;
   padding-top: 27px;
-  
-  /* padding-right: 718px;
-  padding-bottom: 15px; */
 }
 
 </style>

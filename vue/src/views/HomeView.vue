@@ -29,7 +29,7 @@ export default {
 <style scoped>
 
 .title{
-  padding-top: 80px;
+  padding-top: 10px;
   padding-left: 20px;
 }
 
