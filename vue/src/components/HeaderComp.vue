@@ -2,7 +2,7 @@
     <div id="app">
       <header class="sticky-header">
         <div class="title-img-container">
-          <h1 class="title">NominEAT</h1>
+          <h1 class="title">NominEat</h1>
           <img class="logo" src="../assets/cropped-logo.png">
         </div>
         <nav class="nav-container">
@@ -37,9 +37,7 @@
   align-items: center;
   justify-content: flex-end;
   position: fixed;
-  top: 0;
   width: 100%;
-  z-index: 1000;
   background-color: var(--bg-100);
   height: 60px;
   border-bottom-width: 1.1px;
