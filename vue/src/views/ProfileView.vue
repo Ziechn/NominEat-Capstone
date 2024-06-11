@@ -1,30 +1,38 @@
 <template>
     <HeaderComp/>
-    <Profile/>
-    <!-- <EventInformation/> -->
-    <!-- <EmailEventLink/> -->
-    <!-- <EventRestaurants/> -->
+    <div class="profile-container">
+        <Profile/>
+    </div>
+    <!-- <EventOrganizer/> -->
 </template>
 
 <script>
 import Profile from '../components/Profile.vue';
 import HeaderComp from '../components/HeaderComp.vue';
-// import EventInformation from '../components/EventInformation.vue';
 // import EmailEventLink from '../components/EmailEventLink.vue';
-// import EventRestaurants from '../components/EventRestaurants/>';
+// import EventOrganizer from '../components/EventOrganizer.vue';
+
 
 
 export default {
     components: {
         Profile,
         HeaderComp,
-        // EventInformation,
         // EmailEventLink,
-        // EventRestaurants
+        // EventOrganizer
     }    
 }
 
 </script>
 
 <style scoped>
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
 </style>

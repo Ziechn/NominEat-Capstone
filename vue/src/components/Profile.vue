@@ -1,19 +1,33 @@
 <template>
-    <div class="user-profile">
+    <div class="card-front">
+        
         <div class="profile-content">
-            <div>
-                <h1>User Profile</h1>
-                <p>Username: {{ user.username }}</p>
-                <p>Email: {{ user.email }}</p>
+            <h1 class="title">Profile</h1>
+            <div class="user-info">
+                <div class="profile-img">
+                    <img class="placeholder-img" src="../assets/stock-user_img.jpg" />
+                </div>
+                <div class="info">
+                    <div class="info-label">Username</div>
+                    <div class="info-data">{{ user.username }}</div>
+                </div>
+                <div class="info">
+                    <div class="info-label">Email Address</div>
+                    <div class="info-data">{{ user.email }}</div>
+                </div>
             </div>
-            <img class="placeholder-img" src="../assets/stock-user_img.jpg"/>
+                <div class="button-container">
+                    <button @click="logout()">Log Out</button>
+                </div>
+                <div class="line"></div>
+
             <div class="user-events">
-                <h2>Events</h2>
+                <h2 class="event-title">My Events</h2>
                 <p>Events go here</p>
             </div>
+            
         </div>
     </div>
-    <button @click="logout()">Log Out</button>
 </template>
 
 <script>
@@ -27,7 +41,7 @@ export default {
         ...mapActions(['fetchUser']),
         ...mapMutations(['LOGOUT']),
 
-        logout(){
+        logout() {
             this.LOGOUT();
             this.$router.push({ name: 'login' })
         }
@@ -40,14 +54,62 @@ export default {
 
 <style scoped>
 .placeholder-img {
-    height: 50px;
+    height: 100px;
     border-radius: 50%;
     border-width: 3px;
-    border-color: var(--bg-100);
 }
 
-.user-profile {
+.card-front {
     display: flex;
     justify-content: center;
+    width: 95%;
+    height: 500px; /* set to auto when importing event organizer? */
+
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 40px;
+    
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+
+.title {
+    padding-left: 40px;
+}
+
+.info {
+    padding-left: 30px;
+}
+
+.info-label {
+    padding-bottom: 10px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.user-events{
+    padding-left: 40px;
+}
+
+.button-container {
+    display: flex;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    justify-content: end;
+}
+
+.line {
+    height: 2px; 
+    background: linear-gradient(to right, transparent, var(--primary-100) 50%, transparent); 
 }
 </style>

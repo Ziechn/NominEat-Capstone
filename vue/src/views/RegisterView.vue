@@ -82,7 +82,7 @@ export default {
         },
         clearErrors() {
             this.registrationErrors = false;
-            this.registrationErrorMsg = 'Email already in use. Please enter a different username.';
+            this.registrationErrorMsg = 'Email already in use. Please enter a different email.';
         },
         checkPasswordStrength(password) {
             const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,}$)/;
