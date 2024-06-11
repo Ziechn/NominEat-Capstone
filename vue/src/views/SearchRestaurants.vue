@@ -150,7 +150,6 @@ export default{
     background-color: var(--bg-100);
     color: var(--text-100);
     text-align: center;
-    padding-top: 70px;
 }
 
 .search-form {
