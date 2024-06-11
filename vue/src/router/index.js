@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: LoginAndZip,
+    component: HomeView,
     meta: {
       requiresAuth: false
     }

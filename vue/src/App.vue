@@ -7,22 +7,15 @@
     </div>
     <router-view /> -->
   </div>
-  <div>
-    <EventInformation />
-  </div>
 </template>
 
 <script>
-import EventInformation from './components/EventInformation.vue';
 export default{
   name: 'App',
   data() {
     return {
       date: ''
     }
-  },
-  components: {
-    EventInformation
   }
 };
 </script>

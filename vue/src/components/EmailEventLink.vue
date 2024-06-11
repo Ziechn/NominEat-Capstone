@@ -1,7 +1,7 @@
 <template>
     <div>
         Event Link:
-        <p>{{ event.eventLink }}</p>
+        <!-- <p>{{ event.eventLink }}</p> -->
         <!-- email button -->
     </div>
 </template>

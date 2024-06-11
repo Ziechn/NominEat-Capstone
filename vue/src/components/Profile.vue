@@ -10,6 +10,7 @@
             <div class="user-events">
                 <h2>Events</h2>
                 <p>Events go here</p>
+                <EventOrganizer />
             </div>
         </div>
     </div>
@@ -18,6 +19,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
+import EventOrganizer from './EventOrganizer.vue';
 
 export default {
     computed: {
@@ -34,6 +36,9 @@ export default {
     },
     created() {
         this.fetchUser();
+    },
+    components: {
+        EventOrganizer
     }
 }
 </script>
