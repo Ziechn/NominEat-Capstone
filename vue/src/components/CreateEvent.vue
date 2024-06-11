@@ -55,12 +55,14 @@ export default {
                     }
                 ).catch(
                     (error) => {
-                        this.handleErrorResponse(error, "Error associating restaurants with the event.");
+                        // this.handleErrorResponse(error, "Error associating restaurants with the event.");
+                        console.log("Error associating restaurants with the event.")
                     }
                 );
             }).catch(
                 (error) => {
                     this.handleErrorResponse(error, "Error creating an event.");
+                    console.log("Error creating an event.")
                 }
             );
         }
