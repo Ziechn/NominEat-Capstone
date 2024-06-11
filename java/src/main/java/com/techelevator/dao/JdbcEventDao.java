@@ -96,16 +96,13 @@ public class JdbcEventDao implements EventDao {
 
     @Override
     public Event getEventByLink(String eventLink) {
-        Event event = null;
 
-        String sql = "SELECT event_id, organizer_id, event_name, location, event_link, decision_date " +
-                "FROM event " +
-                "WHERE event_link = ?;";
+        String sql = "SELECT * FROM event WHERE event_link = ?;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventLink);
             if (results.next()) {
-                event = mapRowToEvent(results);
+                return mapRowToEvent(results);
             }
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
@@ -115,7 +112,7 @@ public class JdbcEventDao implements EventDao {
             throw new DataIntegrityViolationException("" + e);
         }
 
-        return event;
+        return new Event();
     }
 
     private Event mapRowToEvent(SqlRowSet results) {
@@ -127,6 +124,99 @@ public class JdbcEventDao implements EventDao {
         event.setEventLink(results.getString("event_link"));
         event.setDecisionDate(results.getTimestamp("decision_date"));
         return event;
+    }
+
+    // Chris's edits
+    public void insertUniqueEventUserLink(String userEventLink, int eventId){
+        String sql = "INSERT INTO event_attendee_link (event_link, event_id, yes_votes, no_votes) " +
+                "VALUES (?, ?, 0, 0);";
+
+        try {
+            jdbcTemplate.update(sql, userEventLink, eventId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] createUniqueEventUserLink() Problem creating unique event link: " + userEventLink);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        System.out.println("[Restaurant JDBC DAO] createUniqueEventUserLink() Unique user event link created successfully");
+    }
+
+    // Get an event by the unique link
+
+    // Get yes votes from the restaurant_event table.
+    public int getRestaurantEventYesVotes(int eventId, String restaurantId){
+        String sql = "SELECT yes_votes FROM restaurant_event WHERE event_id = ? AND restaurant_id = ?;";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, int.class, eventId, restaurantId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getRestaurantEventYesVotes() Problem getting yes votes for event ID: " + eventId + " and restaurant ID: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+    }
+
+    // Get no votes from the restaurant_event table.
+    public int getRestaurantEventNoVotes(int eventId, String restaurantId){
+        String sql = "SELECT no_votes FROM restaurant_event WHERE event_id = ? AND restaurant_id = ?;";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, int.class, eventId, restaurantId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getRestaurantEventYesVotes() Problem getting yes votes for event ID: " + eventId + " and restaurant ID: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+    }
+
+    // Get yes votes from the event_attendee_link table.
+    // Get yes votes from the event_attendee_link table.
+
+    // Add yes vote to the restaurant_event table.
+    public String addRestaurantEventYesVote(int eventId, String restaurantId){
+        // Get the current votes.
+        int newVoteCount = 1 + getRestaurantEventYesVotes(eventId, restaurantId);
+
+        String sql = "UPDATE restaurant_event SET yes_votes = ? WHERE event_id = ? AND restaurant_id = ?;";
+
+        try {
+            jdbcTemplate.update(sql, newVoteCount, eventId, restaurantId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] addRestaurantEventYesVote() Event ID: " + eventId + ", Problem voting yes for restaurant ID: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return "Added";
+    }
+
+    // Add no vote to the restaurant_event table.
+    public String addRestaurantEventNoVote(int eventId, String restaurantId){
+        // Get the current votes.
+        int newVoteCount = 1 + getRestaurantEventNoVotes(eventId, restaurantId);
+
+        String sql = "UPDATE restaurant_event SET no_votes = ? WHERE event_id = ? AND restaurant_id = ?;";
+
+        try {
+            jdbcTemplate.update(sql, newVoteCount, eventId, restaurantId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] addRestaurantEventNoVote() Event ID: " + eventId + ", Problem voting no for restaurant ID: " + restaurantId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return "Added";
     }
 }
 
