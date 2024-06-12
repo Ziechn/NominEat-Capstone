@@ -5,23 +5,14 @@
           <h1 class="title">NominEat</h1>
           <img class="logo" src="../assets/cropped-logo.png">
         </div>
-        <!-- 
-        <nav class="nav-container">
-          <router-link to="/">Home</router-link>
-          <router-link to="/restaurants/search">Search Restaurants</router-link>
-          <router-link to="/create-event">Create Event</router-link>
-          <router-link to="/login">Login</router-link>
-          <router-link to="/register" v-if="!isAuthenticated">Register</router-link>
-          <router-link to="/profile" v-if="isAuthenticated">Profile</router-link>
-          <button @click="logout" v-if="isAuthenticated">Logout</button>
-      </nav>
-      -->
 
-        <!-- <nav class="nav-container">
+        <nav class="nav-container">
           <router-link v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE & EVENTS</router-link>
           <router-link v-if="!isSignedIn && showLoginLink" v-bind:to="{ name: 'login' }">LOG IN</router-link>
           <router-link v-if="showHomeLink" v-bind:to="{ name: 'home' }">HOME</router-link>
-        </nav>  -->
+          <router-link v-if="!isSignedIn && showSearchLink" v-bind:to="{ name: 'RestaurantSearch' }">RESTAURANT SEARCH</router-link>
+          <router-link v-if="isSignedIn && showCreateEventLink" v-bind:to="{ name: 'CreateEvent' }">CREATE EVENT</router-link>
+        </nav> 
         
       </header>
     </div>
@@ -32,10 +23,15 @@ import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 
   export default {
     computed: {
-      ...mapGetters(['isAuthenticated']),
-      ...mapState([ 'user' ]), 
+      ...mapState([ 'user' ]),
+      showCreateEventLink(){
+        return this.$route.path !== '/create-event';
+      },
+      showSearchLink(){
+        return this.$route.path !== '/restaurants/search';
+      },
       showHomeLink(){
-        return this.$route.path !== '/'
+        return this.$route.path !== '/';
       },
       showProfileLink() {
         return this.$route.path !== '/profile';

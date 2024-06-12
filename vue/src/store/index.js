@@ -1,102 +1,99 @@
-// MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
-// Nice to Haves: Num of stars, map, takeout.delivery option shown 
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
 import createPersistedState from 'vuex-persistedstate';
 import RestaurantService from '../services/RestaurantService';
 import EventService from '../services/EventService';
-// import AuthService from '../services/AuthService';
+import AuthService from '../services/AuthService';
 //import backupData from '@/backupData';
 
 //initial backup data (comment in and out dont delete)
-const backupData = [
-  {
-    id: 1,
-    name: 'East Village Pizza',
-   // zipCode: '11222',
-    imageUrl: 'https://via.placeholder.com/250',
-    categories: ['Pizza'],
-    rating: 3.5,
-    price: '$$',
-    address1: '1234 Pizza St, New York, NY',
-    isOpenNow: true,
-    menuUrl: 'http://www.eastvillagepizza.com/menu',
-    hours: [
-      { day: 1, start: '1100', end: '2200'},
-      { day: 2, start: '1100', end: '2200'},
-      { day: 3, start: '1100', end: '2200'},
-      { day: 4, start: '1100', end: '2200'},
-      { day: 5, start: '1100', end: '2200'},
-      { day: 6, start: '1100', end: '2200'},
-      { day: 7, start: '1100', end: '2200'},
-    ],
-    phoneNumber: '555-1234',
-    status: 'Open',
-  },
-  {
-    id: 2,
-    name: 'Sushi Place',
-   // zipCode: '11222',
-    imageUrl: 'https://via.placeholder.com/250',
-    categories: [ 'Sushi' ],
-    // category: 'Sushi',
-    rating: 4,
-    price: '$$$',
-    address1: '678 Sushi Place, New York, NY',
-    isOpenNow: true,
-    menuUrl: 'http://www.sushiplace.com/menu',
-    hours: [
-      { day: 1, start: '1100', end: '2200'},
-      { day: 2, start: '1100', end: '2200'},
-      { day: 3, start: '1100', end: '2200'},
-      { day: 4, start: '1100', end: '2200'},
-      { day: 5, start: '1100', end: '2200'},
-      { day: 6, start: '1100', end: '2200'},
-      { day: 7, start: '1100', end: '2200'},
-    ],
-    phoneNumber: '555-1234',
-    status: 'Open',
-  },
-  {
-    id: 3,
-    name: 'Burger House',
-   // zipCode: '11222',
-    imageUrl: 'https://via.placeholder.com/250',
-    categories: ['Burgers'],
-    rating: 5,
-    price: '$$',
-    address1: '1234 Burger Blvd, New York, NY',
-    isOpenNow: true,
-    menuUrl: 'http://www.burgerhouse.com/menu',
-    hours: [
-      { day: 1, start: '1100', end: '2200'},
-      { day: 2, start: '1100', end: '2200'},
-      { day: 3, start: '1100', end: '2200'},
-      { day: 4, start: '1100', end: '2200'},
-      { day: 5, start: '1100', end: '2200'},
-      { day: 6, start: '1100', end: '2200'},
-      { day: 7, start: '1100', end: '2200'},
-    ],
-    phoneNumber: '555-1234',
-    status: 'Open',
-    // coordinates;
-  }
+// const backupData = [
+//   {
+//     id: 1,
+//     name: 'East Village Pizza',
+//    // zipCode: '11222',
+//     imageUrl: 'https://via.placeholder.com/250',
+//     categories: ['Pizza'],
+//     rating: 3.5,
+//     price: '$$',
+//     address1: '1234 Pizza St, New York, NY',
+//     isOpenNow: true,
+//     menuUrl: 'http://www.eastvillagepizza.com/menu',
+//     hours: [
+//       { day: 1, start: '1100', end: '2200'},
+//       { day: 2, start: '1100', end: '2200'},
+//       { day: 3, start: '1100', end: '2200'},
+//       { day: 4, start: '1100', end: '2200'},
+//       { day: 5, start: '1100', end: '2200'},
+//       { day: 6, start: '1100', end: '2200'},
+//       { day: 7, start: '1100', end: '2200'},
+//     ],
+//     phoneNumber: '555-1234',
+//     status: 'Open',
+//   },
+//   {
+//     id: 2,
+//     name: 'Sushi Place',
+//    // zipCode: '11222',
+//     imageUrl: 'https://via.placeholder.com/250',
+//     categories: [ 'Sushi' ],
+//     // category: 'Sushi',
+//     rating: 4,
+//     price: '$$$',
+//     address1: '678 Sushi Place, New York, NY',
+//     isOpenNow: true,
+//     menuUrl: 'http://www.sushiplace.com/menu',
+//     hours: [
+//       { day: 1, start: '1100', end: '2200'},
+//       { day: 2, start: '1100', end: '2200'},
+//       { day: 3, start: '1100', end: '2200'},
+//       { day: 4, start: '1100', end: '2200'},
+//       { day: 5, start: '1100', end: '2200'},
+//       { day: 6, start: '1100', end: '2200'},
+//       { day: 7, start: '1100', end: '2200'},
+//     ],
+//     phoneNumber: '555-1234',
+//     status: 'Open',
+//   },
+//   {
+//     id: 3,
+//     name: 'Burger House',
+//    // zipCode: '11222',
+//     imageUrl: 'https://via.placeholder.com/250',
+//     categories: ['Burgers'],
+//     rating: 5,
+//     price: '$$',
+//     address1: '1234 Burger Blvd, New York, NY',
+//     isOpenNow: true,
+//     menuUrl: 'http://www.burgerhouse.com/menu',
+//     hours: [
+//       { day: 1, start: '1100', end: '2200'},
+//       { day: 2, start: '1100', end: '2200'},
+//       { day: 3, start: '1100', end: '2200'},
+//       { day: 4, start: '1100', end: '2200'},
+//       { day: 5, start: '1100', end: '2200'},
+//       { day: 6, start: '1100', end: '2200'},
+//       { day: 7, start: '1100', end: '2200'},
+//     ],
+//     phoneNumber: '555-1234',
+//     status: 'Open',
+//     // coordinates;
+//   }
 
-];
+// ];
 
 const store = _createStore({
   state: {
     zipCode: '',
-    limit: 2,
+    limit: 10,
     restaurants: [],
-    events: [],
+   // events: [],
     loading: false,
     error: null,
     category: '',
     filteredRestaurants: [],
-
-    //selectedRestaurants: [],
-    //events: null,
+   // selectedRestaurants: [],
+    events: null,
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
   },
@@ -111,7 +108,6 @@ const store = _createStore({
       state.restaurants = restaurants;
       state.filteredRestaurants = restaurants;
     },
-
     // ADD_SELECTED_RESTAURANTS(state, restaurant) {
     //   state.selectedRestaurants.push(restaurant);
     // },
@@ -167,10 +163,13 @@ const store = _createStore({
     }
   },
   actions: {
-    async fetchRestaurants({ commit }, { zipCode, limit, category }) {
+
+
+    async fetchRestaurants({ commit }, { zipCode, limit = 10 }) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit, category);
+        const response = await RestaurantService.list(zipCode, limit);
+       // const responseEvents = await EventService.getEventRestaurants({ zipCode, limit });
         console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
         //commit('SET_RESTAURANTS', responseEvents);
@@ -236,14 +235,6 @@ const store = _createStore({
     //     console.error('Error saving restaurants to event:', error);
     //   }
     // },
-    async createEvent({commit}, event) {
-      try {
-        const response =await axios.post  ('/events/create', event);
-        commit ('CREATE_EVENT', response.data );
-      }catch (error) {
-        console.error ('Error creating an event',error);
-      }
-    },
     fetchUser({ commit }) {
       const user = JSON.parse(localStorage.getItem('user'));
       if(user){
@@ -252,10 +243,9 @@ const store = _createStore({
       
     }
   },
-  // getters: {
-  //   isAuthenticated(state) {
-  //     return ! !state.user;
-  //   },
+  getters: {
+    isAuthenticated: state => !!state.token,
+    getUser: state => state.user
   //   eventById: (state) => (id) => {
   //     return state.events.find(event => event.id === id);
   //   },
@@ -264,6 +254,7 @@ const store = _createStore({
   //   },
    },
   plugins: [createPersistedState(),]
+  }
 }); 
 export default store;
 

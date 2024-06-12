@@ -19,7 +19,7 @@
                 <div class="button-container">
                     <button @click="logout()">Log Out</button>
                 </div>
-                <div class="line"></div>
+                <div class="line">L</div>
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>
@@ -68,7 +68,7 @@ export default {
     display: flex;
     justify-content: center;
     width: 95%;
-    height: 500px; /* set to auto when importing event organizer? */
+    height: auto; /* set to auto when importing event organizer? */
 
 }
 
@@ -114,6 +114,7 @@ export default {
 }
 
 .line {
+    width: 100%;
     height: 2px; 
     background: linear-gradient(to right, transparent, var(--primary-100) 50%, transparent); 
 }
