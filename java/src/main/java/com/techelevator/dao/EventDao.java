@@ -16,4 +16,5 @@ public interface EventDao {
     public int getRestaurantEventNoVotes(int eventId, String restaurantId);
     public String addRestaurantEventYesVote(int eventId, String restaurantId);
     public String addRestaurantEventNoVote(int eventId, String restaurantId);
+    public Event getEventByUserId(int userId);
 }

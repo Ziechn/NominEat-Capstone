@@ -222,6 +222,25 @@ public class JdbcEventDao implements EventDao {
 
         return "Added";
     }
+
+    public Event getEventByUserId(int organizerId){
+        String sql = "SELECT * FROM event WHERE organizer_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, organizerId);
+            if (results.next()){
+                return mapRowToEvent(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getEventByUserId() problem getting event by user ID: " + organizerId);
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return new Event();
+    }
 }
 
 

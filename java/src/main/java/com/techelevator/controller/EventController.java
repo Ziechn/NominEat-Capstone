@@ -218,6 +218,14 @@ public class EventController {
     public String addRestaurantEventNoVote(@PathVariable int eventId, @PathVariable String restaurantId) {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
     }
+
+    @GetMapping(path = "/organizer")
+    public Event getEventByUserId(Principal principal){
+        User organizer = userDao.getUserByUsername(principal.getName());
+        int organizerId = organizer.getId();
+
+        return eventDao.getEventByUserId(organizerId);
+    }
 }
 
 
