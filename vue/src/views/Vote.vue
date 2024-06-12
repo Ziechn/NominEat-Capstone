@@ -1,18 +1,18 @@
 <template>
     <div>
         <HeaderComp />
-        <RestaurantList :eventId="eventId" />
+        <EventRestaurantList :eventId="eventId" />
     </div>
 </template>
 
 <script>
 import HeaderComp from '@/components/HeaderComp.vue';
-import RestaurantList from '@/components/restaurant/RestaurantList.vue';
+import EventRestaurantList from '@/components/event/EventRestaurantList.vue';
 
 export default {
     components: { 
         HeaderComp, 
-        RestaurantList 
+        EventRestaurantList 
     },
     props: {
         eventId: String

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="restaurant-details">
             <h2 class="restaurant-name">{{ restaurant.name }}</h2>
 
@@ -21,18 +21,4 @@
         },
     },
     };
-</script>
-<style scoped>
-.restaurant-details {
-    padding: 20px;
-    background-color: var(--bg1100);
-    color: var(--text-100);
-}
-.restaurant-name {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--text-100);
-}
-
-
-</style>
+</script> -->

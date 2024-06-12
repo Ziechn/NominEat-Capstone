@@ -33,7 +33,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-import EventOrganizer from './EventOrganizer.vue';
+import EventOrganizer from '@/components/event/EventOrganizer.vue';
 
 export default {
     computed: {

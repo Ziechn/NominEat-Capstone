@@ -16,10 +16,11 @@
   </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 
   export default {
     computed: {
+      ...mapGetters(['isAuthenticated']),
       ...mapState([ 'user' ]), 
       showHomeLink(){
         return this.$route.path !== '/'
@@ -39,7 +40,7 @@ import { mapState, mapActions, mapMutations } from 'vuex';
         } else {
           return false;
         }
-      }
+      },
     },
     methods: {
       ...mapMutations([ 'LOGOUT' ]),

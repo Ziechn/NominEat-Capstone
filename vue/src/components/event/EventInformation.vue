@@ -36,9 +36,15 @@ export default {
                 this.event = response.data;
             });
         }
+    }
+};
+</script>
+
+
+
     //     getEventInformation(){
     //         EventService.getEvent(this.tempEventId).then(
-    //             (response) => {
+    //             (response) ={
     //                 if (response.status === 200) {
     //                     this.eventName = response.data.eventName;
     //                     this.eventLocation = response.data.location;
@@ -49,19 +55,12 @@ export default {
     //                 }
     //             }
     //         ).catch(
-    //             (error) => {
+    //             (error) ={
     //                 // this.handleErrorResponse(error, "Error creating an event.");
     //                 console.log("Error getting the event.")
     //             }
     //         );
     //     }
-    // },
-    // created() {
+    // 
+    // created() 
     //     this.getEventInformation();
-}
-};
-</script>
-
-<style>
-
-</style>

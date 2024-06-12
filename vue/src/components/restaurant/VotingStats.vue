@@ -16,39 +16,34 @@ export default {
             restaurantName: '',
             yesVotes: 0,
             noVotes: 0
-        }
+        };
     },
     methods: {
         getRestaurantName(){
             // Create an event in the RestaurantService to reach out to a new endpoint to get the restaurant name.
         },
         fetchVotes() {
-        //getRestaurantYesVotes(){
-            EventService.getYesVote(this.eventId, this.restaurantId).then(
-                (response) => {
-                    if (response.status === 200) {
+            EventService.getYesVote(this.eventId, this.restaurantId).then(response => {
+                   // if (response.status === 200) {
                         this.yesVotes = response.data;
-                    }
-                }
-            );
-        //getRestaurantNoVotes() {
-            EventService.getNoVote(this.eventId, this.restaurantId).then(
-                (response) => {
-                    if (response.status === 200) {
+                    }); 
+                    EventService.getNoVote(this.eventId, this.restaurantId).then(response => {
+                    //if (response.status === 200) {
                         this.noVotes = response.data;
-                    }
+                    });
                 }
-            ).catch(
-                (error) => {
-                    console.log("Problem getting no votes for restaurant ID: " + this.restaurantId + " in event ID: " + this.eventId);
-                }
-            );
-        }
-
-    }
-};
+            },
+            watch: {
+                eventId: 'fetchVotes',
+                restaurantId: 'fetchVotes'
+            }
+        };
 </script>
-
 <style>
-
 </style>
+
+            <!-- catch
+                (error)  {
+                    console.log("Problem getting no votes for restaurant ID: " + this.restaurantId + " in event ID: " + this.eventId);
+            }
+             -->

@@ -5,7 +5,7 @@ import { useStore } from 'vuex';
 import Home from '@/views/Home.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
 import RestaurantSearch from '@/views/RestaurantSearch.vue';
-//import EventView from '@/views/EventView.vue';
+import EventView from '@/views/EventView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 //import EventCreationPopup from '@/components/EventCreationPopup.vue';
@@ -51,6 +51,18 @@ const routes = [
     }
   },
   {
+    path: '/event/:id', 
+    name: 'EventView',
+    component: EventView,
+    props: true
+  },
+  {
+    path: '/vote/:id', 
+    name: 'Vote',
+    component: Vote,
+    props: true
+    },
+  {
     path: '/register',
     name: 'register',
     component: RegisterView,
@@ -63,12 +75,6 @@ const routes = [
     name: 'CreateEvent',
     component: CreateEvent
   },
-  {
-    path: '/vote/:id', 
-    name: 'Vote',
-    component: Vote,
-    props: true
-    },
   {
     path: '/profile',
     name: 'profile',

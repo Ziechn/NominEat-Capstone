@@ -18,14 +18,12 @@ export default {
        // if (category) params.term = category;
         return http.get('/restaurants/search', { params });
     },
-    create(event) {
-        return http.post('/events/create', event);
-    },
+    };
+    // create(event) {
+    //     return axios.post('/events/create', event);
+    // },
     // associateRestaurantWithEvent(eventId, restaurants) {
     //     return http.post(`restaurants/create/${eventId}`,  { restaurants });
     // }
-};
 
 
-
-//searchRestaurants...

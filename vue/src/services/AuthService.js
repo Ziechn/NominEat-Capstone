@@ -16,15 +16,14 @@ import axios from 'axios';
 
   export default {
   login(user) {
-    //return axios.post('/', user),
-    return axios.post('/login', user)
+    return http.post('/login', user); //user or credentials??
   },
 
-  register(user) {
-    return axios.post('/register', user)
+  register(userData) {
+    return http.post('/register', userData);
   },
-  // getUserProfile(user) {
-  //   return axios.get(`/profile/${}`)
-  // }
+  getUserProfile() {
+    return http.get('/user/profile');
+  }
 
-}
+};

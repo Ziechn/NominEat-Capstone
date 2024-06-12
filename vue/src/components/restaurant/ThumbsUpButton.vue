@@ -15,9 +15,8 @@ export default {
         addYesVote() {
             EventService.addYesVote(this.eventId, this.restaurantId).then(() => {
  //voting success handling
-            }
-           
-            );
+                this.$emit('voteSuccess', 'yes');
+            });
         }
     }
 };
