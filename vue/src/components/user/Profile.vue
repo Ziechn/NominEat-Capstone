@@ -67,7 +67,6 @@ export default {
 }
 
 .card-front {
-    margin-top: 180px;
     display: flex;
     justify-content: center;
     width: 80%;

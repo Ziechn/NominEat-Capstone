@@ -3,16 +3,19 @@
     <div class="profile-container">
         <Profile/>
     </div>
+    <Footer/>
 </template>
 
 <script>
 import Profile from '@/components/user/Profile.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
+import Footer from '../components/Footer.vue';
 
 export default {
     components: {
         Profile,
         HeaderComp,
+        Footer
     }    
 }
 

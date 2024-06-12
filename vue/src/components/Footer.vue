@@ -19,7 +19,6 @@ div {
     width: 100%;
     color: rgb(181, 181, 181);
     background-color: rgb(107, 107, 107);
-    position: absolute;
     bottom: 0;
 }
 </style>

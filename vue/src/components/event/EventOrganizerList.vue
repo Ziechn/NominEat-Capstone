@@ -2,17 +2,17 @@
 
 <template>
     <div>
-        <VotingStats v-for="restaurant in restaurants" v-bind:key="restaurant.id" v-bind:restaurantId="restaurant.id" v-bind:eventId="eventId" />
+        <RestaurantCardForOrganizer v-for="restaurant in restaurants" v-bind:key="restaurant.id" v-bind:restaurantId="restaurant.id" v-bind:eventId="eventId" />
     </div>
 </template>
 
 <script>
 import EventService from '@/services/EventService';
-import VotingStats from '../restaurant/VotingStats.vue';
+import RestaurantCardForOrganizer from '../restaurant/RestaurantCardForOrganizer.vue';
 
 export default {
     components: {
-        VotingStats
+        RestaurantCardForOrganizer
     },
     data() {
       return {
