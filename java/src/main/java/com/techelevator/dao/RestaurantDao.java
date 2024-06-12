@@ -17,4 +17,5 @@ public interface RestaurantDao {
     public List<Open> createHours(String restaurantId, List<Open> hours);
     public int createCategory(String categoryName);
     public int createTransaction(String transactionName);
+    public List<Restaurant> getAllRestaurants();
 }
