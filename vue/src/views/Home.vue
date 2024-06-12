@@ -3,7 +3,7 @@
   <div class="title">
     <h2> Welcome! </h2>
   </div>
-  <p class="description">
+  <!-- <p class="description">
     NominEat simplifies the process of deciding where to eat with friends. Say goodbye to endless 
     back-and-forth conversations about dinner plans! With NominEat, you can easily coordinate dining 
     outings by logging in, entering your zip code, and generating a curated list of nearby restaurants. 
@@ -12,7 +12,7 @@
     automatically selects the restaurant with the most support as the venue for your gathering. It's 
     a hassle-free solution that streamlines the decision-making process, so you can spend less time 
     planning and more time enjoying good food and company.
-  </p>
+  </p> -->
 </template>
 
 <script>

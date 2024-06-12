@@ -1,4 +1,29 @@
 <template>
+    <div>
+        <HeaderComp />
+        <EventRestaurantList :eventId="eventId" />
+    </div>
+</template>
+
+<script>
+import HeaderComp from '@/components/HeaderComp.vue';
+import EventRestaurantList from '@/components/event/EventRestaurantList.vue';
+
+export default {
+    components: { 
+        HeaderComp, 
+        EventRestaurantList 
+    },
+    props: {
+        eventId: String
+    }
+};
+
+</script>
+
+
+
+<!-- OG_THOUGHT_FLOW_ <template>
    <div class="voting-container">
 
        <div class="card-deck">
@@ -11,34 +36,34 @@
                   />
                   </div>
                     <div class="results" v-if="showResults && isOrganizer">
-                        <h3>Voting Complete!</h3>
-                        <ul>
-                            <li v-for="vote in vote" :key="vote.restaurant">
-                                Restaurant ID: {{ vote.restaurant }} - Vote : {{  vote.vote }}
+                        <h3>enter event list component</h3>
+                         <ul>
+                            <li v-for="vote in votes" :key="vote.restaurant">
+                            Restaurant ID: {{ vote.restaurant }} - Vote : {{  votes.vote }}
                             </li>
-                        </ul>
-                        <div class="stats">
+                        </ul> -->
+                        <!-- <div class="stats">
                             <p>Total Votes: {{  votes.length  }}</p>
                             <p>Thumbs Up: {{ thumbsUpCount }}</p>
                             <p>Thumbs Down: {{ thumbsDownCount }}</p>
-                    </div>
-                </div>
+                    </div>   
                     <div v-if="showResults && isOrganizer">
                     <h3>Thank you for voting!</h3>
                     <p>Your event organizer will reach out with the results soon.</p>
-                </div>
-        </div> 
-</template>
+   
 
-<script>
 import { mapState,  mapActions } from 'vuex';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 import EventService from '@/services/EventService.js';
+import HeaderComp from '../components/HeaderComp.vue';
+import EventRestaurantList from '../components/event/EventRestaurantList.vue';
 
 export default{
     components: {
-        RestaurantCard,
-    },
+    RestaurantCard,
+    HeaderComp,
+    EventRestaurantList
+},
     data(){
         return {
             votes: [],
@@ -127,4 +152,4 @@ export default{
 }
 
 
-</style>
+</style> -->

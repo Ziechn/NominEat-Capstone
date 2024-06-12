@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="event-creation-confirmation">
         <div class="confirmation-content">
             <h2>Event Created Successfully!</h2>
@@ -54,4 +54,4 @@ export default {
     color:red;
 
 }
-</style>
+</style> -->

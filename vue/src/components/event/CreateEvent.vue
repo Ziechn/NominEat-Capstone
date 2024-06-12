@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import RestaurantService from '../services/RestaurantService';
-import EventService from '../services/EventService';
+import RestaurantService from '@/services/RestaurantService';
+import EventService from '@/services/EventService';
 
 export default {
     data() {

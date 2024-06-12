@@ -2,13 +2,15 @@ import { createRouter as createRouter, createWebHistory } from 'vue-router';
 import { useStore } from 'vuex';
 
 // Import components
-import HomeView from '@/views/HomeView.vue';
+import Home from '@/views/Home.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
-import SearchRestaurants from '@/views/SearchRestaurants.vue';
+import RestaurantSearch from '@/views/RestaurantSearch.vue';
+import EventView from '@/views/EventView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
-import EventCreationPopup from '@/components/EventCreationPopup.vue';
-import Voting from '@/views/Voting.vue';
+//import EventCreationPopup from '@/components/EventCreationPopup.vue';
+import CreateEvent from '@/components/event/CreateEvent.vue';
+import Vote from '@/views/Vote.vue';
 import LogoutView from '@/views/LogoutView.vue';
 
 
@@ -27,7 +29,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    component: Home,
     meta: {
       requiresAuth: false
     }
@@ -42,12 +44,24 @@ const routes = [
   },
   {
     path: '/restaurants/search',
-    name: 'SearchRestaurants',
-    component: SearchRestaurants,
+    name: 'RestaurantSearch',
+    component: RestaurantSearch,
     meta: {
       requiresAuth: false
     }
   },
+  {
+    path: '/event/:id', 
+    name: 'EventView',
+    component: EventView,
+    props: true
+  },
+  {
+    path: '/vote/:id', 
+    name: 'Vote',
+    component: Vote,
+    props: true
+    },
   {
     path: '/register',
     name: 'register',
@@ -56,22 +70,11 @@ const routes = [
       requiresAuth: false
     }
   },
-  // {
-  //   path: '/events',
-  //   name: 'createEvent',
-  //   component: EventCreation,
-  //   meta: {
-  //     requiresAuth: false
-  //   }
-  // },
   {
-    path: '/voting', 
-    name: 'Voting',
-    component: Voting,
-    meta: {
-      requiresAuth: false
-    }
-    },
+    path: '/create-event',
+    name: 'CreateEvent',
+    component: CreateEvent
+  },
   {
     path: '/profile',
     name: 'profile',

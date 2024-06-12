@@ -54,9 +54,16 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
 
 
 <script>
+import VoteCard from '@/components/restaurant/VoteCard.vue';
+
+
 export default {
+    components: {
+        VoteCard
+    },
     props: {
-        restaurant: Object
+        restaurant: Object,
+        eventId: String
     },
 
     data() {

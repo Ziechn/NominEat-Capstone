@@ -500,6 +500,30 @@ public class RestaurantJdbcDao implements RestaurantDao {
         }
     }
 
+    @Override
+    public List<Restaurant> getAllRestaurants() {
+        List<Restaurant> restaurants = new ArrayList<>();
+
+        String sql = "SELECT *\n" +
+                "FROM restaurant;";
+
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                restaurants.add(mapRowToRestaurant(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getAllRestaurant() Problem getting all restaurant");
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return restaurants;
+    }
+
     public void associateEventWithRestaurants(String restaurantId, int eventId){
         String sql = "INSERT INTO restaurant_event (restaurant_id, event_id, yes_votes, no_votes) " +
                 "VALUES (?, ?, ?, ?)";
