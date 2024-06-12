@@ -1,8 +1,5 @@
 package com.techelevator.dao;
 import com.techelevator.model.Event;
-import com.techelevator.model.Restaurant;
-import com.techelevator.model.TotalVoteCount;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;

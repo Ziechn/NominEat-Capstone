@@ -5,23 +5,17 @@ import com.techelevator.dao.RestaurantDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Event;
 import com.techelevator.model.Restaurant;
-import com.techelevator.model.TotalVoteCount;
 import com.techelevator.model.User;
 import com.techelevator.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
