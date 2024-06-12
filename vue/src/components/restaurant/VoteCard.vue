@@ -1,6 +1,6 @@
 <template>
         <div class="vote-card">
-            <VoteButtons :eventId="eventId" :restaurantId="restaurant.id" :eventId="eventId" :restaurantId="restaurant.id" />
+            <VoteButtons :eventId="eventId" :restaurantId="restaurant.id"  />
             <VotingStats :eventId="eventId" :restaurantId="restaurant.id" />
         </div>
 </template>

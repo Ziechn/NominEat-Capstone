@@ -1,42 +1,44 @@
 <template> 
  <div class="event-restaurant-list">
-    <!-- <RestaurantList
-             v-for="restaurants in restaurants"
+    <RestaurantList
+             v-for="restaurant in restaurants"
              :key="restaurant.id"
              :restaurant="restaurant"
-             /> -->
+             :eventId="eventId"
+             />
             
  </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import RestaurantList from './RestaurantList.vue';
-
+import EventService from '@/services/EventService';
+import RestaurantCard from '@/components/restaurant/RestaurantCard.vue';
 
 
 export default {
     components: {
-    RestaurantList
+    RestaurantCard
 },
 
     props: {
-        eventId: this.Number
+        eventId: String
     },
-    computed : {
-        ...mapState(['events']), 
-        restaurants() {
-            const event = this.events.find(event => event.id === this.eventId);
-            return event ? event.restaurants : [];
-        }
-
-        },
-    methods: {
-        ...mapActions(['fetchRestaurants']), 
-},
+    data() {
+        return {
+            restaurants: []
+        };
+    },
     mounted() {
-        this.fetchEventRestaurants({ this.eventId });
+        this.fetchRestaurants();
+    },
+    methods: {
+        fetchRestaurants() {
+            EventService.getRestaurantsForEvent(this.eventId).then(response => {
+                this.restaurants = response.data;
+            });
+        }
     }
+
 
 };
 </script>

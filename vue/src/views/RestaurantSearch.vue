@@ -1,10 +1,28 @@
 <template>
+    <div class="search-container">
+        <HeaderComp />
+        <RestaurantList />
+    </div>
+</template>
+
+<script>
+import HeaderComp from '@/components/HeaderComp';
+import RestaurantList from '@/components/restaurant/RestaurantList.vue';
+
+export default {
+    components: {
+        HeaderComp,
+        RestaurantList
+    }
+};
+
+</script> 
+<!-- <template>
     <HeaderComp/>
     <div class="search-container">
 
         <RestaurantList :restaurants="restaurants"/>
-    
-    <!-- <div class="search-restaurants">
+ <div class="search-restaurants">
         <h2>Search Restaurants</h2>  
         <form @submit.prevent="searchRestaurants">
         <div>
@@ -25,7 +43,7 @@
         </div> -->
         <!-- <button type="submit">Search</button>
         </form> -->
-        <div v-if="loading" class="loading">Loading...please wait...</div>
+        <!-- <div v-if="loading" class="loading">Loading...please wait...</div>
         <div v-if="!loading && restaurants.length" class="restaurant-cards"> 
             <RestaurantCard
             v-for="restaurant in restaurants" 
@@ -47,15 +65,14 @@
         :eventLink="createdEventLink"
         @close="closeEventCreationConfirmation"
         />
-        <!-- v-for="restaurant in filteredRestaurants"  -->
-        <!-- <div v-if="selectedRestaurants.length">
+        v-for="restaurant in filteredRestaurants" 
+         <div v-if="selectedRestaurants.length">
             <h3>Selected Restaurants</h3>
                 <ul>
                     <li v-for="restaurant in selectedRestaurants" :key="restaurant.id" >{{  restaurant.name }}
                      </li>
                 </ul>
-        </div> -->
-    
+        </div>
     </div>
 </template>
 
@@ -146,7 +163,7 @@ export default{
                                      }
                  }
     };
-</script>
+</script> -->
 
 <style scoped>
 .search-restaurants {
@@ -213,4 +230,4 @@ export default{
     .no-results {
         color: var(--text-200);
     }
-</style>
+</style>  

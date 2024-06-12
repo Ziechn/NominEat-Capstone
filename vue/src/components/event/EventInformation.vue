@@ -12,44 +12,54 @@
 </template>
 
 <script>
-import EventService from '../services/EventService';
+import EventService from '@/services/EventService';
 
 export default {
+    props: { eventId: String 
+    },
     data() {
         return {
-            tempEventId: '',
-            eventName: '',
-            eventLocation: '',
-            decisionDate: '',
-            eventLink: ''
-        }
+            event: {}
+            // tempEventId: '',
+            // eventName: '',
+            // eventLocation: '',
+            // decisionDate: '',
+            // eventLink: ''
+        };
     },
-    props: ['eventId'],
+    mounted() {
+        this.fetchEvent();
+    },
     methods: {
-        getEventInformation(){
-            EventService.getEvent(this.tempEventId).then(
-                (response) => {
-                    if (response.status === 200) {
-                        this.eventName = response.data.eventName;
-                        this.eventLocation = response.data.location;
-                        this.decisionDate = response.data.decisionDate;
-                        this.eventLink = response.data.eventLink; // Added after testing.
-                    } else {
-                        console.log("How did we get here?");
-                    }
-                }
-            ).catch(
-                (error) => {
-                    // this.handleErrorResponse(error, "Error creating an event.");
-                    console.log("Error getting the event.")
-                }
-            );
+        fetchEvent() {
+            EventService.getEvent(this.eventId).then(response => {
+                this.event = response.data;
+            });
         }
-    },
-    created() {
-        this.getEventInformation();
-    }
+    //     getEventInformation(){
+    //         EventService.getEvent(this.tempEventId).then(
+    //             (response) => {
+    //                 if (response.status === 200) {
+    //                     this.eventName = response.data.eventName;
+    //                     this.eventLocation = response.data.location;
+    //                     this.decisionDate = response.data.decisionDate;
+    //                     this.eventLink = response.data.eventLink; // Added after testing.
+    //                 } else {
+    //                     console.log("How did we get here?");
+    //                 }
+    //             }
+    //         ).catch(
+    //             (error) => {
+    //                 // this.handleErrorResponse(error, "Error creating an event.");
+    //                 console.log("Error getting the event.")
+    //             }
+    //         );
+    //     }
+    // },
+    // created() {
+    //     this.getEventInformation();
 }
+};
 </script>
 
 <style>

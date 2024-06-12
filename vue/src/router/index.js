@@ -4,11 +4,13 @@ import { useStore } from 'vuex';
 // Import components
 import Home from '@/views/Home.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
-import RestaurantS from '@/views/SearchRestaurants.vue';
+import RestaurantSearch from '@/views/RestaurantSearch.vue';
+//import EventView from '@/views/EventView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
-import EventCreationPopup from '@/components/EventCreationPopup.vue';
-import Voting from '@/views/Voting.vue';
+//import EventCreationPopup from '@/components/EventCreationPopup.vue';
+import CreateEvent from '@/components/event/CreateEvent.vue';
+import Vote from '@/views/Vote.vue';
 import LogoutView from '@/views/LogoutView.vue';
 
 
@@ -42,8 +44,8 @@ const routes = [
   },
   {
     path: '/restaurants/search',
-    name: 'SearchRestaurants',
-    component: SearchRestaurants,
+    name: 'RestaurantSearch',
+    component: RestaurantSearch,
     meta: {
       requiresAuth: false
     }
@@ -56,21 +58,16 @@ const routes = [
       requiresAuth: false
     }
   },
-  // {
-  //   path: '/events',
-  //   name: 'createEvent',
-  //   component: EventCreation,
-  //   meta: {
-  //     requiresAuth: false
-  //   }
-  // },
   {
-    path: '/voting', 
-    name: 'Voting',
-    component: Voting,
-    meta: {
-      requiresAuth: false
-    }
+    path: '/create-event',
+    name: 'CreateEvent',
+    component: CreateEvent
+  },
+  {
+    path: '/vote/:id', 
+    name: 'Vote',
+    component: Vote,
+    props: true
     },
   {
     path: '/profile',
