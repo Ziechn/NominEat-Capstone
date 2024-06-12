@@ -36,4 +36,7 @@ const http = axios.create({
     getYesVote(eventId, restaurantId) {
         return http.get(`events/yes-votes/${eventId}/${restaurantId}`);
     },
+    getRestaurantById(restaurantId){
+        return http.get(`restaurants/${restaurantId}`);
+    }
 };
