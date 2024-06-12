@@ -221,7 +221,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @GetMapping(path = "/organizer")
+    @RequestMapping(path = "/organizer", method = RequestMethod.GET)
     public Event getEventByUserId(Principal principal){
         User organizer = userDao.getUserByUsername(principal.getName());
         int organizerId = organizer.getId();
