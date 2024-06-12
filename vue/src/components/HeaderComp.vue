@@ -6,10 +6,21 @@
           <img class="logo" src="../assets/cropped-logo.png">
         </div>
         <nav class="nav-container">
+          <router-link to="/">Home</router-link>
+          <router-link to="/restaurants/search">Search Restaurants</router-link>
+          <router-link to="/create-event">Create Event</router-link>
+          <router-link to="/login" v-if="!isAuthenticated">Login</router-link>
+          <router-link to="/register" v-if="!isAuthenticated">Register</router-link>
+          <router-link to="/profile" v-if="isAuthenticated">Profile</router-link>
+          <button @click="logout" v-if="isAuthenticated">Logout</button>
+          </nav>
+
+
+        <!-- <nav class="nav-container">
           <router-link v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE & EVENTS</router-link>
           <router-link v-if="!isSignedIn && showLoginLink" v-bind:to="{ name: 'login' }">LOG IN</router-link>
           <router-link v-if="showHomeLink" v-bind:to="{ name: 'home' }">HOME</router-link>
-        </nav> 
+        </nav>  -->
         
       </header>
     </div>
@@ -44,7 +55,7 @@ import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
     },
     methods: {
       ...mapMutations([ 'LOGOUT' ]),
-      ...mapActions([ 'fetchUser' ]),
+      ...mapActions([ 'fetchUser', 'logout' ]),
       logout(){
         this.LOGOUT();
         this.$router.push({ name: 'login' });

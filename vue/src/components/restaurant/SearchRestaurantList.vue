@@ -2,7 +2,7 @@
 
 <template> 
 <div class="search-restaurant-list">
-    <RestaurantCard :key="restaurant.id" :restaurant="restaurant" />
+    <RestaurantCard :key="restaurantId" :restaurant="restaurant" />
 </div>
 </template>
 

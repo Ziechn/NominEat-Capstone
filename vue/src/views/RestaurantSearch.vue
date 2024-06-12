@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import HeaderComp from '@/components/HeaderComp';
-import RestaurantList from '@/components/restaurant/RestaurantList.vue';
+//import HeaderComp from '@/components/HeaderComp';
+import RestaurantList from '@/components/restaurant/SearchRestaurantList.vue';
 
 export default {
     components: {
-        HeaderComp,
+       // HeaderComp,
         RestaurantList
     }
 };
