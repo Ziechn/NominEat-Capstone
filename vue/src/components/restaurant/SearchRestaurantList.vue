@@ -2,7 +2,7 @@
 
 <template> 
 <div class="search-restaurant-list">
-    <RestaurantCard :key="restaurantId" :restaurant="restaurant" />
+    <RestaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" />
 </div>
 </template>
 
@@ -14,7 +14,14 @@ export default {
         RestaurantCard
     },
     props: {
+        eventId: String
+    },
+    data() {
+        return 
         restaurants: []
+    };
+    
+
     }
 };
 </script>

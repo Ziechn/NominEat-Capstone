@@ -38,8 +38,7 @@ export default {
     },
     methods: {
         searchRestaurants() {
-            RestaurantService.searchRestaurants(this.zipcode, this.limit, this.term)
-                .then(response => {
+            RestaurantService.searchRestaurants(this.zipcode, this.limit, this.term).then(response => {
                     this.restaurants = response.data;
                 }
                 );
