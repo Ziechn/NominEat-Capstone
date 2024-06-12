@@ -1,49 +1,40 @@
 <template>
-    <form v-on:submit.prevent="getEventInformation">
-    <input type="text" v-model="tempEventId">
-    <button type="submit">Submit</button>
-    </form>
-    <div>
-        {{ user.id }}
-    </div>
   <div class="event-information">
-    <p> Temp Event ID: {{ eventId }} <br> </p>
-    <p> Event Name: {{ eventName }} <br> </p>
-    <p> Event Location: {{ eventLocation }} <br></p>
-    <p> Event Decision Date: {{  decisionDate }}</p>
+    <p>  Temp Event ID: {{ event.eventId }} <br> </p>
+    <p>  Event Name: {{ event.name }} <br> </p>
+    <p>Event Location: {{ event.location }} <br></p>
+    <p> Event Decision Date: {{  event.decisionDate }}</p>
+    <p> Event Link {{ eventLink }} </p>
   </div>
 </template>
 
 <script>
 import EventService from '@/services/EventService';
-import { mapState, mapActions} from 'vuex';
 
 export default {
-    props: ['eventId'],
+    // props: { eventId: String 
+    // },
     data() {
         return {
-            event: {}
-            // tempEventId: '',
-            // eventName: '',
-            // eventLocation: '',
-            // decisionDate: '',
-            // eventLink: ''
+            event: null,
+            eventId: 1,
+            eventName: '',
+            eventLocation: '',
+            decisionDate: '',
+            eventLink: ''
         };
     },
-    created() {
-        this.fetchUser();
-        this.fetchEvent();
-    },
     methods: {
-        ...mapActions(['fetchUser']),
-        fetchEvent() {
-            EventService.getEvent(this.eventId).then(response => {
+        getEventInfo() {
+            EventService.getEventByUserId(this.eventId).then(response => {
                 this.event = response.data;
-            });
+            }).catch(error => {
+                console.error('Error fetching event data:', error)
+            })
         }
     },
-    computed: {
-        ...mapState(['user'])
+    created(){
+        this.getEventInfo();
     }
 };
 </script>

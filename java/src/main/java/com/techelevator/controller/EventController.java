@@ -221,6 +221,7 @@ public class EventController {
 
     @GetMapping(path = "/organizer")
     public Event getEventByUserId(Principal principal){
+        System.out.println(principal);
         User organizer = userDao.getUserByUsername(principal.getName());
         int organizerId = organizer.getId();
 

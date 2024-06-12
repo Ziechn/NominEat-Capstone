@@ -107,4 +107,8 @@ h1 {
   padding-top: 27px;
 }
 
+router-link {
+  padding-right: 30px;
+}
+
 </style>
