@@ -4,7 +4,7 @@
     <p>  Event Name: {{ event.name }} <br> </p>
     <p>Event Location: {{ event.location }} <br></p>
     <p> Event Decision Date: {{  event.decisionDate }}</p>
-    <p> Event Link {{ eventLink }} </p>
+    <p> Event Link {{ event.eventLink }} </p>
   </div>
 </template>
 
@@ -16,12 +16,13 @@ export default {
     // },
     data() {
         return {
-            event: null,
+            event: {
             eventId: 1,
             eventName: '',
             eventLocation: '',
             decisionDate: '',
             eventLink: ''
+            }
         };
     },
     methods: {

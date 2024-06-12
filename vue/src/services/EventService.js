@@ -38,5 +38,8 @@ const http = axios.create({
     },
     getEventByUserId(){
         return http.get(`events/organizer`);
+    },
+    getRestaurantById(restaurantId){
+        return http.get(`restaurants/${restaurantId}`);
     }
-};
+}

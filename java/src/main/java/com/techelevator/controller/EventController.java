@@ -9,6 +9,7 @@ import com.techelevator.model.User;
 import com.techelevator.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
@@ -219,6 +220,7 @@ public class EventController {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping(path = "/organizer")
     public Event getEventByUserId(Principal principal){
         System.out.println(principal);
