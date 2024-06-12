@@ -5,7 +5,7 @@
             <h1 class="title">Profile</h1>
             <div class="user-info">
                 <div class="profile-img">
-                    <img class="placeholder-img" src="../assets/stock-user_img.jpg" />
+                    <img class="placeholder-img" src="@/assets/stock-user_img.jpg" />
                 </div>
                 <div class="info">
                     <div class="info-label">Username</div>
@@ -19,7 +19,7 @@
                 <div class="button-container">
                     <button @click="logout()">Log Out</button>
                 </div>
-                <div class="line">L</div>
+                <div class="line"></div>
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>

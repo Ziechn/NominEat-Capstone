@@ -9,14 +9,17 @@
 <script>
 import EventService from '@/services/EventService';
 import RestaurantCardForOrganizer from '@/components/restaurant/RestaurantCardForOrganizer.vue';
+import RestaurantCardForOrganzier from '../restaurant/RestaurantCardForOrganzier.vue';
+
 
 
 export default {
     components: {
-       RestaurantCardForOrganizer
+        RestaurantCardForOrganizer
     },
-    props: 
-        ['eventId'],
+    props:  {
+        eventId: String
+    },
     data() {
       return {
         restaurants: []

@@ -2,21 +2,21 @@
   <div>
     Event Organizer Panel <br>
     <EventInformation v-bind:eventId="eventId" />
-    <EmailEventLink v-bind:eventId="eventId"  />
     <EventRestaurantList v-bind:eventId="eventId"  />
+    <VotingStats />
   </div>
 </template>
 
 <script>
-import EmailEventLink from '@/components/event/EmailEventLink.vue';
 import EventInformation from '@/components/event/EventInformation.vue';
 import EventRestaurantList from '@/components/event/EventRestaurantList.vue';
+import VotingStats from '../restaurant/VotingStats.vue';
 
 export default {
     components: {
     EventInformation,
-    EmailEventLink,
-    EventRestaurantList
+    EventRestaurantList,
+    VotingStats
 }
 };
 </script>

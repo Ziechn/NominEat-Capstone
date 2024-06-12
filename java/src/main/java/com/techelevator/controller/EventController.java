@@ -9,6 +9,7 @@ import com.techelevator.model.User;
 import com.techelevator.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/events")
 @CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class EventController {
 
     @Autowired
@@ -217,6 +219,16 @@ public class EventController {
     @PostMapping(path = "/add-no-vote/{eventId}/{restaurantId}")
     public String addRestaurantEventNoVote(@PathVariable int eventId, @PathVariable String restaurantId) {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
+    }
+
+    @PreAuthorize("permitAll")
+    @RequestMapping(path = "/organizer", method = RequestMethod.GET)
+    public Event getEventByUserId(Principal principal){
+        System.out.println(principal);
+        User organizer = userDao.getUserByUsername(principal.getName());
+        int organizerId = organizer.getId();
+
+        return eventDao.getEventByUserId(organizerId);
     }
 }
 

@@ -15,12 +15,9 @@
 
 <script>
 import EventService from '@/services/EventService';
-import RestaurantCardForVoting from '@/components/restaurant/RestaurantCardForVoting.vue';
-
 
 export default {
     components: {
-    RestaurantCardForVoting
 },
 
 props: 
@@ -31,7 +28,7 @@ props:
             restaurants: []
         };
     },
-    mounted() {
+    created() {
         this.fetchRestaurants();
     },
     methods: {

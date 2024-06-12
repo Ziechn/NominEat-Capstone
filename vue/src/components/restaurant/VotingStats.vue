@@ -1,8 +1,8 @@
 <template>
   <div class="voting-stats">
-   <h2> Restaurant Name: {{ restaurantName }} </h2> <br>
+   <h2> Restaurant Name: {{ restaurant.name }} </h2> <br>
    <p> Restaurant Yes Votes: {{ yesVotes }}</p> <br>
-   <p>  Restaurant No Votes: {{ noVotes }}</p>
+   <p> Restaurant No Votes: {{ noVotes }}</p>
   </div>
 </template>
 
@@ -13,31 +13,58 @@ export default {
     props: ['restaurantId', 'eventId'],
     data(){
         return {
+            tempRestaurantId: 'A123',
+            tempEventId: 1,
             restaurantName: '',
-            yesVotes: 0,
-            noVotes: 0
+            yesVotes: -420,
+            noVotes: -420,
+            restaurant: {}
         };
     },
     methods: {
         getRestaurantName(){
-            // Create an event in the RestaurantService to reach out to a new endpoint to get the restaurant name.
+            EventService.getRestaurantById(this.tempRestaurantId).then(
+                (response) => {
+                    if (response.status === 200) {
+                        this.restaurant = response.data;
+                    }
+                }
+            ).catch(
+                (error) => {
+                    console.log("Error getting restaurant for ID: " + this.restaurantId + error);
+                }
+            ); 
         },
         fetchVotes() {
-            EventService.getYesVote(this.eventId, this.restaurantId).then(response => {
-                   // if (response.status === 200) {
+            EventService.getYesVote(this.tempEventId, this.tempRestaurantId).then(response => {
+                    if (response.status === 200) {
                         this.yesVotes = response.data;
-                    }); 
-                    EventService.getNoVote(this.eventId, this.restaurantId).then(response => {
-                    //if (response.status === 200) {
+                    }  
+                }).catch(
+                    (error) => {
+                        console.log("Error getting yes vote for restaurant ID: " + this.restaurantId + " for event ID: " + this.eventId);
+                    }
+                ); 
+                EventService.getNoVote(this.tempEventId, this.tempRestaurantId).then(response => {
+                    if (response.status === 200) {
                         this.noVotes = response.data;
-                    });
-                }
-            },
-            watch: {
-                eventId: 'fetchVotes',
-                restaurantId: 'fetchVotes'
+                    }
+                }).catch(
+                    (error) => {
+                        console.log("Error getting no vote for restaurant ID: " + this.restaurantId + " for event ID: " + this.eventId);
+                    }
+                );
             }
-        };
+        },
+        watch: {
+            eventId: 'fetchVotes',
+            restaurantId: 'fetchVotes'
+        },
+        created() {
+            this.getRestaurantName();
+            this.fetchVotes();
+        }
+    };
 </script>
 <style>
 </style>
