@@ -31,10 +31,10 @@ const http = axios.create({
         return http.post(`events/add-no-vote/${eventId}/${restaurantId}`);
     },
     getNoVote(eventId, restaurantId) {
-        return http.get(`events/add-no-vote/${eventId}/${restaurantId}`);
+        return http.get(`events/no-votes/${eventId}/${restaurantId}`);
     },
     getYesVote(eventId, restaurantId) {
-        return http.get(`events/add-yes-vote/${eventId}/${restaurantId}`);
+        return http.get(`events/yes-votes/${eventId}/${restaurantId}`);
     },
     getEventByUserId(){
         return http.get(`events/organizer`);

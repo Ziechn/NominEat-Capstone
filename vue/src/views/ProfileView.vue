@@ -3,23 +3,16 @@
     <div class="profile-container">
         <Profile/>
     </div>
-    <!-- <EventOrganizer/> -->
 </template>
 
 <script>
 import Profile from '@/components/user/Profile.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
-// import EmailEventLink from '../components/EmailEventLink.vue';
-// import EventOrganizer from '../components/EventOrganizer.vue';
-
-
 
 export default {
     components: {
         Profile,
         HeaderComp,
-        // EmailEventLink,
-        // EventOrganizer
     }    
 }
 
