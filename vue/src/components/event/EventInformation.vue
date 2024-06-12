@@ -3,11 +3,11 @@
     <input type="text" v-model="tempEventId">
     <button type="submit">Submit</button>
     </form>
-  <div>
-    Temp Event ID: {{ eventId }} <br>
-    Event Name: {{ eventName }} <br>
-    Event Location: {{ eventLocation }} <br>
-    Event Decision Date: {{  decisionDate }}
+  <div class="event-information">
+    <p>  Temp Event ID: {{ eventId }} <br> </p>
+    <p>  Event Name: {{ eventName }} <br> </p>
+    <p>Event Location: {{ eventLocation }} <br></p>
+    <p> Event Decision Date: {{  decisionDate }}</p>
   </div>
 </template>
 
