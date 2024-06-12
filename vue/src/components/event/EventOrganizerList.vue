@@ -2,42 +2,47 @@
 
 <template>
     <div>
-        <RestaurantCardForOrganizer v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" :eventId="eventId" />
+        <VotingStats v-for="restaurant in restaurants" v-bind:key="restaurant.id" v-bind:restaurantId="restaurant.id" v-bind:eventId="eventId" />
     </div>
 </template>
 
 <script>
 import EventService from '@/services/EventService';
-import RestaurantCardForOrganizer from '@/components/restaurant/RestaurantCardForOrganizer.vue';
-import RestaurantCardForOrganzier from '../restaurant/RestaurantCardForOrganzier.vue';
-
-
+import VotingStats from '../restaurant/VotingStats.vue';
 
 export default {
     components: {
-        RestaurantCardForOrganizer
-    },
-    props:  {
-        eventId: String
+        VotingStats
     },
     data() {
       return {
+        eventId: -420,
         restaurants: []
       };
     },
-    mounted() {
-        this.fetchOrganizerRestaurants();
+    created() {
+        this.getEventId();
     },
     methods: {
+        getEventId(){
+            EventService.getEventByUserId().then(response => {
+                this.eventId = response.data.eventId;
+                this.fetchOrganizerRestaurants();
+            }).catch(error => {
+                console.error('Error fetching event data:', error)
+            })
+        },
         fetchOrganizerRestaurants() {
-
-            EventService.getOrganizerRestaurants(this.eventId).then(response => {
-                this.restaurants = response.data;
-            });
+            EventService.getOrganizerRestaurants(this.eventId).then(
+                (response) => {
+                    console.log(response.data);
+                    this.restaurants = response.data;
+            }).catch(
+                (error) => {
+                    console.log("Problem getting restaurants for event ID: " + this.eventId + " Error: " + error);
+                }
+            );
         }
     }
-
 }
-
-
 </script>

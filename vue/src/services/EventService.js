@@ -30,7 +30,7 @@ http.interceptors.request.use(config => {
         return http.get(`/events/restaurants/${eventId}`);
     },
     getOrganizerRestaurants(eventId) {
-        return http.get(`/events/organizer/restaurants/${eventId}`)
+        return http.get(`/events/${eventId}/restaurants/`)
     },
     addYesVote(eventId, restaurantId) {
         return http.post(`events/add-yes-vote/${eventId}/${restaurantId}`);

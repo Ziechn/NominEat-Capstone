@@ -27,7 +27,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/events")
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class EventController {
 
     @Autowired
@@ -51,7 +50,6 @@ public class EventController {
     @RequestMapping(path = "/{eventId}", method = RequestMethod.GET)
     public Event getEventById(@PathVariable int eventId) {
 
-
         Event event = eventDao.getEventById(eventId);
 
         if (event == null) {
@@ -60,51 +58,17 @@ public class EventController {
 
         LocalDateTime now =LocalDateTime.now();
 
-
-
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String now2 = now.toString().substring(0,16);
         String timeString = event.getDecisionDate();
         String timeStringModify = timeString.replace(" ", "T");
         LocalDateTime eventDate =LocalDateTime.parse(timeStringModify);
 
-
         if(now.isBefore(eventDate)) {
             return event;
         }else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The current time is after the event's decision date/time.");
         }
-
-
-        //if(now2.compareTo(event.getDecisionDate())<0){
-         //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
-        //}
-
-
-
-
-        //return eventDao.getEventById(eventId);
-        // Get the event from the database...
-        //Event event = eventDao.getEventById(eventId);
-
-        // Check to see if the event decision time is later than the current time.
-        // If so throw the exception.
-        // Otherwise return the event.
-
-        //I need to check the current date and time against the decision date and time
-        //the decision date format is Timestamp and how the front end sends the time is not
-        //find out if there is a way to covert the time from timestamp to how it's received?
-
-        // Chris commented this for the time being
-//        LocalDateTime now = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-//        String now2 = now.toString().substring(0, 16);
-//        if (now2.compareTo(event.getDecisionDate()) < 0) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
-//        }
-
-
-
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -118,15 +82,6 @@ public class EventController {
         }
 
         User organizer = userDao.getUserByUsername(principal.getName());
-
-
-
-        //LocalDateTime now =LocalDateTime.now();
-        //DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        //String now2 = now.toString().substring(0,16);
-        //if(now2.compareTo(event.getDecisionDate())<0){
-          // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
-        //}
 
        if (event.getEventLink() == null || event.getEventLink().isEmpty()) {
            event.setEventLink(generateUniqueEventLink());
@@ -164,6 +119,7 @@ public class EventController {
 
     @GetMapping(path = "/{eventId}/restaurants")
     public List<Restaurant> getRestaurants(@PathVariable int eventId) {
+        System.out.println("Getting restaurants for event ID: " + eventId);
         return restaurantDao.getRestaurantsByEventId(eventId);
     }
 
@@ -174,13 +130,6 @@ public class EventController {
         if (event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event does not exist.");
         }
-
-        // LocalDateTime now = LocalDateTime.now();
-        // System.out.println(now);
-        // if (now.isAfter(event.getDecisionDate().toLocalDateTime())) {
-        //    throw new ResponseStatusException(HttpStatus.LOCKED, "Can not accessed link");
-        // }
-
         return event;
     }
 
@@ -221,7 +170,6 @@ public class EventController {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
     }
 
-    @PreAuthorize("permitAll")
     @RequestMapping(path = "/organizer", method = RequestMethod.GET)
     public Event getEventByUserId(Principal principal){
         System.out.println(principal);
