@@ -23,7 +23,6 @@
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>
-                <p>Events go here</p>
                 <EventOrganizer />
             </div>
             
@@ -58,6 +57,9 @@ export default {
 </script>
 
 <style scoped>
+/* template{
+    margin-bottom: 40px; 
+} */
 .placeholder-img {
     height: 100px;
     border-radius: 50%;
@@ -65,9 +67,10 @@ export default {
 }
 
 .card-front {
+    margin-top: 180px;
     display: flex;
     justify-content: center;
-    width: 95%;
+    width: 80%;
     height: auto; /* set to auto when importing event organizer? */
 
 }
@@ -104,6 +107,7 @@ export default {
 
 .user-events{
     padding-left: 40px;
+    margin-bottom: 40px;
 }
 
 .button-container {
