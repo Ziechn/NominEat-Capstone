@@ -44,10 +44,5 @@ props:
 </script>
 
 <style scoped>
-/* .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    border-width: 3px;
-} */
+
 </style>

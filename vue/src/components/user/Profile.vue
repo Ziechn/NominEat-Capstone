@@ -67,10 +67,9 @@ export default {
 }
 
 .card-front {
-    margin-top: 180px;
     display: flex;
     justify-content: center;
-    width: 80%;
+    width: 70%;
     height: auto; /* set to auto when importing event organizer? */
 
 }
@@ -81,14 +80,12 @@ export default {
     flex-direction: row;
     width: 100%;
     padding-left: 40px;
-    
 }
 
 .profile-content {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
 }
 
 .title {
@@ -101,7 +98,7 @@ export default {
 
 .info-label {
     padding-bottom: 10px;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -113,7 +110,7 @@ export default {
 .button-container {
     display: flex;
     padding-right: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     justify-content: end;
 }
 
@@ -121,5 +118,10 @@ export default {
     width: 100%;
     height: 2px; 
     background: linear-gradient(to right, transparent, var(--primary-100) 50%, transparent); 
+}
+
+.event-title{
+    padding: 0;
+    margin-top: 20px;
 }
 </style>

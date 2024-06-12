@@ -1,6 +1,5 @@
 <template>
   <div>
-    Event Organizer Panel <br />
     <EventInformation />
     <EventOrganizerList />
   </div>
