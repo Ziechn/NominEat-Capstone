@@ -1,5 +1,7 @@
 <!-- MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
 Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
+
+<!-- DISPLAYS DETAILS OF A RESTAURANT FETCHED FROM THE DATABASE AND HANDLES VOTING -->
 <template>
     <div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" 
     @click="flipCard">
@@ -13,8 +15,8 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
-                    </p>
-                   
+                    </p> 
+ 
                      <!-- <div class="restaurant-rating">
                         <img :src="getStarImage(restaurant.rating)" alt="Rating" class="star-rating" />
                         <span> {{ restaurant.rating }}</span>
@@ -49,7 +51,8 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                 </div>
             </div>
         </div>
-    </div>
+   <VoteCard :eventId="eventId" :restaurant="restaurant" />
+   </div>
 </template>
 
 

@@ -6,8 +6,8 @@ const http = axios.create({
 
   export default {
  
-    createEvent(event) {
-        return http.post('/events/create', event);
+    createEvent(eventData) {
+        return http.post('/events/create', eventData);
     },
     addRestaurantsToEvent(eventId, restaurants) {
         return http.post(`restaurants/create/${eventId}`, restaurants);
@@ -20,6 +20,9 @@ const http = axios.create({
     },
     getRestaurantsForEvent(eventId) {
         return http.get(`/events/restaurants/${eventId}`);
+    },
+    getOrganizerRestaurants(eventId) {
+        return http.get(`/events/organizer/restaurants/${eventId}`)
     },
     addYesVote(eventId, restaurantId) {
         return http.post(`events/add-yes-vote/${eventId}/${restaurantId}`);
