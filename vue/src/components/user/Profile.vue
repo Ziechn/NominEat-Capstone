@@ -68,7 +68,7 @@ export default {
     display: flex;
     justify-content: center;
     width: 95%;
-    height: 500px; /* set to auto when importing event organizer? */
+    height: auto; /* set to auto when importing event organizer? */
 
 }
 

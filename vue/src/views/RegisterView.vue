@@ -74,6 +74,7 @@ export default {
                     .catch((error) => {
                     const response = error.response;
                     this.registrationErrors = true;
+                    console.log(response.status)
                     if (response.status === 400) {
                         this.registrationErrorMsg = 'Username is already in use. Please enter a different username.';
                     }
