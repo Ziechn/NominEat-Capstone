@@ -10,6 +10,7 @@ import com.techelevator.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -56,11 +57,28 @@ public class EventController {
         }
 
         LocalDateTime now =LocalDateTime.now();
+
+
+
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String now2 = now.toString().substring(0,16);
-        if(now2.compareTo(event.getDecisionDate())<0){
-         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+        String timeString = event.getDecisionDate();
+        String timeStringModify = timeString.replace(" ", "T");
+        LocalDateTime eventDate =LocalDateTime.parse(timeStringModify);
+
+
+        if(now.isBefore(eventDate)) {
+            return event;
+        }else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The current time is after the event's decision date/time.");
         }
+
+
+        //if(now2.compareTo(event.getDecisionDate())<0){
+         //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
+        //}
+
+
 
 
         //return eventDao.getEventById(eventId);
@@ -83,7 +101,7 @@ public class EventController {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current time is after the decision date/time.");
 //        }
 
-        return event;
+
 
     }
 
