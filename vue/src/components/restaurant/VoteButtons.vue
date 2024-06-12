@@ -16,9 +16,7 @@ export default {
         ThumbsUpButton,
         ThumbsDownButton
     },
-    props: {
-        eventId: String,
-        restaurantId: String
-    }  
+  props: 
+        ['restaurant', 'eventId'],
 };
 </script>

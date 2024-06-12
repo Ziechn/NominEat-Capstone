@@ -1,7 +1,16 @@
-<template>
-    <div class="event-restaurant-list">
-        <RestaurantList v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" :eventId="eventId" />
-    </div>
+<!-- pulls and displays r data for a specific event from database used for voting  -->
+
+
+<template> 
+ <div class="event-restaurant-list">
+    <RestaurantCardForVoting
+             v-for="restaurant in restaurants"
+             :key="restaurant.id"
+             :restaurant="restaurant"
+             :eventId="eventId"
+             />
+            
+ </div>
 </template>
 
 <script>
@@ -11,9 +20,9 @@ export default {
     components: {
     },
 
-    props: {
-        eventId: String
-    },
+props: 
+        ['eventId'],
+        
     data() {
         return {
             restaurants: []
@@ -29,6 +38,8 @@ export default {
             });
         }
     }
+
+
 };
 </script>
 

@@ -1,4 +1,5 @@
 <!-- reusing card component to display search results -->
+<!-- fetches restaurant data from API displays it and allows saving of ten to database -->
 
 <template> 
 <div class="search-restaurant-list">

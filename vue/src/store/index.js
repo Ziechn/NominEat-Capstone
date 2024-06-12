@@ -86,8 +86,82 @@ export function createStore(currentToken, currentUser) {
           state.filteredRestaurants = state.restaurants;
         }
       }
-    },
-    actions: {
+    }, actions: {
+      //initial backup data (comment in and out dont delete)
+      // const backupData = [
+      //   {
+      //     id: 1,
+      //     name: 'East Village Pizza',
+      //    // zipCode: '11222',
+      //     imageUrl: 'https://via.placeholder.com/250',
+      //     categories: ['Pizza'],
+      //     rating: 3.5,
+      //     price: '$$',
+      //     address1: '1234 Pizza St, New York, NY',
+      //     isOpenNow: true,
+      //     menuUrl: 'http://www.eastvillagepizza.com/menu',
+      //     hours: [
+      //       { day: 1, start: '1100', end: '2200'},
+      //       { day: 2, start: '1100', end: '2200'},
+      //       { day: 3, start: '1100', end: '2200'},
+      //       { day: 4, start: '1100', end: '2200'},
+      //       { day: 5, start: '1100', end: '2200'},
+      //       { day: 6, start: '1100', end: '2200'},
+      //       { day: 7, start: '1100', end: '2200'},
+      //     ],
+      //     phoneNumber: '555-1234',
+      //     status: 'Open',
+      //   },
+      //   {
+      //     id: 2,
+      //     name: 'Sushi Place',
+      //    // zipCode: '11222',
+      //     imageUrl: 'https://via.placeholder.com/250',
+      //     categories: [ 'Sushi' ],
+      //     // category: 'Sushi',
+      //     rating: 4,
+      //     price: '$$$',
+      //     address1: '678 Sushi Place, New York, NY',
+      //     isOpenNow: true,
+      //     menuUrl: 'http://www.sushiplace.com/menu',
+      //     hours: [
+      //       { day: 1, start: '1100', end: '2200'},
+      //       { day: 2, start: '1100', end: '2200'},
+      //       { day: 3, start: '1100', end: '2200'},
+      //       { day: 4, start: '1100', end: '2200'},
+      //       { day: 5, start: '1100', end: '2200'},
+      //       { day: 6, start: '1100', end: '2200'},
+      //       { day: 7, start: '1100', end: '2200'},
+      //     ],
+      //     phoneNumber: '555-1234',
+      //     status: 'Open',
+      //   },
+      //   {
+      //     id: 3,
+      //     name: 'Burger House',
+      //    // zipCode: '11222',
+      //     imageUrl: 'https://via.placeholder.com/250',
+      //     categories: ['Burgers'],
+      //     rating: 5,
+      //     price: '$$',
+      //     address1: '1234 Burger Blvd, New York, NY',
+      //     isOpenNow: true,
+      //     menuUrl: 'http://www.burgerhouse.com/menu',
+      //     hours: [
+      //       { day: 1, start: '1100', end: '2200'},
+      //       { day: 2, start: '1100', end: '2200'},
+      //       { day: 3, start: '1100', end: '2200'},
+      //       { day: 4, start: '1100', end: '2200'},
+      //       { day: 5, start: '1100', end: '2200'},
+      //       { day: 6, start: '1100', end: '2200'},
+      //       { day: 7, start: '1100', end: '2200'},
+      //     ],
+      //     phoneNumber: '555-1234',
+      //     status: 'Open',
+      //     // coordinates;
+      //   }
+
+      // ];
 
 
       async fetchRestaurants({ commit }, { zipCode, limit = 10 }) {
@@ -170,7 +244,7 @@ export function createStore(currentToken, currentUser) {
       }
     },
 
-    plugins: [createPersistedState(),]
+    plugins: [createPersistedState()]
   });
   return store;
 }

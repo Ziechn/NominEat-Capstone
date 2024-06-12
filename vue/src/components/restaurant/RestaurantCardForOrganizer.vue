@@ -17,12 +17,10 @@ export default {
     components: {
         VotingStats
     },
-    props: {
-        restaurant: Object,
-        eventId: String
-    }
+    props: 
+        ['restaurant', 'eventId']
 };
 </script>
 
-<style S>
+<style>
 </style>
