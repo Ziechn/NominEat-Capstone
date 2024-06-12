@@ -1,6 +1,9 @@
+<!-- pulls and displays r data for a specific event from database used for voting  -->
+
+
 <template> 
  <div class="event-restaurant-list">
-    <RestaurantList
+    <RestaurantCardForVoting
              v-for="restaurant in restaurants"
              :key="restaurant.id"
              :restaurant="restaurant"
@@ -12,17 +15,17 @@
 
 <script>
 import EventService from '@/services/EventService';
-import RestaurantCard from '@/components/restaurant/RestaurantCard.vue';
+import RestaurantCardForVoting from '@/components/restaurant/RestaurantCardForVoting.vue';
 
 
 export default {
     components: {
-    RestaurantCard
+    RestaurantCardForVoting
 },
 
-    props: {
-        eventId: String
-    },
+props: 
+        ['eventId'],
+        
     data() {
         return {
             restaurants: []
@@ -38,6 +41,8 @@ export default {
             });
         }
     }
+
+
 };
 </script>
 

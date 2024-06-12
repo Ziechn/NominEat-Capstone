@@ -1,7 +1,7 @@
-MAIN VIEW FOR EVENT DETAILS AND RESTAURANT LIST
+
     <template>
     <div>
-        <!-- <HeaderComp /> -->
+        <HeaderComp />
         <EventInformation :eventId="eventId" />
         <EventRestaurantList :eventId="eventId" />
     </div>

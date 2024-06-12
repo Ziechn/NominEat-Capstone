@@ -2,17 +2,20 @@
     <div class="search-container">
         <HeaderComp />
         <RestaurantList />
+   
     </div>
 </template>
 
 <script>
 //import HeaderComp from '@/components/HeaderComp';
 import RestaurantList from '@/components/restaurant/SearchRestaurantList.vue';
+//import EventInformation from '../components/event/EventInformation.vue';
 
 export default {
     components: {
        // HeaderComp,
-        RestaurantList
+        RestaurantList,
+       // EventInformation
     }
 };
 

@@ -8,11 +8,11 @@
                   <router-link to="/profile" aria-label="Profile" v-if="$store.state.token != ''"><i class="icon-user"></i></router-link>
                   <router-link to="/login" aria-label="Profile" v-if="$store.state.token != ''"><i class="icon-exit"></i></router-link>
                 </nav> -->
-              <!-- <div id="nav">
+              <div id="nav">
                 <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
                 <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
               </div>
-              <router-view /> -->
+              <router-view />
   </div>
 </template>
 

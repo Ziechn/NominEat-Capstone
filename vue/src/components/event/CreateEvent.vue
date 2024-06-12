@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h3>Create your NominEat event</h3>
-    <form v-on:submit.prevent="createEvent">
+    <!-- <h3>Create your NominEat event</h3>
+    <eventCreationPopup @eventCreated="handleEventCreated" /> -->
+    <form v-on:submit.prevent="createEvent">    
         <label for="eventName">Event Name: </label>
         <input type="text" name="eventName" id="eventName" v-model="event.eventName">
         <label for="decisionDate">Decision Date: </label>
@@ -10,7 +11,7 @@
     </form>
   </div>
 </template>
-
+                    <!-- create event should pull in info from the database and save it - main view for creating events, pulling initial r data from API and saving to database... -->
 <script>
 import RestaurantService from '@/services/RestaurantService';
 import EventService from '@/services/EventService';

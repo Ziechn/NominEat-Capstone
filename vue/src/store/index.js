@@ -84,53 +84,16 @@ import AuthService from '../services/AuthService';
 
 const store = _createStore({
   state: {
-    zipCode: '',
-    limit: 10,
     restaurants: [],
-   // events: [],
-    loading: false,
-    error: null,
-    category: '',
-    filteredRestaurants: [],
-   // selectedRestaurants: [],
-    events: null,
+    events: [],
+    //votes: {},
     token: localStorage.getItem('token') || '',
     user: JSON.parse(localStorage.getItem('user')) || {}
   },
+ 
   mutations: {
-    SET_ZIP_CODE(state, zipCode) {
-      state.zipCode = zipCode;
-    },
-    SET_LIMIT(state, limit) {
-      state.limit = limit;
-    },
-    SET_RESTAURANTS(state, restaurants) {
-      state.restaurants = restaurants;
-      state.filteredRestaurants = restaurants;
-    },
-    // ADD_SELECTED_RESTAURANTS(state, restaurant) {
-    //   state.selectedRestaurants.push(restaurant);
-    // },
-    // REMOVE_SELECTED_RESTAURANTS(state, restaurantId) {
-    //   state.selectedRestaurants = state.selectedRestaurants.filter(
-    //     restaurant => restaurant.id !== restaurantId
-    //   );
-    // },
-    CREATE_EVENT(state, event) {
-      state.events.push(event);
-    },
-        // ADD_EVENT(state, event) {
-    //   state.events.push(event);
-    // },
-    SET_ERROR(state, error) {
-      state.error = error;
-    },
-    SET_LOADING(state, loading) {
-      state.loading = loading;
-    },
-    SET_EVENTS(state, events) {
-      state.events = events;
-    },
+
+ 
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
@@ -140,6 +103,26 @@ const store = _createStore({
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user));
     },
+    SET_EVENTS(state, events) {
+      state.events = events;
+    },
+    SET_RESTAURANTS(state, restaurants) {
+      state.restaurants = restaurants;
+     // state.filteredRestaurants = restaurants;
+    },
+    //       SET_ZIP_CODE(state, zipCode) {
+    //   state.zipCode = zipCode;
+    // },
+    // SET_LIMIT(state, limit) {
+    //   state.limit = limit;
+    // },
+      ADD_RESTAURANT(state, restaurant) {
+      state.restaurants.push(restaurant);
+    },
+  //   SET_VOTES(state, { restaurantId, votes }) {
+  //    state.votes = ??
+  //   }
+  // },
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -148,27 +131,47 @@ const store = _createStore({
       axios.defaults.headers.common = ['Authorization'];
     axios.defaults.headers.common = {};
     },
-    SET_CATEGORY(state, category) {
-      state.category = category;
-    },
-    FILTER_BY_CATEGORY(state, category) {
-     if (category) {
-        state.filteredRestaurants = state.restaurants.filter(restaurant =>
-          restaurant.categories.some(cat =>
-            cat.title.toLowerCase().includes(category.toLowerCase())
-            )
-          )   } else { 
-      state.filteredRestaurants = state.restaurants;
-      }
-    }
   },
+
+    // REMOVE_SELECTED_RESTAURANTS(state, restaurantId) {
+    //   state.selectedRestaurants = state.selectedRestaurants.filter(
+    //     restaurant => restaurant.id !== restaurantId
+    //   );
+    // // },
+    // CREATE_EVENT(state, event) {
+    //   state.events.push(event);
+    // },
+        // ADD_EVENT(state, event) {
+    //   state.events.push(event);
+    // },
+    // SET_ERROR(state, error) {
+    //   state.error = error;
+    // },
+    // SET_LOADING(state, loading) {
+    //   state.loading = loading;
+    // },
+
+    // SET_CATEGORY(state, category) {
+    //   state.category = category;
+    // },
+    // FILTER_BY_CATEGORY(state, category) {
+    //  if (category) {
+    //     state.filteredRestaurants = state.restaurants.filter(restaurant =>
+    //       restaurant.categories.some(cat =>
+    //         cat.title.toLowerCase().includes(category.toLowerCase())
+    //         )
+    //       )   } else { 
+    //   state.filteredRestaurants = state.restaurants;
+    //   }
+    // }
+
   actions: {
 
 
     async fetchRestaurants({ commit }, { zipCode, limit = 10 }) {
       commit('SET_LOADING', true);
       try {
-        const response = await RestaurantService.list(zipCode, limit);
+        const response = await RestaurantService.searchRestaurants(zipCode, limit);
        // const responseEvents = await EventService.getEventRestaurants({ zipCode, limit });
         console.log('Restaurants fetched:', response.data);
         commit('SET_RESTAURANTS', response.data);
@@ -235,6 +238,8 @@ const store = _createStore({
     //     console.error('Error saving restaurants to event:', error);
     //   }
     // },
+    
+    
     fetchUser({ commit }) {
       const user = JSON.parse(localStorage.getItem('user'));
       if(user){
@@ -243,17 +248,20 @@ const store = _createStore({
       
     }
   },
-  getters: {
-    isAuthenticated: state => !!state.token,
-    getUser: state => state.user
-  //   eventById: (state) => (id) => {
-  //     return state.events.find(event => event.id === id);
-  //   },
-  //   restaurantsForEvent: (state) => (eventId) => {
-  //     return state.restaurants.filter(restaurant => restaurant.eventId === eventId);
-  //   },
-   },
-  plugins: [createPersistedState(),]
+  // getters: {
+  //   isAuthenticated: state => !!state.token,
+  //   getUser: state => state.user,
+  //   getEvents: state => state.events,
+  //   getRestaurants: state => state.restaurants,
+  // }
+    // eventById: (state) => (id) => {
+    //   return state.events.find(event => event.id === id);
+    // },
+    // restaurantsForEvent: (state) => (eventId) => {
+    //   return state.restaurants.filter(restaurant => restaurant.eventId === eventId);
+    // },
+   //},
+ plugins: [createPersistedState(),]
   }
 }); 
 export default store;

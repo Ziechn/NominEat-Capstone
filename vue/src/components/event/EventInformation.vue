@@ -15,8 +15,8 @@
 import EventService from '@/services/EventService';
 
 export default {
-    props: { eventId: String 
-    },
+    props: 
+        ['eventId'],
     data() {
         return {
             event: {}

@@ -64,10 +64,8 @@ export default {
     components: {
         VoteCard
     },
-    props: {
-        restaurant: Object,
-        eventId: String
-    },
+    props: 
+        ['restaurant', 'eventId'],
 
     data() {
         return {
