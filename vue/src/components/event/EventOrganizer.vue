@@ -2,18 +2,19 @@
   <div>
     Event Organizer Panel <br>
     <EventInformation v-bind:eventId="eventId" />
-    <EventRestaurantList v-bind:eventId="eventId"  />
+    <EventOrganizerList/>
   </div>
 </template>
 
 <script>
 import EventInformation from '@/components/event/EventInformation.vue';
-import EventRestaurantList from '@/components/event/EventRestaurantList.vue';
+import EventOrganizerList from '@/components/event/EventOrganizerList.vue';
+
 
 export default {
     components: {
     EventInformation,
-    EventRestaurantList
+    EventOrganizerList
 }
 }
 </script>

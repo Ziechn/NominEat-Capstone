@@ -2,22 +2,23 @@
 
 <template>
     <div>
-        <RestaurantCardForOrganizer v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" :eventId="eventId" />
+        <RestaurantCardForOrganzier v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" :eventId="eventId"/>
     </div>
 </template>
 
 <script>
 import EventService from '@/services/EventService';
-import RestaurantCardForOrganizer from '@../restaurant/RestaurantCardForOrganizer.vue';
+import RestaurantCardForOrganzier from '../restaurant/RestaurantCardForOrganzier.vue';
+
 
 
 export default {
     components: {
-        RestaurantCardForOrganizer
-    },
-    props:  {
-        eventId: String
-    },
+    RestaurantCardForOrganzier
+},
+
+    props: ['eventId', 'restaurant'],
+
     data() {
       return {
         restaurants: []
