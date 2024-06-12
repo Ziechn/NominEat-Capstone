@@ -1,20 +1,22 @@
 <!-- MVP: hours of operation - store and card(back) need, open and closed data -store needs card has, call to order store and card(back) need
 Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
+
+<!-- DISPLAYS DETAILS OF A RESTAURANT FETCHED FROM THE DATABASE AND HANDLES VOTING -->
 <template>
     <div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" 
     @click="flipCard">
 
         <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered }">
             <div class="card-front" aria-label="restaurant-card-front-of-card">
-         <!-- <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" /> -->
+                <img :src="restaurant.imageUrl" :alt="restaurant.name" class="restaurant-image" />
                 <div class="restaurant-info">
                     <h2 class="restaurant-name-front" >{{ restaurant.name }}</h2>
                     <p class="restaurant-category"> 
-                        <!-- <span v-for="(type, index) in restaurant.categories" v-bind:key="index">
-                            {{ type }}<span v-if="index < restaurant.categories.length - 1">, </span>
-                        </span> -->
+                        <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
+                            {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
+                        </span>
                     </p> 
-<!-- !!!!changed from category to type here ^^ -->
+ 
                      <!-- <div class="restaurant-rating">
                         <img :src="getStarImage(restaurant.rating)" alt="Rating" class="star-rating" />
                         <span> {{ restaurant.rating }}</span>
