@@ -1,13 +1,13 @@
 <template>
-  <div>
-    Restaurant Name: {{ restaurantName }} <br>
-    Restaurant Yes Votes: {{ yesVotes }} <br>
-    Restaurant No Votes: {{ noVotes }}
+  <div class="voting-stats">
+   <h2> Restaurant Name: {{ restaurantName }} </h2> <br>
+   <p> Restaurant Yes Votes: {{ yesVotes }}</p> <br>
+   <p>  Restaurant No Votes: {{ noVotes }}</p>
   </div>
 </template>
 
 <script>
-import EventService from '../services/EventService';
+import EventService from '../../services/EventService';
 
 export default {
     props: ['restaurantId', 'eventId'],
@@ -22,20 +22,16 @@ export default {
         getRestaurantName(){
             // Create an event in the RestaurantService to reach out to a new endpoint to get the restaurant name.
         },
-        getRestaurantYesVotes(){
+        fetchVotes() {
+        //getRestaurantYesVotes(){
             EventService.getYesVote(this.eventId, this.restaurantId).then(
                 (response) => {
                     if (response.status === 200) {
                         this.yesVotes = response.data;
                     }
                 }
-            ).catch(
-                (error) => {
-                    console.log("Problem getting yes votes for restaurant ID: " + this.restaurantId + " in event ID: " + this.eventId);
-                }
             );
-        },
-        getRestaurantNoVotes() {
+        //getRestaurantNoVotes() {
             EventService.getNoVote(this.eventId, this.restaurantId).then(
                 (response) => {
                     if (response.status === 200) {
@@ -50,7 +46,7 @@ export default {
         }
 
     }
-}
+};
 </script>
 
 <style>

@@ -22,6 +22,9 @@ import axios from 'axios';
 
   register(user) {
     return axios.post('/register', user)
-  }
+  },
+  // getUserProfile(user) {
+  //   return axios.get(`/profile/${}`)
+  // }
 
 }

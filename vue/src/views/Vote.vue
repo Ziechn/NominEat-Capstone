@@ -11,17 +11,17 @@
                   />
                   </div>
                     <div class="results" v-if="showResults && isOrganizer">
-                        <h3>Voting Complete!</h3>
-                        <ul>
-                            <li v-for="vote in vote" :key="vote.restaurant">
-                                Restaurant ID: {{ vote.restaurant }} - Vote : {{  vote.vote }}
+                        <h3>enter event list component</h3>
+                        <!-- <ul>
+                            <li v-for="vote in votes" :key="vote.restaurant">
+                            Restaurant ID: {{ vote.restaurant }} - Vote : {{  votes.vote }}
                             </li>
-                        </ul>
-                        <div class="stats">
+                        </ul> -->
+                        <!-- <div class="stats">
                             <p>Total Votes: {{  votes.length  }}</p>
                             <p>Thumbs Up: {{ thumbsUpCount }}</p>
                             <p>Thumbs Down: {{ thumbsDownCount }}</p>
-                    </div>
+                    </div> -->
                 </div>
                     <div v-if="showResults && isOrganizer">
                     <h3>Thank you for voting!</h3>
