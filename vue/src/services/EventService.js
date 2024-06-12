@@ -12,7 +12,7 @@ http.interceptors.request.use(config => {
     return config;
   });
 
-  export default {
+export default {
  
     createEvent(eventData) {
         return http.post('/events/create', eventData);

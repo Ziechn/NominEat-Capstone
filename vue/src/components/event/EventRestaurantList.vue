@@ -1,13 +1,7 @@
-<template> 
- <div class="event-restaurant-list">
-    <RestaurantList
-             v-for="restaurant in restaurants"
-             :key="restaurant.id"
-             :restaurant="restaurant"
-             :eventId="eventId"
-             />
-            
- </div>
+<template>
+    <div class="event-restaurant-list">
+        <RestaurantList v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" :eventId="eventId" />
+    </div>
 </template>
 
 <script>
@@ -15,7 +9,7 @@ import EventService from '@/services/EventService';
 
 export default {
     components: {
-},
+    },
 
     props: {
         eventId: String
@@ -39,9 +33,10 @@ export default {
 </script>
 
 <style scoped>
-.cards-container {
+/* .cards-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
+    border-width: 3px;
+} */
 </style>
