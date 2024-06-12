@@ -1,10 +1,10 @@
 <template>
   <div class="event-information">
     <p>  Temp Event ID: {{ event.eventId }} <br> </p>
-    <p>  Event Name: {{ event.name }} <br> </p>
+    <p>  Event Name: {{ event.eventName }} <br> </p>
     <p>Event Location: {{ event.location }} <br></p>
     <p> Event Decision Date: {{  event.decisionDate }}</p>
-    <p> Event Link {{ event.eventLink }} </p>
+    <p> Event Link: http://localhost:9000/{{ event.eventLink }} </p>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
             event: {
                 eventId: 1,
                 eventName: '',
-                eventLocation: '',
+                location: '',
                 decisionDate: '',
                 eventLink: ''
             }

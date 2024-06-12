@@ -19,7 +19,7 @@
                 <div class="button-container">
                     <button @click="logout()">Log Out</button>
                 </div>
-                <div class="line">L</div>
+                <div class="line"></div>
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>
