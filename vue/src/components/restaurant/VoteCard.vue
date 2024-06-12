@@ -9,9 +9,7 @@ import VoteButtons from './VoteButtons.vue';
 
 export default {
     components: { VoteButtons},
-    props: {
-        eventId: String,
-        restaurant: Object
-    }
+    props: 
+        ['restaurant', 'eventId'],
 };
 </script>

@@ -7,10 +7,9 @@
 import EventService from '../../services/EventService';
 
 export default {
-    props: {
-        eventId: String,
-        restaurantId: String
-    },
+   props: 
+        ['restaurant', 'eventId'],
+        
     methods: {
         addYesVote() {
             EventService.addYesVote(this.eventId, this.restaurantId).then(() => {

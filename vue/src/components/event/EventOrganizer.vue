@@ -1,26 +1,45 @@
 <template>
   <div>
-    Event Organizer Panel <br>
-    <EventInformation v-bind:eventId="eventId" />
-    <EmailEventLink v-bind:eventId="eventId"  />
-    <EventRestaurantList v-bind:eventId="eventId"  />
+    Event Organizer Panel <br />
+    <EventInformation />
+    <EventOrganizerList />
   </div>
 </template>
 
 <script>
-import EmailEventLink from '@/components/event/EmailEventLink.vue';
-import EventInformation from '@/components/event/EventInformation.vue';
-import EventRestaurantList from '@/components/event/EventRestaurantList.vue';
+import EventInformation from "@/components/event/EventInformation.vue";
+import EventOrganizerList from "./EventOrganizerList.vue";
+import EventService from "../../services/EventService";
 
 export default {
-    components: {
+  components: {
     EventInformation,
-    EmailEventLink,
-    EventRestaurantList
-}
-}
+    EventOrganizerList,
+  },
+  data() {
+    return {
+      event: {
+        eventId: -420,
+        eventName: "",
+        location: "",
+        decisionDate: "",
+        eventLink: "",
+      },
+    };
+  },
+  methods: {
+    getEventInfo() {
+      EventService.getEventByUserId()
+        .then((response) => {
+          this.event = response.data;
+        })
+        .catch((error) => {
+          console.error("Error fetching event data:", error);
+        });
+    },
+  },
+  created() {
+    this.getEventInfo();
+  },
+};
 </script>
-
-<style>
-
-</style>
