@@ -28,6 +28,7 @@ export default {
     methods: {
         getEventInfo() {
             EventService.getEventByUserId().then(response => {
+                console.log(response);
                 this.event = response.data;
             }).catch(error => {
                 console.error('Error fetching event data:', error)

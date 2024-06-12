@@ -27,6 +27,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/events")
 @CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class EventController {
 
     @Autowired
@@ -220,6 +221,7 @@ public class EventController {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
     }
 
+    @PreAuthorize("permitAll")
     @RequestMapping(path = "/organizer", method = RequestMethod.GET)
     public Event getEventByUserId(Principal principal){
         System.out.println(principal);
