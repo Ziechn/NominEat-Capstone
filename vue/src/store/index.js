@@ -8,15 +8,10 @@ import AuthService from '../services/AuthService';
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
-      //  zipCode: '',
-      //  limit: 10,
       restaurants: [],
-      // events: [],
       loading: false,
       error: null,
-      // category: '',
-      // filteredRestaurants: [],
-      // selectedRestaurants: [],
+      //votes: {},
       events: null,
       token: localStorage.getItem('token') || '',
       user: JSON.parse(localStorage.getItem('user')) || {}
@@ -35,6 +30,27 @@ export function createStore(currentToken, currentUser) {
       ADD_SELECTED_RESTAURANTS(state, restaurants) {
         state.selectedRestaurants.push(restaurants);
       },
+      setVotes(state, { restaurantId, votes }) {
+        state.votes = {
+          ...state.votes,
+          [restaurantId]: votes
+        };
+      },
+      incrementYesVotes(state, restaurantId) {
+        if (state.votes[restaurantId]) {
+          state.votes[restaurantId].yesVotes++;
+        } else {
+          state.votes[restaurantId] = { yesVotes: 1, noVotes: 0 };
+        }
+      },
+      incrementNoVotes(state, restaurantId) {
+        if (state.votes[restaurantId]) {
+          state.votes[restaurantId].noVotes++;
+        } else {
+          state.votes[restaurantId] = { noVotes: 1, yesVotes: 0 };
+        }
+      },
+
       // REMOVE_SELECTED_RESTAURANTS(state, restaurantId) {
       //   state.selectedRestaurants = state.selectedRestaurants.filter(
       //     restaurant => restaurant.id !== restaurantId
@@ -332,6 +348,30 @@ export function createStore(currentToken, currentUser) {
         }
       }
     },
+    fetchVotes({ commit }, { eventId, restaurantId }) {
+      return Promise.all([
+        EventService.getYesVote(eventId, restaurantId),
+        EventService.getNoVote(eventId, restaurantId)]).then(([
+          yesResponse, noResponse]) => {
+            commit('setVotes', {
+              restaurantId,
+              votes: {
+                yesVotes: yesResponse.data,
+                noVotes: noResponse.data
+              }
+            });
+          });
+        },
+          addYesVote({ commit }, { eventId, restaurantId }) {
+          //   return EventService.addYesVote(eventId, restaurantId).then(() 
+          //   => {
+          //     commit('incrementNoVotes', restaurantId);
+          //   });
+          // },
+          // addNoVote({ commit }, { eventId,restaurantId })
+      
+    },
+   
 
     plugins: [createPersistedState(),]
   });
