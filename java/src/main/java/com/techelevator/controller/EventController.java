@@ -5,6 +5,7 @@ import com.techelevator.dao.RestaurantDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Event;
 import com.techelevator.model.Restaurant;
+import com.techelevator.model.TotalVoteCount;
 import com.techelevator.model.User;
 import com.techelevator.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,6 +229,12 @@ public class EventController {
 
         return eventDao.getEventByUserId(organizerId);
     }
+
+   // @RequestMapping(path = "/{eventId}/restaurants/{restaurantId}/vote")
+   // public List<TotalVoteCount> getVotesByEventIdAndRestaurantId(@PathVariable int eventId, @PathVariable String restaurantId) {
+      //  return eventDao.getVotesByEventIdAndRestaurantId(eventId,restaurantId);
+    //}
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 import com.techelevator.model.Event;
 import com.techelevator.model.Restaurant;
+import com.techelevator.model.TotalVoteCount;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -118,6 +119,7 @@ public class JdbcEventDao implements EventDao {
 
         return new Event();
     }
+
 
     private Event mapRowToEvent(SqlRowSet results) {
         Event event = new Event();

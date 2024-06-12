@@ -1,7 +1,7 @@
 package com.techelevator.dao;
 import com.techelevator.model.Event;
 import java.util.List;
-
+import com.techelevator.model.TotalVoteCount;
 
 public interface EventDao {
 
@@ -9,6 +9,7 @@ public interface EventDao {
     Event getEventById (int eventId);
     Event createEvent (Event event);
     Event getEventByLink (String eventLink);
+   // List<TotalVoteCount>getVotesByEventIdAndRestaurantId (int eventId, String restaurantId);
 
     // Chris's edits...
     public void insertUniqueEventUserLink(String userEventLink, int eventId);
