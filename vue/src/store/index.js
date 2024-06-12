@@ -243,16 +243,6 @@ const store = _createStore({
       
     }
   },
-  getters: {
-    isAuthenticated: state => !!state.token,
-    getUser: state => state.user
-  //   eventById: (state) => (id) => {
-  //     return state.events.find(event => event.id === id);
-  //   },
-  //   restaurantsForEvent: (state) => (eventId) => {
-  //     return state.restaurants.filter(restaurant => restaurant.eventId === eventId);
-  //   },
-   },
   plugins: [createPersistedState(),]
   }
 }); 
