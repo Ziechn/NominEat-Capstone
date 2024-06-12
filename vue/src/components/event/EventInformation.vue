@@ -3,20 +3,23 @@
     <input type="text" v-model="tempEventId">
     <button type="submit">Submit</button>
     </form>
+    <div>
+        {{ user.id }}
+    </div>
   <div class="event-information">
-    <p>  Temp Event ID: {{ eventId }} <br> </p>
-    <p>  Event Name: {{ eventName }} <br> </p>
-    <p>Event Location: {{ eventLocation }} <br></p>
+    <p> Temp Event ID: {{ eventId }} <br> </p>
+    <p> Event Name: {{ eventName }} <br> </p>
+    <p> Event Location: {{ eventLocation }} <br></p>
     <p> Event Decision Date: {{  decisionDate }}</p>
   </div>
 </template>
 
 <script>
 import EventService from '@/services/EventService';
+import { mapState, mapActions} from 'vuex';
 
 export default {
-    props: { eventId: String 
-    },
+    props: ['eventId'],
     data() {
         return {
             event: {}
@@ -27,15 +30,20 @@ export default {
             // eventLink: ''
         };
     },
-    mounted() {
+    created() {
+        this.fetchUser();
         this.fetchEvent();
     },
     methods: {
+        ...mapActions(['fetchUser']),
         fetchEvent() {
             EventService.getEvent(this.eventId).then(response => {
                 this.event = response.data;
             });
         }
+    },
+    computed: {
+        ...mapState(['user'])
     }
 };
 </script>

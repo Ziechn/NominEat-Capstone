@@ -12,12 +12,9 @@
 
 <script>
 import EventService from '@/services/EventService';
-import RestaurantCard from '@/components/restaurant/RestaurantCard.vue';
-
 
 export default {
     components: {
-    RestaurantCard
 },
 
     props: {
@@ -28,7 +25,7 @@ export default {
             restaurants: []
         };
     },
-    mounted() {
+    created() {
         this.fetchRestaurants();
     },
     methods: {

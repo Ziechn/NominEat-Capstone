@@ -5,16 +5,17 @@
           <h1 class="title">NominEat</h1>
           <img class="logo" src="../assets/cropped-logo.png">
         </div>
+        <!-- 
         <nav class="nav-container">
           <router-link to="/">Home</router-link>
           <router-link to="/restaurants/search">Search Restaurants</router-link>
           <router-link to="/create-event">Create Event</router-link>
-          <router-link to="/login" v-if="!isAuthenticated">Login</router-link>
+          <router-link to="/login">Login</router-link>
           <router-link to="/register" v-if="!isAuthenticated">Register</router-link>
           <router-link to="/profile" v-if="isAuthenticated">Profile</router-link>
           <button @click="logout" v-if="isAuthenticated">Logout</button>
-          </nav>
-
+      </nav>
+      -->
 
         <!-- <nav class="nav-container">
           <router-link v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE & EVENTS</router-link>

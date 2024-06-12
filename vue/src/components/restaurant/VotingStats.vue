@@ -2,7 +2,7 @@
   <div class="voting-stats">
    <h2> Restaurant Name: {{ restaurantName }} </h2> <br>
    <p> Restaurant Yes Votes: {{ yesVotes }}</p> <br>
-   <p>  Restaurant No Votes: {{ noVotes }}</p>
+   <p> Restaurant No Votes: {{ noVotes }}</p>
   </div>
 </template>
 
@@ -24,20 +24,30 @@ export default {
         },
         fetchVotes() {
             EventService.getYesVote(this.eventId, this.restaurantId).then(response => {
-                   // if (response.status === 200) {
+                    if (response.status === 200) {
                         this.yesVotes = response.data;
-                    }); 
-                    EventService.getNoVote(this.eventId, this.restaurantId).then(response => {
-                    //if (response.status === 200) {
+                    }  
+                }).catch(
+                    (error) => {
+                        console.log("Error getting yes vote for restaurant ID: " + this.restaurantId + " for event ID: " + this.eventId);
+                    }
+                ); 
+                EventService.getNoVote(this.eventId, this.restaurantId).then(response => {
+                    if (response.status === 200) {
                         this.noVotes = response.data;
-                    });
-                }
-            },
-            watch: {
-                eventId: 'fetchVotes',
-                restaurantId: 'fetchVotes'
+                    }
+                }).catch(
+                    (error) => {
+                        console.log("Error getting no vote for restaurant ID: " + this.restaurantId + " for event ID: " + this.eventId);
+                    }
+                );
             }
-        };
+        },
+        watch: {
+            eventId: 'fetchVotes',
+            restaurantId: 'fetchVotes'
+        }
+    };
 </script>
 <style>
 </style>
