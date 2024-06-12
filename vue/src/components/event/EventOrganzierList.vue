@@ -2,17 +2,18 @@
 
 <template>
     <div>
-        <RestaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :eventId="eventId" />
+        <RestaurantCardForOrganizer v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" :eventId="eventId" />
     </div>
 </template>
 
 <script>
 import EventService from '@/services/EventService';
-import RestaurantCard from '@/components/restaurant/RestaurantCard.vue';
+import RestaurantCardForOrganizer from '@../restaurant/RestaurantCardForOrganizer.vue';
+
 
 export default {
     components: {
-        RestaurantCard
+        RestaurantCardForOrganizer
     },
     props:  {
         eventId: String
@@ -28,7 +29,7 @@ export default {
     methods: {
         fetchOrganizerRestaurants() {
 
-            EventService.fetchOrganizerRestaurants(this.eventId).then(response => {
+            EventService.getOrganizerRestaurants(this.eventId).then(response => {
                 this.restaurants = response.data;
             });
         }
