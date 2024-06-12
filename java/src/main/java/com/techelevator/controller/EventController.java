@@ -220,7 +220,6 @@ public class EventController {
         return eventDao.addRestaurantEventNoVote(eventId, restaurantId);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping(path = "/organizer", method = RequestMethod.GET)
     public Event getEventByUserId(Principal principal){
         System.out.println(principal);

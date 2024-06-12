@@ -17,17 +17,17 @@ export default {
     data() {
         return {
             event: {
-            eventId: 1,
-            eventName: '',
-            eventLocation: '',
-            decisionDate: '',
-            eventLink: ''
+                eventId: 1,
+                eventName: '',
+                eventLocation: '',
+                decisionDate: '',
+                eventLink: ''
             }
         };
     },
     methods: {
         getEventInfo() {
-            EventService.getEventByUserId(this.eventId).then(response => {
+            EventService.getEventByUserId().then(response => {
                 this.event = response.data;
             }).catch(error => {
                 console.error('Error fetching event data:', error)
