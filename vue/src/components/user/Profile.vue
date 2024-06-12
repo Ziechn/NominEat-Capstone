@@ -2,7 +2,7 @@
     <div class="card-front">
         
         <div class="profile-content">
-            <h1 class="title">Profile</h1>
+            <h2 class="title">My Profile</h2>
             <div class="user-info">
                 <div class="profile-img">
                     <img class="placeholder-img" src="@/assets/stock-user_img.jpg" />
@@ -90,6 +90,8 @@ export default {
 
 .title {
     padding-left: 40px;
+    font-size: 30px;
+    padding-bottom: 50px;
 }
 
 .info {
@@ -100,6 +102,11 @@ export default {
     padding-bottom: 10px;
     font-size: 12px;
     font-weight: bold;
+}
+
+.info-data {
+    color: #5c5c5c;
+    font-size: 18px;
 }
 
 .user-events{
@@ -123,5 +130,6 @@ export default {
 .event-title{
     padding: 0;
     margin-top: 20px;
+    font-size: 30px;
 }
 </style>
