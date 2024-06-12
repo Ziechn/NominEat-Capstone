@@ -13,14 +13,17 @@
     a hassle-free solution that streamlines the decision-making process, so you can spend less time 
     planning and more time enjoying good food and company.
   </p>
+  <Footer/>
 </template>
 
 <script>
 import HeaderComp from '../components/HeaderComp.vue';
+import Footer from '../components/Footer.vue';
 
 export default {
   components: {
-    HeaderComp
+    HeaderComp,
+    Footer
   }
 }
 
