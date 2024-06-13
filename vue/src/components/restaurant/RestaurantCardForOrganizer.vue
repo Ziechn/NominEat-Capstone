@@ -58,7 +58,7 @@ export default {
 .voting-stats-wrapper {
     background-color: var(--bg-200);
     border: 1px solid #ccc;
-    margin-right: 40px;
+    margin-right: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
