@@ -10,6 +10,7 @@
         <input v-model="limit" type="number" placeholder="Limit" />
         <input v-model="term" placeholder="Type of Establishment" />
         <button @click="fetchRestaurants">Search</button>
+        <button @click="doIt">Fetch</button>
 
         <div v-if="restaurants.length">
     <div v-for="restaurant in restaurants" :key="restaurant.id" >
@@ -62,9 +63,13 @@ export default {
         const eventId = this.$route.params.eventId;
         this.associateRestaurantsWithEvent({ eventId, restaurants: this.restaurants.slice(0, 10) })
         .then(() => {  //      this.fetchRestaurants({ eventId, restaurants: this.restaurant.slice(0, 10) }).
+            console.log('HERE: ' + this.$store.state.restaurants)
             alert('Restaurants saved successfully');
         });
-    }}
+    }},
+    doIt() {
+        console.log('FETCH: ' + this.$store.state.restaurants)
+    }
 };
 </script>
 
