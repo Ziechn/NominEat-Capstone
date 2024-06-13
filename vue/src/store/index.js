@@ -353,29 +353,29 @@ return EventService.createEvent(eventData).then(response => {
         }
       }
     },
-    // fetchVotes({ commit }, { eventId, restaurantId }) {
-    //   return Promise.all([
-    //     EventService.getYesVote(eventId, restaurantId),
-    //     EventService.getNoVote(eventId, restaurantId)]).then(([
-    //       yesResponse, noResponse]) => {
-    //         commit('setVotes', {
-    //           restaurantId,
-    //           votes: {
-    //             yesVotes: yesResponse.data,
-    //             noVotes: noResponse.data
-    //           }
-    //         });
-    //       });
-    //     },
+    fetchVotes({ commit }, { eventId, restaurantId }) {
+      return Promise.all([
+        EventService.getYesVote(eventId, restaurantId),
+        EventService.getNoVote(eventId, restaurantId)]).then(([
+          yesResponse, noResponse]) => {
+            commit('setVotes', {
+              restaurantId,
+              votes: {
+                yesVotes: yesResponse.data,
+                noVotes: noResponse.data
+              }
+            });
+          });
+        },
     //       addYesVote({ commit }, { eventId, restaurantId }) {
-          //   return EventService.addYesVote(eventId, restaurantId).then(() 
-          //   => {
-          //     commit('incrementNoVotes', restaurantId);
-          //   });
-          // },
-          // addNoVote({ commit }, { eventId,restaurantId })
+    //         return EventService.addYesVote(eventId, restaurantId).then(() 
+    //         => {
+    //           commit('incrementNoVotes', restaurantId);
+    //         });
+    //       },
+    //       addNoVote({ commit }, { eventId,restaurantId })
       
-    //},
+    // },
    
 
     plugins: [createPersistedState(),]

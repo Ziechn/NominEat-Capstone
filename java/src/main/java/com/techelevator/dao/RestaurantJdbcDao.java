@@ -203,8 +203,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
         List<Restaurant> newRestaurants = new ArrayList<>();
 
         // Get a list of restaurant_id's by an event id.
-        String sql = SELECT_RESTAURANT +
-                "FROM restaurant_event WHERE event_id = ?;";
+        String sql = "SELECT * FROM restaurant_event WHERE event_id = ?;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);

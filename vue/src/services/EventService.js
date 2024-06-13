@@ -30,7 +30,7 @@ export default {
         return http.get(`/events/link/${eventLink}`);
     },
     getRestaurantsForEvent(eventId) {
-        return http.get(`/events/restaurants/${eventId}`);
+        return http.get(`/events/${eventId}/restaurants`);
     },
     getOrganizerRestaurants(eventId) {
         return http.get(`/events/${eventId}/restaurants/`)

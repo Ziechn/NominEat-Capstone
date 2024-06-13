@@ -33,7 +33,7 @@
 <script>
 import HeaderComp from '@/components/HeaderComp.vue';
 //import RestaurantService from '@/services/RestaurantService.js';
-import RestaurantCardForOrganizer from '../restaurant/RestaurantCardForOrganizer.vue';
+import RestaurantCardForOrganizer from '@/components/restaurant/RestaurantCardForOrganizer.vue';
 import { mapActions, mapState } from 'vuex';
 //import EventService from '@/services/EventService';
 

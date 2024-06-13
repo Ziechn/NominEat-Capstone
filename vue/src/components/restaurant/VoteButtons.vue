@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import ThumbsDownButton from './ThumbsDownButton.vue';
-import ThumbsUpButton from './ThumbsUpButton.vue';
+import ThumbsDownButton from '@/components/restaurant/ThumbsDownButton.vue';
+import ThumbsUpButton from '@/components/restaurant//ThumbsUpButton.vue';
 
 export default {
     components: { 
@@ -17,6 +17,6 @@ export default {
         ThumbsDownButton
     },
   props: 
-        ['restaurant', 'eventId'],
+        ['restaurantId', 'eventId'],
 };
 </script>

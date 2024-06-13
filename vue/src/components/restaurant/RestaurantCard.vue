@@ -51,13 +51,13 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                 </div>
             </div>
        </div>
-     <!--<VoteCard :eventId="eventId" :restaurant="restaurant" /> -->
+
    </div>
 </template>
 
 
 <script>
-import VoteCard from '@/components/restaurant/VoteCard.vue';
+
 
 
 export default {

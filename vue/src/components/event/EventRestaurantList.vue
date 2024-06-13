@@ -3,6 +3,7 @@
 
 <template> 
  <div class="event-restaurant-list">
+    <h2> Restaurants for Voting </h2>
     <RestaurantCardForVoting
              v-for="restaurant in restaurants"
              :key="restaurant.id"
@@ -14,39 +15,51 @@
 </template>
 
 <script>
-//import EventService from '@/services/EventService';
-import RestaurantCardForVoting from '@/components/restaurant/RestaurantCardForVoting.vue';
-import { mapActions, mapState } from 'vuex';
+import EventService from '@/services/EventService';
+import RestaurantCardForVoting from '@/components/restaurant/RestaurantCardForVoting.vue'
+//import { mapActions, mapGetters } from 'vuex';
 
 export default {
     components: {
         RestaurantCardForVoting
     },
-props: 
-        ['eventId'],
 
-computed: {
-    ...mapState(['restaurants'])
-},
-    mounted() {
-        this.fetchRestaurants();
+// props: 
+//         ['eventId'],
+
+            data() {
+        return {
+            eventId: 1,
+            restaurants: []
+        };
+
     },
-        
-    // data() {
-    //     return {
-    //         restaurants: []
-    //     };
+    // mounted() {
+    //     this.fetchEventRestaurants();
     // },
-    // created() {
-    //     this.fetchRestaurants();
-    // },
-    methods: {
-        ...mapActions(['fetchEventRestaurants']),
-        fetchRestaurants() {
-            this.fetchEventRestaurants(this.eventId);
-            }
-        }
+
+// computed: {
+//     ...mapGetters(['getRestaurants']),
+//     restaurants() {
+//     return this.getRestaurants;
+//     }
+// },
     
+        
+
+    // },
+    created() {
+        this.fetchEventRestaurants();
+    },
+    methods: {
+       fetchEventRestaurants() { 
+            EventService.getRestaurantsForEvent(this.eventId).then(response => {
+                this.restaurants = response.data
+            }).catch (error => {
+                console.error('error getting restaurants: ', error);
+          });   
+        }
+    }
 
 
 };

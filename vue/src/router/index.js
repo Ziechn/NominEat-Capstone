@@ -71,8 +71,14 @@ const routes = [
     //component: EventOrganizerList,
     props: true
   },
-  {
-    path: '/vote/:id', 
+  // {
+  //   path: '/vote/:id', 
+  //   name: 'Vote',
+  //   component: Vote,
+  //   props: true
+  //   },
+    {
+    path: '/Vote', 
     name: 'Vote',
     component: Vote,
     props: true

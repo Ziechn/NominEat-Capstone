@@ -1,6 +1,7 @@
 <!-- handle thumbs up voting -->
 <template>
-    <button @click="addYesVote">yes</button>
+    <button @click="addYesVote">Thumbs Up</button>
+    {{ restaurantId }}  {{ eventId }}
 </template>
 
 <script>
@@ -8,16 +9,21 @@ import EventService from '../../services/EventService';
 
 export default {
    props: 
-        ['restaurant', 'eventId'],
+        ['restaurantId', 'eventId'],
         
     methods: {
-        addYesVote() {
-            EventService.addYesVote(this.eventId, this.restaurantId).then(() => {
- //voting success handling
-                this.$emit('voteSuccess', 'yes');
-            });
+        async addYesVote() {
+            try {
+                await  EventService.addYesVote(this.eventId, this.restaurantId);
+                alert('Vote added successfully');
+            }catch (error) {
+                console.error('Error adding vote:', error);
+            }
+
+ //voting success handling in store
+               // this.$emit('voteSuccess', 'yes');
+            }
         }
-    }
 };
 
 </script>
