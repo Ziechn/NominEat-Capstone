@@ -30,7 +30,8 @@ export default {
             data() {
         return {
             eventId: 1,
-            restaurants: []
+            restaurants: [],
+            eventLink: '28e2e4b3-2bca-40bc-a876-6eeff60a52b9'
         };
 
     },
@@ -52,12 +53,21 @@ export default {
         this.fetchEventRestaurants();
     },
     methods: {
+
        fetchEventRestaurants() { 
             EventService.getRestaurantsForEvent(this.eventId).then(response => {
                 this.restaurants = response.data
             }).catch (error => {
                 console.error('error getting restaurants: ', error);
           });   
+        },
+
+        fetchEventLink() {
+            EventService.getEventByLink(this.eventLink).then(response => {
+                this.restaurants = response.date
+            }).catch (error => {
+                console.error('error getting link: ', error);
+            });
         }
     }
 
