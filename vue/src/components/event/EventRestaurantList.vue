@@ -49,6 +49,7 @@ export default {
 
     // },
     created() {
+        console.log(this.$route.params.eventLink);
         this.fetchEventRestaurants();
     },
     methods: {

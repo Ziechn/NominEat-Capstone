@@ -15,6 +15,7 @@ import LogoutView from '@/views/LogoutView.vue';
 import SearchRestaurantList from '@/components/restaurant/SearchRestaurantList.vue';
 // import EventRestaurantList from '@/components/event/EventRestaurantList';
 // import EventOrganizerList from '@/components/event/EventOrganizerList';
+import EventRestaurantList from '@/components/event/EventRestaurantList.vue';
 
 
 
@@ -106,8 +107,15 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: '/link/:eventLink',
+    name: 'eventLink',
+    component: EventRestaurantList,
+    meta: {
+      requiresAuth: false
+    }
   }
-  
 ];
 
 // Create the router
