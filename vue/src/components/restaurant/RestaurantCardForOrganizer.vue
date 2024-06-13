@@ -6,7 +6,8 @@
         <!-- <p>{{ restaurant.type }}</p> -->
         <!-- <p>{{ restaurant.address1 }}</p> -->
         <!-- <p>{{ restaurant.hours }}</p> -->
-        <VotingStats v-bind:eventId="passthroughEventId" v-bind:restaurantId="passthroughRestaurantId" />
+        <!-- <VotingStats :eventId="eventId" :restaurantId="restaurant.id" /> -->
+       <VotingStats v-bind:eventId="passthroughEventId" v-bind:restaurantId="passthroughRestaurantId" />
     </div>
 </template>
 
@@ -25,6 +26,7 @@ export default {
   components: {
     VotingStats,
   },
+//   props: ["eventId", "restaurant"],
   props: ["eventId", "restaurantId"],
   methods: {
     setIds() {

@@ -282,21 +282,26 @@ export function createStore(currentToken, currentUser) {
         }
 
       },
-      async createEvent({ commit, state }, eventData) {
-        commit('SET_LOADING', true);
-        try {
-          eventData.organizerId = state.user.id;
-          const eventResponse = await EventService.createEvent(eventData);
-          const eventId = eventResponse.data.id;
-          await EventService.addRestaurantsToEvent(eventId, eventData.restaurants);
-          return eventResponse.data;
-        } catch (error) {
-          commit('SET_ERROR', error);
-          throw error;
-        } finally {
-          commit('SET_LOADING', false);
-        }
-      },
+      async createEvent({ commit }, eventData) {
+return EventService.createEvent(eventData).then(response => {
+  commit('SET_EVENTS', [...this.state.events, response.data]);
+  return response.data;
+});
+
+        //commit('SET_LOADING', true);
+        //try {
+      //     eventData.organizerId = state.user.id;
+      //     const eventResponse = await EventService.createEvent(eventData);
+      //     const eventId = eventResponse.data.id;
+      //     await EventService.addRestaurantsToEvent(eventId, eventData.restaurants);
+      //     return eventResponse.data;
+      //   } catch (error) {
+      //     commit('SET_ERROR', error);
+      //     throw error;
+      //   } finally {
+      //     commit('SET_LOADING', false);
+      //   }
+      // },
       //    create event og method const response = await EventService.createEvent(eventData);
       //     commit('SET_EVENTS', [...this.state.events, response.data]);
       //     return response.data;
@@ -307,7 +312,7 @@ export function createStore(currentToken, currentUser) {
       //   } finally {
       //     commit('SET_LOADING', false);
       //   }
-      // },
+      },
       async fetchEvent({ commit }, eventId ) {
         try {
           const response = await axios.get(`/events/${eventId}`);
@@ -328,7 +333,7 @@ export function createStore(currentToken, currentUser) {
         // } catch (error) {
         //   console.error('Error fetching event restaurants:', error);
         // }
-      
+        //saveRestauranttoEvent 
       async associateRestaurantsWithEvent({ commit }, { eventId, restaurants }) { 
           // const response = await RestaurantService.associateRestaurantWithEvent(eventId, restaurants);
           // return response;
@@ -348,21 +353,21 @@ export function createStore(currentToken, currentUser) {
         }
       }
     },
-    fetchVotes({ commit }, { eventId, restaurantId }) {
-      return Promise.all([
-        EventService.getYesVote(eventId, restaurantId),
-        EventService.getNoVote(eventId, restaurantId)]).then(([
-          yesResponse, noResponse]) => {
-            commit('setVotes', {
-              restaurantId,
-              votes: {
-                yesVotes: yesResponse.data,
-                noVotes: noResponse.data
-              }
-            });
-          });
-        },
-          addYesVote({ commit }, { eventId, restaurantId }) {
+    // fetchVotes({ commit }, { eventId, restaurantId }) {
+    //   return Promise.all([
+    //     EventService.getYesVote(eventId, restaurantId),
+    //     EventService.getNoVote(eventId, restaurantId)]).then(([
+    //       yesResponse, noResponse]) => {
+    //         commit('setVotes', {
+    //           restaurantId,
+    //           votes: {
+    //             yesVotes: yesResponse.data,
+    //             noVotes: noResponse.data
+    //           }
+    //         });
+    //       });
+    //     },
+    //       addYesVote({ commit }, { eventId, restaurantId }) {
           //   return EventService.addYesVote(eventId, restaurantId).then(() 
           //   => {
           //     commit('incrementNoVotes', restaurantId);
@@ -370,7 +375,7 @@ export function createStore(currentToken, currentUser) {
           // },
           // addNoVote({ commit }, { eventId,restaurantId })
       
-    },
+    //},
    
 
     plugins: [createPersistedState(),]

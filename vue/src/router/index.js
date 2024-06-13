@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 // Import components
 import Home from '@/views/Home.vue';
 import LoginAndZip from '@/views/LoginAndZip.vue';
-import RestaurantSearch from '@/views/RestaurantSearch.vue';
+//import RestaurantSearch from '@/views/RestaurantSearch.vue';
 import EventView from '@/views/EventView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import ProfileView from '@/views/ProfileView.vue';
@@ -12,7 +12,9 @@ import ProfileView from '@/views/ProfileView.vue';
 import CreateEvent from '@/components/event/CreateEvent.vue';
 import Vote from '@/views/Vote.vue';
 import LogoutView from '@/views/LogoutView.vue';
-
+import SearchRestaurantList from '@/components/restaurant/SearchRestaurantList.vue';
+// import EventRestaurantList from '@/components/event/EventRestaurantList';
+// import EventOrganizerList from '@/components/event/EventOrganizerList';
 
 
 
@@ -44,16 +46,29 @@ const routes = [
   },
   {
     path: '/restaurants/search',
-    name: 'RestaurantSearch',
-    component: RestaurantSearch,
+    name: 'SearchRestaurantList',
+    component: SearchRestaurantList,
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: '/event/:id', 
+    path: '/create-event',
+    name: 'CreateEvent',
+    component: CreateEvent
+  },
+  {
+    path: '/event/:eventId/restaurants', 
     name: 'EventView',
     component: EventView,
+    // component: EventRestaurantList,
+    props: true
+  },
+  {
+    path: '/event/:eventId/organizer', 
+    name: 'EventView',
+    component: EventView,
+    //component: EventOrganizerList,
     props: true
   },
   {
@@ -69,11 +84,6 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  },
-  {
-    path: '/create-event',
-    name: 'CreateEvent',
-    component: CreateEvent
   },
   {
     path: '/profile',

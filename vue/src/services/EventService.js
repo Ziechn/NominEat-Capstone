@@ -20,6 +20,9 @@ export default {
     addRestaurantsToEvent(eventId, restaurants) {
         return http.post(`restaurants/create/${eventId}`, restaurants);
     },
+    getEvents() {
+        return http.get('/events');
+    },
     getEvent(eventId) {
         return http.get(`/events/${eventId}`);
     },

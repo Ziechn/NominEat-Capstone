@@ -15,8 +15,8 @@
 
 <script>
 //import EventService from '@/services/EventService';
-import RestaurantCardForVoting from '../restaurant/RestaurantCardForVoting.vue';
-import { mapActions, mapGetters } from 'vuex';
+import RestaurantCardForVoting from '@/components/restaurant/RestaurantCardForVoting.vue';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     components: {
@@ -26,10 +26,7 @@ props:
         ['eventId'],
 
 computed: {
-    ...mapGetters(['getRestaurants']),
-    restaurants() {
-    return this.getRestaurants;
-    }
+    ...mapState(['restaurants'])
 },
     mounted() {
         this.fetchRestaurants();

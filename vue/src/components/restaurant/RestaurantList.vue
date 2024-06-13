@@ -1,4 +1,4 @@
-<!-- search and display a list of restaurants using R...Card -->
+<!-- search and display a list of restaurants using R...Card
 
 <template>
 <div class="restaurant-list">
@@ -53,4 +53,4 @@ export default {
     flex-wrap: wrap;
     gap: 20px;
 }
-</style>
+</style> -->

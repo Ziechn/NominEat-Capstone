@@ -1,3 +1,12 @@
+
+
+<!-- event organizer should not be importing the event organizer list it should be importing the restaurant card for organizer...
+mapstate to 'restaurants' mounted to fetUserRestaurants - methods  methods: {
+  ...mapActions(['fetchEventRestaurants']),
+  fetchOrganizerRestaurants() {
+    *same as list but we add this now* const UserId = this.$tore.state.user.id;
+      this.fetchEventRestaurants(UserId);
+  } -->
 <template>
   <div>
     <EventInformation />

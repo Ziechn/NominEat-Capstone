@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="event-creation-popup">
         <div class="popup-content">
         <h2>Create Event</h2>
@@ -65,4 +65,4 @@ export default {
 }
 
 
-</style>
+</style> -->
