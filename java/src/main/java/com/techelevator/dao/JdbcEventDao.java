@@ -73,8 +73,10 @@ public class JdbcEventDao implements EventDao {
 
         String sql = "INSERT INTO event (organizer_id, event_name, location, event_link, decision_date) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING event_id;";
+
         String date= event.getDecisionDate().substring(0,10)+ " "+ event.getDecisionDate().substring(11)+":00";
         Timestamp time= Timestamp.valueOf(date);
+
         try {
             int eventId = jdbcTemplate.queryForObject(sql, int.class,
                     event.getOrganizerId(),

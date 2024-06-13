@@ -8,9 +8,9 @@
 
         <nav class="nav-container">
           <router-link class="link" v-if="isSignedIn && showProfileLink" v-bind:to="{ name: 'profile' }">PROFILE & EVENTS</router-link>
-          <router-link class="link" v-if="!isSignedIn && showLoginLink" v-bind:to="{ name: 'login' }">LOG IN</router-link>
+          <router-link class="link" v-if="showLoginLink" v-bind:to="{ name: 'login' }">LOGIN & ENTER ZIP</router-link>
           <router-link class="link" v-if="showHomeLink" v-bind:to="{ name: 'home' }">HOME</router-link>
-          <router-link class="link" v-if="!isSignedIn && showSearchLink" v-bind:to="{ name: 'RestaurantSearch' }">RESTAURANT SEARCH</router-link>
+          <router-link class="link" v-if="!isSignedIn && showSearchLink" v-bind:to="{ name: 'SearchRestaurantList' }">RESTAURANT SEARCH</router-link>
           <router-link class="link" v-if="isSignedIn && showCreateEventLink" v-bind:to="{ name: 'CreateEvent' }">CREATE EVENT</router-link>
         </nav> 
         
@@ -19,7 +19,7 @@
   </template>
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
   export default {
     computed: {

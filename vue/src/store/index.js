@@ -265,7 +265,7 @@ export function createStore(currentToken, currentUser) {
   actions: {
 
 
-      async fetchRestaurants({ commit }, { zipCode, limit , term }) {
+      async fetchRestaurants({ commit, state }, { zipCode, limit , term }) {
         commit('SET_LOADING', true);
         try {
           const response = await RestaurantService.searchRestaurants(zipCode, limit, term).then(response => {
@@ -339,7 +339,8 @@ return EventService.createEvent(eventData).then(response => {
           // return response;
          return EventService.addRestaurantsToEvent(eventId, restaurants).then(response => {
           response.data.forEach(restaurant => {
-            commit('ADD_SELECTED_RESTAURANTS');
+            // commit('ADD_SELECTED_RESTAURANTS');
+            commit('SET_RESTAURANTS')
           });
          });
         

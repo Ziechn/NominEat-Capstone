@@ -54,6 +54,7 @@ export default {
   flex-direction: column;
   width: 50%;
   height: 550px;
+  overflow: auto;
 }
 
 .title {

@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public class RestaurantJdbcDao implements RestaurantDao {
 
-    private String SELECT_RESTAURANT = "Select  restaurant_id, name, phone, address1, address2, address3, city, \n" +
+    private String SELECT_RESTAURANT = "Select  restaurant_id, name, phone, address1, address2, address3, city, " +
             "country, state, zipcode, image_url, menu_url, ROUND((rating *2), 0)/2 AS rating, latitude, longitude ";
 
     private final JdbcTemplate jdbcTemplate;
@@ -511,7 +511,7 @@ public class RestaurantJdbcDao implements RestaurantDao {
         List<Restaurant> restaurants = new ArrayList<>();
 
         String sql = SELECT_RESTAURANT +
-                "FROM restaurant;";
+                " FROM restaurant;";
 
         try {
 
