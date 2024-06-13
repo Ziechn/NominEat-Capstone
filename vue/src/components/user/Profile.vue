@@ -1,6 +1,5 @@
 <template>
     <div class="card-front">
-        
         <div class="profile-content">
             <h2 class="title">My Profile</h2>
             <div class="user-info">
@@ -19,7 +18,7 @@
                 <div class="button-container">
                     <button @click="logout()">Log Out</button>
                 </div>
-                <div class="line"></div>
+                <div class="line">i</div>
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>
@@ -70,8 +69,7 @@ export default {
     display: flex;
     justify-content: center;
     width: 70%;
-    height: auto; /* set to auto when importing event organizer? */
-
+    overflow-y: auto;
 }
 
 .user-info {
@@ -125,7 +123,8 @@ export default {
 .line {
     width: 100%;
     height: 2px; 
-    background: linear-gradient(to right, transparent, var(--primary-100) 50%, transparent); 
+    background: linear-gradient(to right, transparent, var(--primary-100) 50%, transparent);
+    color: var(--bg-100); 
 }
 
 .event-title{

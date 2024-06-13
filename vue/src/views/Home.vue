@@ -36,7 +36,7 @@ export default {
 .page-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .home-container {
@@ -54,7 +54,6 @@ export default {
   flex-direction: column;
   width: 50%;
   height: 550px;
-  overflow: auto;
 }
 
 .title {
