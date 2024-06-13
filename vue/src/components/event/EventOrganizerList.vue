@@ -1,4 +1,4 @@
-displays restaurants for event organizers pulling data from the database
+<!-- displays restaurants for event organizers pulling data from the database -->
 
 <template>
     <div>
@@ -9,7 +9,6 @@ displays restaurants for event organizers pulling data from the database
 
 <script>
 import EventService from '@/services/EventService';
-//import { mapActions, mapState } from 'vuex';
 import RestaurantCardForOrganizer from '../restaurant/RestaurantCardForOrganizer.vue';
 
 export default {
@@ -17,12 +16,6 @@ export default {
         RestaurantCardForOrganizer
     },
     props: ['eventId'],
-    // computed: {
-    //     ...mapState(['restaurants'])
-    // },
-    // mounted() {
-    //     this.fetchOrganizerRestaurants();
-    // },
     data() {
       return {
         //eventId: -420,
@@ -33,13 +26,8 @@ export default {
         this.getEventId();
     },
     methods: {
-        // ...mapActions(['fetchEventRestaurants']),
-        // fetchOrganizerRestaurants() {
-        //     this.fetchEventRestaurants(this.eventId);
-        // }
         getEventId(){
             EventService.getEventByUserId().then(response => {
-                //this.eventId = response.data.eventId;
                 this.fetchOrganizerRestaurants();
             }).catch(error => {
                 console.error('Error fetching event data:', error)
