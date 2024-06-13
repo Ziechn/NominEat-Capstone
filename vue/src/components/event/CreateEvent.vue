@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="create-event" >
-        <h2>Create your NominEAT event</h2>
+        <div>
+            <h2>Create Your Event</h2>
+        </div>
         <form v-on:submit.prevent="createEvent"> 
-            <input v-model="eventName" placeholder="Event Name" required /> {{ eventName }}
+            <input  v-model="eventName" placeholder="Event Name" required /> {{ eventName }}
             <input type="datetime-local" v-model="decisionDate"  id="decisionDate" required /> {{ decisionDate }}
             <button type="submit">Submit</button>
         </form>
@@ -69,46 +71,26 @@ export default {
 </script>
 
 <style scoped>
-.page-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.create-event-container {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 50px;
-}
-
-.card-front {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 30%;
-  height: 425px;
-}
-
-.event-form {
+.create-event {
+    background-color: var(--bg-200);
+    border: 1px solid #ccc;
+    margin-right: 500px;
+    margin-left: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
-.submit-button {
-    margin-top: 30px;
-    margin-bottom: 30px;
+form{
+    padding-bottom: 40px;
 }
 
-.decision-deadline {
-    padding-top: 10px;
-    padding-bottom: 5px;
-    color: #5c5c5c;
-    font-weight: bold;
+input {
+    margin-right: 20px;
 }
 
 /* .title {
