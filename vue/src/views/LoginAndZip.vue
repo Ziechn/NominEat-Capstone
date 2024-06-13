@@ -32,8 +32,8 @@
             <h1>NominEat</h1>
             <p>Welcome! Please enter your ZIP to find restaurants near you.</p>
             <form class="backside-form" @submit.prevent="goToSearch">
-              <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
-              <button class="submit-button" type="submit">Submit</button>
+            <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
+            <button class="submit-button" type="submit">Submit</button>
             </form> 
           </div>
         </div>
@@ -51,7 +51,7 @@ export default {
   components: {
     FlipCard,
     HeaderComp
-  },
+},
   data() {
     return {
       user: {
@@ -76,6 +76,11 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          // const response = error.response;
+
+          //if (response.status === 401) {
+          //  this.invalidCredentials = true;
+          //}
         });
     },
     flip() {
@@ -84,13 +89,13 @@ export default {
     goToSearch() {
       if (this.zipCode) {
           this.$store.commit("SET_ZIP_CODE", this.zipCode);
-          this.$store.dispatch("fetchRestaurants", { zipCode: this.zipCode, limit: 2 }); 
-          this.$router.push("/restaurants/search");
+          this.$store.dispatch( "fetchRestaurants", { zipCode: this.zipCode }); 
+          this.$router.push('/restaurants/search');
         }
     }
   },
   computed: {
-    isSignedIn() {
+    isSignedIn(){
       return this.$store.state.user.id != undefined;
     }
   }
