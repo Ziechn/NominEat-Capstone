@@ -74,8 +74,10 @@ export default {
 .create-event {
     background-color: var(--bg-200);
     border: 1px solid #ccc;
-    margin-right: 500px;
+    margin-right: 513px;
     margin-left: 500px;
+    padding-right: 150px;
+    padding-left: 150px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;

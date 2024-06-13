@@ -4,8 +4,9 @@
 <template>
     <HeaderComp />
     <div>
-        <CreateEvent v-bind:restaurants="restaurants" />
+        
         <div class="search" >
+            <CreateEvent v-bind:restaurants="restaurants" />
             <h2>Restaurants</h2>
             <!-- <form class="search-form">
                 <input v-model="zipcode" placeholder="Enter Zipcode" />
