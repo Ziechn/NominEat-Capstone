@@ -1,8 +1,6 @@
 <!-- displays restaurants for event organizers pulling data from the database -->
-
 <template>
     <div>
-        <h2>Restaurants for organizer- here for testing</h2> 
         <RestaurantCardForOrganizer v-for="restaurant in restaurants" v-bind:key="restaurant.id" v-bind:restaurantId="restaurant.id" v-bind:eventId="eventId" />
     </div>
 </template>
@@ -15,10 +13,9 @@ export default {
     components: {
         RestaurantCardForOrganizer
     },
-    props: ['eventId'],
     data() {
       return {
-        //eventId: -420,
+        eventId: -420,
         restaurants: []
       };
     },
@@ -28,7 +25,7 @@ export default {
     methods: {
         getEventId(){
             EventService.getEventByUserId().then(response => {
-                this.fetchOrganizerRestaurants();
+                this.eventId = response.data.eventId;
             }).catch(error => {
                 console.error('Error fetching event data:', error)
             })
@@ -45,5 +42,5 @@ export default {
             );
         }
     }
-};
+}
 </script>
