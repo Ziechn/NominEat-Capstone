@@ -2,7 +2,7 @@
     <div class="card-front">
         
         <div class="profile-content">
-            <h1 class="title">Profile</h1>
+            <h2 class="title">My Profile</h2>
             <div class="user-info">
                 <div class="profile-img">
                     <img class="placeholder-img" src="@/assets/stock-user_img.jpg" />
@@ -23,7 +23,6 @@
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>
-                <p>Events go here</p>
                 <EventOrganizer />
             </div>
             
@@ -58,6 +57,9 @@ export default {
 </script>
 
 <style scoped>
+/* template{
+    margin-bottom: 40px; 
+} */
 .placeholder-img {
     height: 100px;
     border-radius: 50%;
@@ -67,7 +69,7 @@ export default {
 .card-front {
     display: flex;
     justify-content: center;
-    width: 95%;
+    width: 70%;
     height: auto; /* set to auto when importing event organizer? */
 
 }
@@ -78,18 +80,18 @@ export default {
     flex-direction: row;
     width: 100%;
     padding-left: 40px;
-    
 }
 
 .profile-content {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
 }
 
 .title {
     padding-left: 40px;
+    font-size: 30px;
+    padding-bottom: 50px;
 }
 
 .info {
@@ -98,18 +100,24 @@ export default {
 
 .info-label {
     padding-bottom: 10px;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
+}
+
+.info-data {
+    color: #5c5c5c;
+    font-size: 18px;
 }
 
 .user-events{
     padding-left: 40px;
+    margin-bottom: 40px;
 }
 
 .button-container {
     display: flex;
     padding-right: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     justify-content: end;
 }
 
@@ -117,5 +125,11 @@ export default {
     width: 100%;
     height: 2px; 
     background: linear-gradient(to right, transparent, var(--primary-100) 50%, transparent); 
+}
+
+.event-title{
+    padding: 0;
+    margin-top: 20px;
+    font-size: 30px;
 }
 </style>

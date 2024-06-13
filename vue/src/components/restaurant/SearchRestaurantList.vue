@@ -16,9 +16,11 @@
 </template>
 
 <script>
-import RestaurantService from '@/services/RestaurantService';
+//import RestaurantService from '@/services/RestaurantService';
+//import EventService from '@/services/EventService';
 import RestaurantCard from '@/components/restaurant/RestaurantCard.vue';
-import EventService from '@/services/EventService';
+import { mapActions, mapGetters } from 'vuex';
+
 
 export default {
     components: {
@@ -28,21 +30,28 @@ export default {
         return {
         zipcode: '',
         limit: 10,
-        term: 10,
-        restaurants: []
+        term: ''
+       // restaurants: []
     };
     },
-    methods: {
-        searchRestaurants() {
-        RestaurantService.searchRestaurants(this.zipcode, this.limit, this.term).then(response => {
-            this.restaurants = response.data;
+    computed: {
+        ...mapGetters(['getRestaurants']),
+        restaurants() {
+            return this.getRestaurants;
         }
-
-        );
+    },
+    methods: {
+        ...mapActions(['searchRestaurants', 'saveRestaurantsToEvent']),
+        searchRestaurants() {
+            this.searchRestaurants({ 
+            zipcode: this.zipcode, 
+            limit: this.limit, 
+            term: this.term
+        });
     },
     saveRestaurants() {
         const eventId = this.$route.params.eventId;
-        EventService.addRestaurantsToEvent(eventId, this.restaurants.slice(0, 10)).then(() => {
+      this.fetchRestaurants({ eventId, restaurants: this.restaurant.slice(0, 10) }).then(() => {
             alert('Restaurants saved successfully');
         });
     }}

@@ -31,14 +31,11 @@
           <div class="home">
             <h1>NominEat</h1>
             <p>Welcome! Please enter your ZIP to find restaurants near you.</p>
-            <form @submit.prevent="goToSearch">
+            <form class="backside-form" @submit.prevent="goToSearch">
             <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
-            <button type="submit">Submit</button>
+            <button class="submit-button" type="submit">Submit</button>
             </form> 
           </div>
-          <router-link v-bind:to="{ name: 'profile' }">
-            View Profile
-          </router-link>
         </div>
       </template>
     </flipCard>
@@ -110,9 +107,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  /* padding-top: 40px; */
+  padding-top: 160px;
+  /* padding-bottom: 40px; */
 }
 
 .form-container {
@@ -131,5 +129,16 @@ export default {
 
 .alert {
   margin-top: 1.2em;
+}
+
+.backside-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.submit-button {
+  margin-top: 20px;
 }
 </style>

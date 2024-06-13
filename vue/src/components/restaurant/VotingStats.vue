@@ -1,10 +1,11 @@
 <template>
   <div class="voting-stats">
-    <h2>Restaurant Name: {{ restaurant.name }}</h2>
-    <br />
-    <p>Restaurant Yes Votes: {{ yesVotes }}</p>
-    <br />
-    <p>Restaurant No Votes: {{ noVotes }}</p>
+    <div class="vote-wrapper yes-votes">
+      <p class="votes yes-votes">{{ yesVotes }}</p>
+    </div>
+    <div class="vote-wrapper no-votes">
+      <p class="votes no-votes">{{ noVotes }}</p>
+    </div>
   </div>
 </template>
 
@@ -15,27 +16,14 @@ export default {
   props: ["restaurantId", "eventId"],
   data() {
     return {
-      restaurantName: "",
       yesVotes: -420,
       noVotes: -420,
-      restaurant: {},
     };
   },
   methods: {
-    getRestaurantName() {
-      EventService.getRestaurantById(this.restaurantId)
-        .then((response) => {
-          if (response.status === 200) {
-            this.restaurant = response.data;
-          }
-        })
-        .catch((error) => {
-          console.log(
-            "Error getting restaurant for ID: " + this.restaurantId + error
-          );
-        });
-    },
     fetchVotes() {
+      console.log("Restaurant ID: " + this.restaurantId);
+      console.log("Event ID: " + this.eventId);
       EventService.getYesVote(this.eventId, this.restaurantId)
         .then((response) => {
           if (response.status === 200) {
@@ -71,8 +59,42 @@ export default {
     restaurantId: "fetchVotes",
   },
   created() {
-    this.getRestaurantName();
     this.fetchVotes();
   },
 };
 </script>
+
+<style scoped>
+.voting-stats {
+  display: flex;
+  justify-content: end;
+  width: 45%;
+  flex-grow: 1;
+  padding-right: 20px;
+}
+
+.vote-wrapper {
+  padding-left: 25px;
+  border-radius: 50%;
+  width: 40px;
+}
+
+.votes {
+  font-weight: bold;
+  color: var(--bg-200);
+  padding: 10px;
+  text-align: center;
+}
+
+.yes-votes .votes {
+  background-color: rgb(43, 116, 43);
+  border-radius: 50%;
+  border: 1px solid #288a24;
+}
+
+.no-votes .votes {
+  background-color: rgb(196, 20, 20);
+  border-radius: 50%;
+  border: 1px solid #a74545;
+}
+</style>

@@ -47,11 +47,11 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <button class="call-button" v-if="restaurant.phoneNumber !== null" @click.stop="showNumber">Call to order</button>
                     <div v-if="isVisible"> {{ restaurant.phoneNumber }} </div>
-                    <!-- <button @click.stop="selectRestaurant" class="select-button">select</button> -->
+                    <button @click.stop="selectRestaurant" class="select-button">select</button>
                 </div>
             </div>
-        </div>
-   <VoteCard :eventId="eventId" :restaurant="restaurant" />
+       </div>
+     <!--<VoteCard :eventId="eventId" :restaurant="restaurant" /> -->
    </div>
 </template>
 
@@ -61,12 +61,10 @@ import VoteCard from '@/components/restaurant/VoteCard.vue';
 
 
 export default {
-    components: {
-        VoteCard
-    },
-    props: 
-        ['restaurant', 'eventId'],
-
+    props: {
+       restaurant: Object
+    }
+,
     data() {
         return {
             isFlipped: false,
