@@ -1,6 +1,5 @@
 <template>
   <div>
-    <HeaderComp />
     <div class="create-event" >
         <h2>Create your NominEAT event</h2>
         <form v-on:submit.prevent="createEvent"> 
@@ -14,11 +13,9 @@
 
 <!-- create event should pull in info from the database and save it - main view for creating events, pulling initial r data from API and saving to database... -->
 <script>
-import HeaderComp from '@/components/HeaderComp.vue';
 import EventService from '@/services/EventService';
 
 export default {
-    components: { HeaderComp},
     data() {
         return {
                 eventName: '',

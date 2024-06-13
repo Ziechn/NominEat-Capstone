@@ -85,7 +85,7 @@ export default {
       if (this.zipCode) {
           this.$store.commit("SET_ZIP_CODE", this.zipCode);
           this.$store.dispatch("fetchRestaurants", { zipCode: this.zipCode, limit: 2 }); 
-          this.$router.push({ name: "SearchRestaurants" });
+          this.$router.push("/restaurants/search");
         }
     }
   },

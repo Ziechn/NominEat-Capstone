@@ -13,7 +13,7 @@
         </div>
         <div class="info-block">
             <div class="info-label">Voting Link</div>
-            <div class="info-data">http://localhost:9000/{{ event.eventLink }} </div>
+            <div class="info-data">http://localhost:9000/link/{{ event.eventLink }} </div>
         </div>
         <div class="info-block">
             <div class="info-label">Restaurant List</div>
