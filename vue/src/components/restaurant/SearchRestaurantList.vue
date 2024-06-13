@@ -5,19 +5,19 @@
     <HeaderComp />
     <div>
         <CreateEvent v-bind:restaurants="restaurants" />
-        <div class="search-restaurant-container">
-            <h2>Search Restaurants</h2>
-            <form class="search-form">
+        <div class="search" >
+            <h2>Restaurants</h2>
+            <!-- <form class="search-form">
                 <input v-model="zipcode" placeholder="Enter Zipcode" />
                 <input v-model="limit" type="number" placeholder="Limit" />
                 <input v-model="term" placeholder="Type of Establishment" />
                 <button @click="fetchRestaurants">Search</button>
-            </form>
-            <div v-if="restaurants.length">
-                <span class="card-collection" v-for="restaurant in restaurants" :key="restaurant.id">
+            </form> -->
+            <div class="search-restaurant-container" v-if="restaurants.length">
+                <div class="card-collection" v-for="restaurant in restaurants" :key="restaurant.id">
                     <RestaurantCard class="restaurant-card" :restaurant="restaurant" />
-                </span>
-                <button @click="saveRestaurants">Save Restaurants</button>
+                </div>
+                <!-- <button @click="saveRestaurants">Save Restaurants</button> -->
             </div>
         </div>
     </div>
@@ -78,14 +78,21 @@ export default {
 </script>
 
 <style scoped>
-.search-restaurant-container {
+.search {
     margin: 20px;
     width: 100vw;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.search-restaurant-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
 }
 
 .card-collection {
-    display: inline;
+    float: left;
 }
 
 .search-form {

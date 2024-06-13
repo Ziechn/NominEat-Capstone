@@ -119,7 +119,7 @@ export default {
 .restaurant-card {
     width: 300px;
     height: 400px;
-    margin: 20px;
+    margin: 40px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
     display: flex;
