@@ -26,6 +26,7 @@ export default {
         getEventId(){
             EventService.getEventByUserId().then(response => {
                 this.eventId = response.data.eventId;
+                this.fetchOrganizerRestaurants();
             }).catch(error => {
                 console.error('Error fetching event data:', error)
             })
