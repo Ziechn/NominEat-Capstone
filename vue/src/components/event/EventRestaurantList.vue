@@ -56,14 +56,10 @@ computed: {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-
-=======
 .cards-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     border-width: 3px;
 }
->>>>>>> 1efa0e0e474c0677efa9bdb64f8ab2c21fbbc92e
 </style>

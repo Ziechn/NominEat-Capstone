@@ -36,9 +36,6 @@
             <button type="submit">Submit</button>
             </form> 
           </div>
-          <router-link v-bind:to="{ name: 'profile' }">
-            View Profile
-          </router-link>
         </div>
       </template>
     </flipCard>
@@ -110,9 +107,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  /* padding-top: 40px; */
+  padding-top: 160px;
+  /* padding-bottom: 40px; */
 }
 
 .form-container {

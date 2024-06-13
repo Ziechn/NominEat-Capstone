@@ -100,7 +100,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 700px;
+  width: 30%;
   height: 500px;
 }
 
@@ -113,9 +113,10 @@ export default {
 .register-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   height: 100vh;
+  padding-top: 160px;
 }
 
 h1 {

@@ -1,19 +1,22 @@
 <template>
-  <HeaderComp/>
-  <div class="title">
-    <h2> Welcome! </h2>
+  <div class="page-container">
+    <HeaderComp />
+    <div class="home-container">
+      <div class="card-front">
+        <div class="title">
+          <h2> Welcome! </h2>
+        </div>
+        <p class="description">
+          NominEat simplifies choosing where to eat with friends. No more endless discussions!
+          Just log in, enter your zip code, and get a list of nearby restaurants. Then share the link with
+          friends, who can then vote on their preferred spot. NominEat tallies the votes and picks the
+          restaurant with the most support, making planning easy and hassle-free. Enjoy more time with good
+          food and company!
+        </p>
+      </div>
+    </div>
+    <Footer />
   </div>
-  <p class="description">
-    NominEat simplifies the process of deciding where to eat with friends. Say goodbye to endless 
-    back-and-forth conversations about dinner plans! With NominEat, you can easily coordinate dining 
-    outings by logging in, entering your zip code, and generating a curated list of nearby restaurants. 
-    Once you've selected your favorites, simply share the link with your friends. They'll be directed 
-    to a page where they can vote on their preferred restaurant. NominEat tallies the votes and 
-    automatically selects the restaurant with the most support as the venue for your gathering. It's 
-    a hassle-free solution that streamlines the decision-making process, so you can spend less time 
-    planning and more time enjoying good food and company.
-  </p>
-  <Footer/>
 </template>
 
 <script>
@@ -30,14 +33,42 @@ export default {
 </script>
 
 <style scoped>
-
-.title{
-  padding-top: 10px;
-  padding-left: 20px;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.description{
-  padding-right: 20px;
+.home-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+.card-front {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  height: 550px;
+}
+
+.title {
+  padding-top: 20px;
   padding-left: 20px;
+  font-size: 32px;
+
+}
+
+.description {
+  padding-right: 80px;
+  padding-left: 80px;
+  padding-bottom: 80px;
+  font-size: 22px;
+  text-indent: 2em;
+  line-height: 1.5em;
 }
 </style>
