@@ -1,7 +1,7 @@
 <template>
   <HeaderComp/>
   <div class="login-zip-container">
-    <flipCard ref="flipCard">
+    <flipCard ref="flipCard" :initialFlipped="isSignedIn">
       <template #front>
         <div class="form-container">
           <h1>Login</h1>
@@ -95,8 +95,8 @@ export default {
     }
   },
   computed: {
-    isAuthenticated(){
-      return this.$store.state.user !== null;
+    isSignedIn(){
+      return this.$store.state.user.id != undefined;
     }
   }
 };
