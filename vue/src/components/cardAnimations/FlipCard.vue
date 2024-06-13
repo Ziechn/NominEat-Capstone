@@ -15,9 +15,15 @@
 
 <script>
 export default {
+    props: {
+        initialFlipped: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
-            isFlipped: false
+            isFlipped: this.initialFlipped
         };
     },
     methods:  {

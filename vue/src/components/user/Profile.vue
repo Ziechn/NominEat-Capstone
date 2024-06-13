@@ -23,7 +23,7 @@
 
             <div class="user-events">
                 <h2 class="event-title">My Events</h2>
-                <EventOrganizer />
+                <EventOrganizer/>
             </div>
             
         </div>
@@ -86,6 +86,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-bottom: 50px;
 }
 
 .title {
