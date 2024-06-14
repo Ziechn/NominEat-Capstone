@@ -15,9 +15,15 @@
 
 <script>
 export default {
+    props: {
+        initialFlipped: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
-            isFlipped: false
+            isFlipped: this.initialFlipped
         };
     },
     methods:  {
@@ -31,7 +37,7 @@ export default {
 <style scoped>
     .flip-card {
     perspective: 1000px; 
-    width: 700px;
+    width: 30%;
     height: 425px;
     }
 
@@ -68,5 +74,4 @@ export default {
     transform: rotateY(180deg);
 }
 
-
-    </style>
+</style>

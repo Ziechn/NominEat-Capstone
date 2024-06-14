@@ -46,4 +46,19 @@ public class RestaurantController {
         }
         return restaurantDao.addRestaurants(restaurants, eventId);
     }
+
+    @RequestMapping(path = "/{restaurantId}", method = RequestMethod.GET)
+    public Restaurant getRestaurantById (@PathVariable String restaurantId) {
+        Restaurant restaurant = restaurantDao.getRestaurantById(restaurantId);
+
+        if (restaurant == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found");
+        }
+        return restaurant;
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<Restaurant>getAllRestaurants (){
+        return restaurantDao.getAllRestaurants();
+    }
 }

@@ -1,14 +1,29 @@
 import axios from 'axios';
 
-export default {
 
+
+  const http = axios.create({
+    baseURL: 'http://localhost:9000',
+  });
+
+  http.interceptors.request.use(config => {
+    const token = localStorage.getItem('token');
+    if(token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+
+  export default {
   login(user) {
-    //return axios.post('/', user),
-    return axios.post('/login', user)
+    return http.post('/login', user); //user or credentials??
   },
 
-  register(user) {
-    return axios.post('/register', user)
+  register(userData) {
+    return http.post('/register', userData);
+  },
+  getUserProfile() {
+    return http.get('/user/profile');
   }
 
-}
+};

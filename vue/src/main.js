@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import CapstoneApp from './App.vue';
-// import { createStore } from './store';
-import store from './store';
+import { createStore } from './store';
+// import store from './store';
 import router from './router';
 import axios from 'axios';
 
@@ -25,7 +25,7 @@ if (currentToken) {
 }
 
 // Create the Vuex store passing in the stored credentials
-// const store = createStore(currentToken, currentUser);
+const store = createStore(currentToken, currentUser);
 
 const app = createApp(CapstoneApp);
 app.use(store);

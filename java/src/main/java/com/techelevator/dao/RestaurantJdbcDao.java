@@ -19,6 +19,10 @@ import java.util.List;
 
 @Component
 public class RestaurantJdbcDao implements RestaurantDao {
+
+    private String SELECT_RESTAURANT = "Select  restaurant_id, name, phone, address1, address2, address3, city, " +
+            "country, state, zipcode, image_url, menu_url, ROUND((rating *2), 0)/2 AS rating, latitude, longitude ";
+
     private final JdbcTemplate jdbcTemplate;
     public RestaurantJdbcDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -172,7 +176,9 @@ public class RestaurantJdbcDao implements RestaurantDao {
         Restaurant newRestaurant = null;
 
         // Get a restaurant by the restaurant_id from the restaurant table.
-        String sql = "SELECT * FROM restaurant WHERE restaurant_id = ?;";
+        //String sql = "SELECT * FROM restaurant WHERE restaurant_id = ?;";
+        String sql = SELECT_RESTAURANT +
+                " FROM restaurant WHERE restaurant_id = ?;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
@@ -498,6 +504,30 @@ public class RestaurantJdbcDao implements RestaurantDao {
             System.out.println("Restaurant JDBC DAO] createTransaction() Problem creating transaction: " + transactionName);
             throw new DataIntegrityViolationException("" + e);
         }
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurants() {
+        List<Restaurant> restaurants = new ArrayList<>();
+
+        String sql = SELECT_RESTAURANT +
+                " FROM restaurant;";
+
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                restaurants.add(mapRowToRestaurant(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("[Restaurant JDBC DAO] Unable to connect to server or database");
+            throw new CannotGetJdbcConnectionException("" + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("[Restaurant JDBC DAO] getAllRestaurant() Problem getting all restaurant");
+            throw new DataIntegrityViolationException("" + e);
+        }
+
+        return restaurants;
     }
 
     public void associateEventWithRestaurants(String restaurantId, int eventId){

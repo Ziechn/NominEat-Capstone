@@ -1,13 +1,11 @@
 <template>
+  <HeaderComp/>
   <div class="login-zip-container">
-    <flipCard ref="flipCard">
+    <flipCard ref="flipCard" :initialFlipped="isSignedIn">
       <template #front>
         <div class="form-container">
           <h1>Login</h1>
           <form v-on:submit.prevent="login">
-            <div role="alert" v-if="invalidCredentials">
-              Invalid username and password!
-            </div>
             <div class="register-success" role="alert" v-if="this.$route.query.registration">
               Account created! Please log in.
             </div>
@@ -18,12 +16,14 @@
               <input placeholder="Password" type="password" id="password" v-model="user.password" required />
             </div>
             <button type="submit">Sign in</button>
+            <div role="alert" class="alert" v-if="invalidCredentials">
+              Invalid username or password.
+            </div>
             <p> Need an account? 
             <router-link v-bind:to="{ name: 'register' }">Sign up.</router-link>
             </p>
           </form>
         </div>
-      
       </template>
 
       <template #back>
@@ -31,14 +31,11 @@
           <div class="home">
             <h1>NominEat</h1>
             <p>Welcome! Please enter your ZIP to find restaurants near you.</p>
-            <form @submit.prevent="goToSearch">
+            <form class="backside-form" @submit.prevent="goToSearch">
             <input type="text" v-model="zipCode" placeholder="Enter ZIP Code" />
-            <button type="submit">Submit</button>
+            <button class="submit-button" type="submit">Submit</button>
             </form> 
           </div>
-          <RouterLink v-bind:to="{name: 'profile'}">
-            View Profile
-          </RouterLink>
         </div>
       </template>
     </flipCard>
@@ -46,13 +43,15 @@
 </template>
 
 <script>
-import FlipCard from "../components/FlipCard.vue";
-import authService from "../services/AuthService";
+import FlipCard from '@/components/cardAnimations/FlipCard.vue';
+import HeaderComp from '@/components/HeaderComp.vue';
+import AuthService from '@/services/AuthService';
 
 export default {
   components: {
-    FlipCard
-  },
+    FlipCard,
+    HeaderComp
+},
   data() {
     return {
       user: {
@@ -66,7 +65,7 @@ export default {
   },
   methods: {
     login() {
-      authService
+      AuthService
         .login(this.user)
         .then(response => {
           if (response.status == 200) {
@@ -76,11 +75,12 @@ export default {
           }
         })
         .catch(error => {
-          const response = error.response;
+          console.log(error);
+          // const response = error.response;
 
-          if (response.status === 401) {
-            this.invalidCredentials = true;
-          }
+          //if (response.status === 401) {
+          //  this.invalidCredentials = true;
+          //}
         });
     },
     flip() {
@@ -88,16 +88,15 @@ export default {
     },
     goToSearch() {
       if (this.zipCode) {
-          this.$store.commit('SET_ZIP_CODE', this.zipCode);
-          this.$store.dispatch( 'fetchRestaurants', { zipCode: this.zipCode, limit: 10}); 
-          this.$router.push({ name: 'SearchRestaurants' });
+          this.$store.commit("SET_ZIP_CODE", this.zipCode);
+          this.$store.dispatch( "fetchRestaurants", { zipCode: this.zipCode }); 
+          this.$router.push('/restaurants/search');
         }
     }
-
   },
   computed: {
-    isAuthenticated(){
-      return this.$store.state.user !== null;
+    isSignedIn(){
+      return this.$store.state.user.id != undefined;
     }
   }
 };
@@ -108,8 +107,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  padding-top: 160px;
+  /* padding-bottom: 40px; */
 }
 
 .form-container {
@@ -124,5 +125,20 @@ export default {
 
 .register-success{
   margin-bottom: 0.5;
+}
+
+.alert {
+  margin-top: 1.2em;
+}
+
+.backside-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.submit-button {
+  margin-top: 20px;
 }
 </style>
