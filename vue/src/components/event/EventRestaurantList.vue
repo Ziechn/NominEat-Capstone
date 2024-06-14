@@ -2,9 +2,9 @@
 
 
 <template> 
-       
+       <HeaderComp />
  <div class="event-restaurant-list">
-    <h2 class="title">NominEat</h2>
+    <!-- <h2 class="title">NominEat</h2> -->
     <p class="memo">You have been invited to share a meal!</p>
     <h1 class="voting-title"> Place your restaurant choices! </h1>
 
@@ -26,10 +26,12 @@
 import EventService from '@/services/EventService';
 import RestaurantCardForVoting from '@/components/restaurant/RestaurantCardForVoting.vue'
 //import { mapActions, mapGetters } from 'vuex';
+import HeaderComp from '@/components/HeaderComp.vue';
 
 export default {
     components: {
-        RestaurantCardForVoting
+        RestaurantCardForVoting,
+        HeaderComp
     },
 
 // props: 
