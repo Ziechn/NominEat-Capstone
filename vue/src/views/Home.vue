@@ -9,8 +9,7 @@
         <p class="description">
           NominEat simplifies choosing where to eat with friends. No more endless discussions!
           Just log in, enter your zip code, and get a list of nearby restaurants. Then share the link with
-          friends, who can then vote on their preferred spot. NominEat tallies the votes and picks the
-          restaurant with the most support, making planning easy and hassle-free. Enjoy more time with good
+          friends, who can then vote on their preferred spot. Enjoy more time with good
           food and company!
         </p>
       </div>
@@ -60,14 +59,13 @@ export default {
   padding-top: 20px;
   padding-left: 20px;
   font-size: 32px;
-
 }
 
 .description {
   padding-right: 80px;
   padding-left: 80px;
   padding-bottom: 80px;
-  font-size: 22px;
+  font-size: 18px;
   text-indent: 2em;
   line-height: 1.5em;
 }

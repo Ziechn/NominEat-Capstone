@@ -20,3 +20,12 @@ export default {
         ['restaurantId', 'eventId'],
 };
 </script>
+
+<style scoped>
+.vote-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 0px;
+}
+</style>

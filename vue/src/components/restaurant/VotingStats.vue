@@ -1,10 +1,10 @@
 <template>
   <div class="voting-stats">
     <div class="vote-wrapper yes-votes">
-      <p class="votes yes-votes">{{ yesVotes }}</p>
+      <p class="votes-yes-votes">{{ yesVotes }}</p>
     </div>
-    <div class="vote-wrapper no-votes">
-      <p class="votes no-votes">{{ noVotes }}</p>
+    <div class="vote-wrapper-no-votes">
+      <p class="votes-no-votes">{{ noVotes }}</p>
     </div>
   </div>
 </template>

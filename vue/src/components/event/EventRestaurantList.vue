@@ -4,13 +4,14 @@
 <template> 
  <div class="event-restaurant-list">
     <h2> Restaurants for Voting </h2>
+    <div class="cards-container">
     <RestaurantCardForVoting
              v-for="restaurant in restaurants"
              :key="restaurant.id"
              :restaurant="restaurant"
              :eventId="eventId"
              />
-            
+            </div>      
  </div>
 </template>
 
@@ -30,7 +31,8 @@ export default {
             data() {
         return {
             eventId: 1,
-            restaurants: []
+            restaurants: [],
+            eventLink: '28e2e4b3-2bca-40bc-a876-6eeff60a52b9'
         };
 
     },
@@ -50,15 +52,26 @@ export default {
     // },
     created() {
         console.log(this.$route.params.eventLink);
-        this.fetchEventRestaurants();
+        this.fetchEventLink();
     },
     methods: {
-       fetchEventRestaurants() { 
-            EventService.getRestaurantsForEvent(this.eventId).then(response => {
+
+       fetchEventRestaurants(frog) { 
+            EventService.getRestaurantsForEvent(frog).then(response => {
+
                 this.restaurants = response.data
             }).catch (error => {
                 console.error('error getting restaurants: ', error);
           });   
+        },
+
+        fetchEventLink() {
+            EventService.getEventByLink(this.$route.params.eventLink).then(response => {
+                this.eventId = response.data.eventId
+                this.fetchEventRestaurants(this.eventId)
+            }).catch (error => {
+                console.error('error getting link: ', error);
+            });
         }
     }
 
@@ -67,10 +80,18 @@ export default {
 </script>
 
 <style scoped>
+.event-restaurant-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+
+}
 .cards-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 0px;
     border-width: 3px;
 }
 </style>

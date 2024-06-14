@@ -1,7 +1,7 @@
 <!-- handle thumbs up voting -->
 <template>
-    <button @click="addYesVote">Thumbs Up</button>
-    {{ restaurantId }}  {{ eventId }}
+
+    <button class="thumbs-up-button" @click="addYesVote"></button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ import EventService from '../../services/EventService';
 
 export default {
    props: 
-        ['restaurantId', 'eventId'],
+        ['restaurantId', 'eventId', 'imageUrl'],
         
     methods: {
         async addYesVote() {
@@ -27,3 +27,17 @@ export default {
 };
 
 </script>
+
+<style scoped>
+.thumbs-up-button {
+    background: url('@/assets/UpButton.jpg') no-repeat center center;
+    background-size: cover;
+    border: none;
+    width: 50px;
+    height:50px;
+    cursor: pointer;
+    /* position: relative;
+    display: inline-block; */
+}
+
+</style>
