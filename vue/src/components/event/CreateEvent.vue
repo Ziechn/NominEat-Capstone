@@ -5,8 +5,8 @@
             <h2>Create Your Event</h2>
         </div>
         <form v-on:submit.prevent="createEvent"> 
-            <input  v-model="eventName" placeholder="Event Name" required /> {{ eventName }}
-            <input type="datetime-local" v-model="decisionDate"  id="decisionDate" required /> {{ decisionDate }}
+            <input  v-model="eventName" placeholder="Event Name" required />
+            <input type="datetime-local" v-model="decisionDate"  id="decisionDate" required />
             <button type="submit">Submit</button>
         </form>
   </div>
