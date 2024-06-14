@@ -28,12 +28,11 @@ methods: {
 </script>
 <style scoped>
 .thumbs-up-button {
-    background: url('@/assets/DownButton.jpg') no-repeat center center;
+    background: url('@/assets/DownButton.png') no-repeat center center;
     background-size: cover;
     border: none;
     width: 50px;
     height:50px;
-    cursor: pointer;
     /* position: relative;
     display: inline-block; */
 

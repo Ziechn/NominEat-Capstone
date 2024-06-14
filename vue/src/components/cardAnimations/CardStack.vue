@@ -1,6 +1,6 @@
 <!-- <template>
-    <div class="stack'>
-        <RestaurantCard v-for="(restaurant) in restaurants"
+    <div class="stack">
+        <RestaurantCardForVoting v-for="(restaurant) in restaurants"
                                 :key="restaurant.id"
                                 :restaurant="restaurant"
                                 :style="getCardStyle(index)" />
@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import RestaurantCard from './RestaurantCard.vue';
+import  RestaurantCardForVoting from '@/components/cardAnimations/RestaurantCardForVoting.vue';
 
 
 export default {
     components: {
-        RestaurantCard
+        RestaurantCardForVoting
     },
-    prop: {
-        restaurants: Array
-    }
+    pros: 
+        ['restaurants'],
+    
 }
 
 </script> -->

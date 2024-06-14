@@ -30,12 +30,14 @@ export default {
 
 <style scoped>
 .thumbs-up-button {
-    background: url('@/assets/UpButton.jpg') no-repeat center center;
+    background: url('@/assets/UpButton.png') no-repeat center center;
     background-size: cover;
     border: none;
     width: 50px;
-    height:50px;
-    cursor: pointer;
+      height:50px;
+     margin-left: 30px;
+     margin-bottom: 0;
+    /* cursor: pointer; */
     /* position: relative;
     display: inline-block; */
 }

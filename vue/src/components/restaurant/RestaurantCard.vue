@@ -15,12 +15,10 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                         <span v-for="(category, index) in restaurant.categories" v-bind:key="index">
                             {{ category }}<span v-if="index < restaurant.categories.length - 1">, </span>
                         </span>
-                    </p> 
- 
-                     <!-- <div class="restaurant-rating">
-                        <img :src="getStarImage(restaurant.rating)" alt="Rating" class="star-rating" />
-                        <span> {{ restaurant.rating }}</span>
-                </div> -->
+                    </p>
+                        <!-- <img :src="getStarImage(restaurant.rating)" alt="Rating" class="star-rating" /> -->
+                        <!-- <span> {{ restaurant.rating }}</span> -->
+       
                     <!-- <button @click.stop="selectRestaurant" class="select-button">select</button>    -->
                 </div>
             </div>
@@ -47,7 +45,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <a :href="restaurant.menuUrl" target="_blank" class="menu-link"> View Menu</a>
                     <button class="call-button" v-if="restaurant.phoneNumber !== null" @click.stop="showNumber">Call to order</button>
                     <div v-if="isVisible"> {{ restaurant.phoneNumber }} </div>
-                    <button @click.stop="selectRestaurant" class="select-button">select</button>
+                    <!-- <button @click.stop="selectRestaurant" class="select-button">select</button> -->
                 </div>
             </div>
         </div>
@@ -96,9 +94,9 @@ export default {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'];
             return days[dayNum];
         }
-        // getStarRatingImage(rating) {
-        //     const roundedRating = Math.round(rating);
-        //     return require(`../assets/yelp_stars/large_${roundedRating}.png`);
+        // getStarImage(rating) {
+        //     //const roundedRating = Math.round(rating *2) / 2;
+        //     return require(`@/assets/yelp_stars/large_${restaurant.rating}.png`);
         // }
        
     
@@ -118,7 +116,7 @@ export default {
 <style scoped>
 .restaurant-card {
     width: 300px;
-    height: 400px;
+    height: 425px;
     margin: 40px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
@@ -190,11 +188,17 @@ export default {
 
 .restaurant-category,
 .restaurant-rating,
-.restaurant-status,
 .restaurant-address {
     font-size: .9em;
     color: var(--text-200);
 }
+
+/* .star-rating {
+    margin-top: 10px;
+    height: auto;
+    width: 100px;
+} */
+
 
 .restaurant-price {
     font-size: .9em;
@@ -204,7 +208,8 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    font-size: 0.9em;
+    font-size: 0.8em;
+    padding-bottom: 5px;
 }
 /* .restaurant-hours {
     font-size: 0.8em;
@@ -217,6 +222,7 @@ export default {
     text-align: left;
 } */
 .menu-link {
+    font-weight: bold;
     margin-top: 10px;
     text-decoration: none;
     color: var(--text-200);
@@ -232,8 +238,12 @@ export default {
     color: var(--text-200);
     padding: 5px;
     border-radius: 5px;
-    font-weight: bold;
+    font-size: large;
 }
+.call-button:hover {
+    color: var(--accent-100);
+    border-color: var(--accent-100);
+ }
 .select-button {
     margin: 10px;
     background-color: var(--bg-100);
@@ -250,10 +260,7 @@ export default {
     font-size: x-large;
 }
 
-.call-button:hover {
-    color: var(--accent-100);
-    border-color: var(--accent-100);
- }
+
 /* .open {
     color: var(--accent-100);
 }

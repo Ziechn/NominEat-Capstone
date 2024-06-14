@@ -2,8 +2,8 @@
 
 <template>
     <div class="vote-buttons">
-        <ThumbsUpButton :eventId="eventId" :restaurantId="restaurantId" />
-        <ThumbsDownButton :eventId="eventId" :restaurantId="restaurantId" />
+        <ThumbsUpButton :eventId="eventId" :restaurantId="restaurantId" :class="{ voted: isVoted }" class="vote-buttonq"/>
+        <ThumbsDownButton :eventId="eventId" :restaurantId="restaurantId" :class="{ voted: isVoted }" class="vote-buttonl" />
     </div>
 </template>
 
@@ -18,14 +18,38 @@ export default {
     },
   props: 
         ['restaurantId', 'eventId'],
+    methods: {
+        vote(voteType) {
+            this.isVoted = true;
+        }
+    }
 };
 </script>
 
 <style scoped>
+
 .vote-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 0px;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+width: 100%;
+margin-top: 10px;
+transition: transform 0.3s ease;
 }
+
+.vote-buttonq:hover {
+    transform: scale(1.1);
+}
+.vote-buttonl:hover {
+    transform: scale(1.1);
+}
+
+.vote-buttons.voted {
+    filter: blur(2px);
+
+}
+
+
+
+
 </style>
