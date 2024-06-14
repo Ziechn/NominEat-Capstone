@@ -3,7 +3,7 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
 
 <!-- DISPLAYS DETAILS OF A RESTAURANT FETCHED FROM THE DATABASE AND HANDLES VOTING -->
 <template>
-    <div class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" 
+    <span class="restaurant-card" @mouseover="isHovered = true" @mouseleave="isHovered = false" 
     @click="flipCard">
 
         <div class="card-inner" :class="{ flipped: isFlipped, enlarged: isHovered }">
@@ -50,9 +50,9 @@ Nice to Haves: Num of stars, map, takeout.delivery option shown  -->
                     <button @click.stop="selectRestaurant" class="select-button">select</button>
                 </div>
             </div>
-       </div>
+        </div>
 
-   </div>
+    </span>
 </template>
 
 
@@ -117,15 +117,15 @@ export default {
 
 <style scoped>
 .restaurant-card {
-    perspective: 1000px; 
     width: 300px;
     height: 400px;
-    margin: 20px;
+    margin: 40px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-wrap: wrap;
 }
+
 .restaurant-card:hover {
     transform: scale(1.05);
 }

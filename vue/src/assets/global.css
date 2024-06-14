@@ -52,9 +52,7 @@ button:hover {
     background-color: var(--primary-200);
 }
 
-input[type = "text"],
-input[type = "password"]
- {
+input {
         padding: 10px;
         margin: 10px 0;
         border: 1px solid var(--primary-300);

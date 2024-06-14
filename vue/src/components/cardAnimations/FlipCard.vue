@@ -74,5 +74,4 @@ export default {
     transform: rotateY(180deg);
 }
 
-
-    </style>
+</style>

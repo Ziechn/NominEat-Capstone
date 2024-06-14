@@ -46,7 +46,4 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-bottom: 40px;
-}
 </style>
