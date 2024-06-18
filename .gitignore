@@ -1,5 +1,6 @@
 node_modules
 /dist
+*.properties
 
 # Visual Studio/.NET
 *.obj
